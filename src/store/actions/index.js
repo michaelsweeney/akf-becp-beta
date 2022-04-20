@@ -1,122 +1,100 @@
 /* building actions */
-export function addBuildingType(idx) {
+export function setCaseResults(data) {
   return {
-    type: "ADD_BUILDING_TYPE",
-    payload: idx,
+    type: "SET_CASE_RESULTS",
+    payload: data,
   };
 }
 
-export function removeBuildingType(idx) {
+export function setCaseInputs(data) {
   return {
-    type: "REMOVE_BUILDING_TYPE",
-    payload: idx,
+    type: "SET_CASE_INPUTS",
+    payload: data,
   };
 }
 
-export function setBuildingTypeArea(val, idx) {
+export function setCaseHeatingAndDomesticCOP(payload) {
   return {
-    type: "SET_BUILDING_TYPE_AREA",
-    payload: { val, idx },
+    type: "SET_CASE_HEATING_AND_DOMESTIC_COP",
+    payload: payload,
   };
 }
 
-export function setBuildingType(val, idx) {
+export function setCaseHeatingAndDomesticFuelSource(payload) {
   return {
-    type: "SET_BUILDING_TYPE",
-    payload: { val, idx },
+    type: "SET_CASE_HEATING_AND_DOMESTIC_FUEL_SOURCE",
+    payload: payload,
   };
 }
 
-export function setNativeUtilityConsumption(val, fuel) {
+export function setCaseName(payload) {
   return {
-    type: "SET_NATIVE_UTILITY_CONSUMPTION",
-    payload: { val, fuel },
-  };
-}
-export function setNativeOnsiteGeneration(val, fuel) {
-  return {
-    type: "SET_NATIVE_ONSITE_GENERATION",
-    payload: { val, fuel },
+    type: "SET_CASE_NAME",
+    payload: payload,
   };
 }
 
-export function compileBuildingOutputs() {
+export function setCaseHeatingTemplate(payload) {
   return {
-    type: "COMPILE_BUILDING_OUTPUTS",
+    type: "SET_CASE_HEATING_TEMPLATE",
+    payload: payload,
   };
 }
 
-export function setAllBuildingInputs(obj) {
+export function setCaseIsDisplayed(payload) {
   return {
-    type: "SET_ALL_BUILDING_INPUTS",
-    payload: obj,
+    type: "SET_CASE_IS_DISPLAYED",
+    payload: payload,
   };
 }
 
-/* ui actions */
-export function setIsLoadModalOpen(bool) {
+export function setBaseCase(payload) {
   return {
-    type: "SET_IS_LOAD_MODAL_OPEN",
-    payload: bool,
-  };
-}
-export function setIsAboutModalOpen(bool) {
-  return {
-    type: "SET_IS_ABOUT_MODAL_OPEN",
-    payload: bool,
+    type: "SET_BASE_CASE",
+    payload: payload,
   };
 }
 
-export function setIsLoadedSummaryModalOpen(bool) {
-  return {
-    type: "SET_IS_LOADED_SUMMARY_MODAL_OPEN",
-    payload: bool,
-  };
-}
-export function toggleAccordion(val) {
-  return {
-    type: "TOGGLE_ACCORDION",
-    payload: val,
-  };
-}
-
-/* berdo api actions */
-export function setBerdoApiInputQuery(query) {
-  return {
-    type: "SET_BERDO_API_INPUT_QUERY",
-    payload: query,
-  };
-}
-
-export function setBerdoApiQueryResults(query_array) {
-  return {
-    type: "SET_BERDO_API_QUERY_RESULTS",
-    payload: query_array,
-  };
-}
-
-export function setLoadedBuildingQueryInfo(result) {
-  return {
-    type: "SET_LOADED_BUILDING_QUERY_INFO",
-    payload: result,
-  };
-}
-export function setBerdoDatasetYear(result) {
-  return {
-    type: "SET_BERDO_DATASET_YEAR",
-    payload: result,
-  };
-}
-// resize actions
+/* general ui actions */
 export function setWindowDimensions(dims) {
   return {
     type: "SET_WINDOW_DIMENSIONS",
     payload: dims,
   };
 }
-export function setActiveView(label) {
+
+export function setIsLoading(bool) {
   return {
-    type: "SET_ACTIVE_VIEW",
-    payload: label,
+    type: "SET_IS_LOADING",
+    payload: bool,
+  };
+}
+
+/* plot config options */
+export function setPlotConfig(config) {
+  return {
+    type: "SET_PLOT_CONFIG",
+    payload: config,
+  };
+}
+
+export function setThresholdView(val) {
+  return {
+    type: "SET_THRESHOLD_VIEW",
+    payload: val,
+  };
+}
+
+export function setGlobalCaseParameters(obj) {
+  return {
+    type: "SET_GLOBAL_CASE_PARAMETERS",
+    payload: obj,
+  };
+}
+
+export function setIsPlotHover(payload) {
+  return {
+    type: "SET_IS_PLOT_HOVER",
+    payload: payload,
   };
 }

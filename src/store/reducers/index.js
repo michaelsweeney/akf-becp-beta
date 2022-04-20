@@ -1,13 +1,15 @@
 import { combineReducers } from "redux";
 
 import uiReducer from "./uireducer";
-import buildingReducer from "./buildingreducer";
-import windowReducer from "./windowreducer";
+import caseInputReducer from "./caseinputreducer";
+import caseOutputReducer from "./caseoutputreducer";
+import plotReducer from "./plotreducer";
 
 const rootReducer = combineReducers({
   ui: uiReducer,
-  building: buildingReducer,
-  window: windowReducer,
+  case_inputs: caseInputReducer,
+  case_outputs: caseOutputReducer,
+  plot_config: plotReducer,
 });
 
 export default rootReducer;

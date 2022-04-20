@@ -1,19 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { conn } from "./store/connect";
 
 import { makeStyles } from "@material-ui/styles";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Header from "./components/header";
-import Footer from "./components/footer";
-import MainContainer from "./components/maincontainer";
-import LoadBldgModal from "./components/modals/loadbldgmodal";
-import AboutModal from "./components/modals/aboutmodal";
-import LoadedSummaryModal from "./components/modals/loadedsummarymodal";
-import TooSmallModal from "./components/modals/toosmallmodal";
-const is_demo_mode = false;
 
+import * as api from "./apicalls";
+import * as d3 from "d3";
+import PlotContainer from "./components/plots/plotcontainer";
+// import PlotControls from "./components/plotcontrols";
+import CaseControls from "./components/casecontrols";
+import GlobalControls from "./components/globalcontrols";
+import ReultsTable from "./components/resultstable";
+import { LoadingSpinner } from "./components/loadingspinner";
+import { LoadingScreenError } from "./components/loadingerrorscreen";
+import { Header } from "./components/header";
+import ResultsTable from "./components/resultstable";
 const theme = createTheme({
   palette: {
     secondary: {
@@ -26,53 +28,79 @@ const theme = createTheme({
 });
 
 const useStyles = makeStyles({
-  app: {
-    height: "100vh",
-    width: "100vw",
-    minWidth: 900,
+  root: {
+    width: "calc(100vw)",
+    height: "calc(100vh)",
     boxSizing: "border-box",
-    overflow: "hidden",
+  },
+  main: {
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+    padding: 10,
+  },
+  header: {
+    display: "block",
+    width: "100%",
+    height: "75px",
+    boxSizing: "border-box",
+  },
+  topMain: {
+    display: "block",
+    height: "calc(100% - 250px - 75px)",
+    width: "calc(100%)",
+    boxSizing: "border-box",
+    padding: 10,
+  },
+  topLeft: {
+    padding: 10,
+    display: "inline-block",
+    width: "250px",
+    height: "100%",
+    boxSizing: "border-box",
+    verticalAlign: "top",
+    overflow: "auto",
+  },
+  topRight: {
+    display: "inline-block",
+    width: "calc(100% - 250px)",
+    height: "100%",
+    boxSizing: "border-box",
+    verticalAlign: "top",
+  },
+
+  bottom: {
+    padding: 10,
+    height: "250px",
+    width: "calc(100%)",
+    boxSizing: "border-box",
+  },
+  bottomMain: {
+    display: "inline-block",
+    width: "calc(100%)",
+    height: "100%",
+    boxSizing: "border-box",
+
+    // border: "black solid 1px",
   },
 });
 
 const App = (props) => {
   const classes = useStyles();
+  let { isLoadingError, case_inputs, isLoading } = props;
 
-  // load test dataset...
+  const updateResults = () => {
+    api.getProjectionFromReferenceBuildings(
+      case_inputs,
+      props.actions.setCaseResults,
+      props.actions.setIsLoading
+    );
+  };
+
   useEffect(() => {
-    const test_building_data = {
-      areas: [
-        {
-          type: "office",
-          area: 21000,
-          index: 0,
-        },
-      ],
-      consumption_native: {
-        elec_grid: 260000,
-        gas: 0,
-        fuel_1: 0,
-        fuel_2: 0,
-        fuel_4: 0,
-        diesel: 0,
-        district_steam: 0,
-        district_hot_water: 0,
-        elec_driven_chiller: 0,
-        absorption_chiller_gas: 0,
-        engine_driven_chiller_gas: 0,
-      },
-      onsite_generation_native: {
-        elec_pv: 800,
-      },
-    };
+    updateResults();
+  }, []);
 
-    if (is_demo_mode) {
-      props.actions.setAllBuildingInputs(test_building_data);
-    }
-    props.actions.compileBuildingOutputs();
-  }, [props.actions]);
-
-  // handle resize
   useEffect(() => {
     const handleResize = () => {
       props.actions.setWindowDimensions({
@@ -80,29 +108,52 @@ const App = (props) => {
         height: window.innerHeight,
       });
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [props.actions]);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.app}>
-        <Header />
-        <MainContainer />
-        <LoadBldgModal />
-        <AboutModal />
-        <LoadedSummaryModal />
-        <TooSmallModal />
-        <Footer />
+      <div className={classes.root}>
+        <div className={classes.main}>
+          <LoadingSpinner isLoading={isLoading} />
+          <div className={classes.header}>
+            <Header />
+          </div>
+          <div className={classes.topMain}>
+            <div className={classes.topLeft}>
+              <h6>Global Controls</h6>
+              <GlobalControls />
+            </div>
+            <div className={classes.topRight}>
+              {isLoadingError ? (
+                <LoadingScreenError />
+              ) : (
+                <>
+                  <ResultsTable />
+                  <PlotContainer />
+                </>
+              )}
+            </div>
+          </div>
+          <div className={classes.bottom}>
+            <div className={classes.bottomMain}>
+              <CaseControls />
+            </div>
+          </div>
+        </div>
       </div>
     </ThemeProvider>
   );
 };
 
+// App.whyDidYouRender = true;
+
 const mapStateToProps = (store) => {
   return {
-    actions: { ...store.actions },
+    isLoadingError: store.case_outputs.isLoadingError,
+    case_inputs: store.case_inputs.case_inputs,
+    isLoading: store.ui.isLoading,
   };
 };
 
