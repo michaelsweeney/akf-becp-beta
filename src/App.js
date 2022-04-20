@@ -5,7 +5,7 @@ import { conn } from "./store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import * as api from "./apicalls";
+// import * as api from "./apicalls";
 import * as d3 from "d3";
 import PlotContainer from "./components/plots/plotcontainer";
 // import PlotControls from "./components/plotcontrols";
@@ -90,11 +90,11 @@ const App = (props) => {
   let { isLoadingError, case_inputs, isLoading } = props;
 
   const updateResults = () => {
-    api.getProjectionFromReferenceBuildings(
-      case_inputs,
-      props.actions.setCaseResults,
-      props.actions.setIsLoading
-    );
+    // api.getProjectionFromReferenceBuildings(
+    //   case_inputs,
+    //   props.actions.setCaseResults,
+    //   props.actions.setIsLoading
+    // );
   };
 
   useEffect(() => {
