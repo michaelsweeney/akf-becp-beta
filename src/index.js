@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import { store } from "./store/configureStore";
-import { Provider } from "react-redux";
+// import "./index.css";
+// import App from "./App";
+// import { store } from "./store/configureStore";
+// import { Provider } from "react-redux";
 
 // ie polyfills
 // if (!Object.values) Object.values = (o) => Object.keys(o).map((k) => o[k]);
@@ -51,7 +51,7 @@ ReactDOM.render(
   <>
     {/* <Provider store={store}> */}
     {/* <App /> */}
-    hi
+    <div>hi</div>
     {/* </Provider> */}
   </>,
   document.getElementById("root")
