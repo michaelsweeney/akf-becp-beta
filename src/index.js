@@ -1,6 +1,12 @@
+import "./wdyr";
 import React from "react";
 import ReactDOM from "react-dom";
+import "./index.css";
 import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+import { store } from "./store/configureStore";
+import { Provider } from "react-redux";
 
 // ie polyfills
 if (!Object.values) Object.values = (o) => Object.keys(o).map((k) => o[k]);
@@ -46,7 +52,9 @@ if (!Array.prototype.map) {
 
 ReactDOM.render(
   <>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </>,
   document.getElementById("root")
 );
