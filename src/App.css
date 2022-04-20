@@ -1,0 +1,13 @@
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+text {
+    /* shape-rendering: geometricPrecision */
+}
+
+circle {
+    /* shape-rendering: geometricPrecision */
+    /* fill: red !important */
+}
