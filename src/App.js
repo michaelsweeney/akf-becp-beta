@@ -147,8 +147,6 @@ const App = (props) => {
   );
 };
 
-// App.whyDidYouRender = true;
-
 const mapStateToProps = (store) => {
   return {
     isLoadingError: store.case_outputs.isLoadingError,

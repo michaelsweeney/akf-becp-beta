@@ -50,7 +50,8 @@ if (!Array.prototype.map) {
 ReactDOM.render(
   <>
     <Provider store={store}>
-      <App />
+      {/* <App /> */}
+      hi
     </Provider>
   </>,
   document.getElementById("root")

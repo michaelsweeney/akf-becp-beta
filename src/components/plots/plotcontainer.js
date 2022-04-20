@@ -643,8 +643,6 @@ const PlotContainer = (props) => {
   );
 };
 
-// PlotContainer.whyDidYouRender = true;
-
 const mapStateToProps = (store) => {
   return {
     case_results: store.case_outputs.case_results,
