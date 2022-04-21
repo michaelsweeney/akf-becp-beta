@@ -11,8 +11,8 @@ import * as d3 from "d3"; // NO ERROR
 // import CaseControls from "./components/casecontrols";
 // import GlobalControls from "./components/globalcontrols";
 // import { LoadingSpinner } from "./components/loadingspinner"; // << CAUSES ERROR
-import { LoadingScreenError } from "./components/loadingerrorscreen";
-// import { Header } from "./components/header";
+import { LoadingScreenError } from "./components/loadingerrorscreen"; // NO ERROR
+import { Header } from "./components/header";
 // import ResultsTable from "./components/resultstable";
 
 const App = () => {
