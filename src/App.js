@@ -5,10 +5,10 @@ import { conn } from "./store/connect"; // << NO ERROR
 import { makeStyles } from "@material-ui/styles"; // << NO ERROR
 import { createTheme, ThemeProvider } from "@mui/material/styles"; // << NO ERROR
 
-// import * as api from "./apicalls";
+import * as api from "./apicalls";
 import * as d3 from "d3"; // << NO ERROR
 // import PlotContainer from "./components/plots/plotcontainer";
-import CaseControls from "./components/casecontrols";
+// import CaseControls from "./components/casecontrols"; //<< CAUSES ERROR
 // import GlobalControls from "./components/globalcontrols"; // << CAUSES ERROR
 // import { LoadingSpinner } from "./components/loadingspinner"; // << CAUSES ERROR
 import { LoadingScreenError } from "./components/loadingerrorscreen"; // << NO ERROR
