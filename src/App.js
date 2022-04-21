@@ -10,7 +10,7 @@ import * as d3 from "d3";
 // import PlotContainer from "./components/plots/plotcontainer";
 // import CaseControls from "./components/casecontrols";
 // import GlobalControls from "./components/globalcontrols";
-import { LoadingSpinner } from "./components/loadingspinner";
+// import { LoadingSpinner } from "./components/loadingspinner"; // << CAUSES ERROR
 // import { LoadingScreenError } from "./components/loadingerrorscreen";
 // import { Header } from "./components/header";
 // import ResultsTable from "./components/resultstable";
