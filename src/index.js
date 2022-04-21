@@ -5,7 +5,7 @@ import App from "./App";
 import { store } from "./store/configureStore";
 import { Provider } from "react-redux";
 
-ie polyfills
+// ie polyfills
 if (!Object.values) Object.values = (o) => Object.keys(o).map((k) => o[k]);
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = function (callback, thisArg) {
