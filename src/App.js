@@ -14,8 +14,8 @@
 // import ReultsTable from "./components/resultstable";
 // import { LoadingSpinner } from "./components/loadingspinner";
 // import { LoadingScreenError } from "./components/loadingerrorscreen";
-import { Header } from "./components/header";
-import ResultsTable from "./components/resultstable";
+// import { Header } from "./components/header";
+// import ResultsTable from "./components/resultstable";
 
 const App = () => {
   return <div>ho</div>;
