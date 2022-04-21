@@ -16,7 +16,7 @@ import { Header } from "./components/header"; // << NO ERROR
 // import ResultsTable from "./components/resultstable"; // << CAUSES ERROR
 
 const App = () => {
-  return <div>hmmmm</div>;
+  return <div>hmmm</div>;
 };
 
 export default App;
