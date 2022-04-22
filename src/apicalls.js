@@ -6,7 +6,7 @@ import {
 
 import * as d3 from "d3";
 
-const url = "http://akf-becp-pyapi.herokuapp.com/";
+const url = "https://akf-becp-pyapi.herokuapp.com/";
 // const url = "http://localhost:5000";
 
 export const states = [
