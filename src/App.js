@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"; // << NO ERRO
 
 // import * as api from "./apicalls"; // << CAUSES ERROR (BUT QUICKLY)
 import * as d3 from "d3"; // << NO ERROR
-import PlotContainer from "./components/plots/plotcontainer";
+// import PlotContainer from "./components/plots/plotcontainer"; //<< CAUSES ERROR
 // import CaseControls from "./components/casecontrols"; //<< CAUSES ERROR
 // import GlobalControls from "./components/globalcontrols"; // << CAUSES ERROR
 // import { LoadingSpinner } from "./components/loadingspinner"; // << CAUSES ERROR
@@ -19,7 +19,7 @@ const App = () => {
   return <div>hmmm</div>;
 };
 
-export default App;
+// export default App;
 
 // const theme = createTheme({
 //   palette: {
