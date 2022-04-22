@@ -18,7 +18,6 @@ import {
   Checkbox,
   Radio,
 } from "@mui/material";
-import { MarginSharp } from "@mui/icons-material";
 
 // small table style:
 // https://mui.com/material-ui/react-table/

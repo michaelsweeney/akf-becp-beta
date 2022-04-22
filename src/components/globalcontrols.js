@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/styles";
 import { useEffect, useState } from "react";
 import * as api from "../apicalls";
 import { SingleSelect } from "./singleselect";
-import { StorefrontRounded } from "@mui/icons-material";
 
 const useStyles = makeStyles({
   root: {},
