@@ -5,7 +5,7 @@ import { conn } from "./store/connect"; // << NO ERROR
 import { makeStyles } from "@material-ui/styles"; // << NO ERROR
 import { createTheme, ThemeProvider } from "@mui/material/styles"; // << NO ERROR
 
-// import * as api from "./apicalls"; // << CAUSES ERROR (BUT QUICKLY)
+import * as api from "./apicalls"; // << CAUSES ERROR (BUT QUICKLY)
 import * as d3 from "d3"; // << NO ERROR
 import PlotContainer from "./components/plots/plotcontainer"; //<< CAUSES ERROR
 import CaseControls from "./components/casecontrols"; //<< CAUSES ERROR
@@ -89,15 +89,15 @@ const App = (props) => {
   let { isLoadingError, case_inputs, isLoading } = props;
 
   const updateResults = () => {
-    // api.getProjectionFromReferenceBuildings(
-    //   case_inputs,
-    //   props.actions.setCaseResults,
-    //   props.actions.setIsLoading
-    // );
+    api.getProjectionFromReferenceBuildings(
+      case_inputs,
+      props.actions.setCaseResults,
+      props.actions.setIsLoading
+    );
   };
 
   useEffect(() => {
-    //     updateResults();
+    updateResults();
   }, []);
 
   useEffect(() => {
