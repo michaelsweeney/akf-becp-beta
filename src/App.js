@@ -13,7 +13,7 @@ import * as d3 from "d3"; // << NO ERROR
 import { LoadingSpinner } from "./components/loadingspinner"; // << CAUSES ERROR
 import { LoadingScreenError } from "./components/loadingerrorscreen"; // << NO ERROR
 import { Header } from "./components/header"; // << NO ERROR
-// import ResultsTable from "./components/resultstable"; // << CAUSES ERROR
+import ResultsTable from "./components/resultstable"; // << CAUSES ERROR
 
 const theme = createTheme({
   palette: {

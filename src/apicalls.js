@@ -1,6 +1,3 @@
-import { TryRounded } from "@mui/icons-material";
-import { store } from "./store";
-
 import {
   HeatPumpIconPath,
   ElectricityIconPath,
@@ -9,7 +6,7 @@ import {
 
 import * as d3 from "d3";
 
-const url = "https://akf-becp-pyapi.herokuapp.com/";
+const url = "http://akf-becp-pyapi.herokuapp.com/";
 // const url = "http://localhost:5000";
 
 export const states = [
