@@ -130,7 +130,7 @@ const App = (props) => {
                 <LoadingScreenError />
               ) : (
                 <>
-                  {/* <ResultsTable /> */}results_table_here
+                  <ResultsTable />
                   {/* <PlotContainer /> */}plot_container_here
                 </>
               )}
