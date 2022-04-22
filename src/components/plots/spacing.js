@@ -99,7 +99,7 @@ export const getIdealSpacing = (arr, spacing) => {
   // REASSEMBLE NEWLY-SPACED ARRAY
   let spaced_arr_reordered = [];
   spaced_arr_sorted.forEach((e, i) => {
-    let pos = original_position_array.filter((d) => d.pos == i)[0].new_val;
+    let pos = original_position_array.filter((d) => d.pos === i)[0].new_val;
     spaced_arr_reordered.push(pos);
   });
 

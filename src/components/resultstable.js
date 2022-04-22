@@ -1,22 +1,17 @@
 import { IconSvg } from "./svgicons";
 
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { conn } from "../store/connect";
 import * as d3 from "d3";
 import { makeStyles } from "@material-ui/styles";
 import { plot_margins } from "./plots/plotcontainer";
 import {
-  MenuItem,
-  Select,
-  FormControl,
   Table,
   TableBody,
   TableRow,
   TableCell,
   TableHead,
-  Checkbox,
-  Radio,
 } from "@mui/material";
 
 // small table style:

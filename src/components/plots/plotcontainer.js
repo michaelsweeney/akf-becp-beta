@@ -13,7 +13,6 @@ import { conn } from "../../store/connect";
 
 import { getIdealSpacing } from "./spacing";
 import { makeStyles } from "@material-ui/styles";
-import ResultsTable from "../resultstable";
 let plot_margins = {
   t: 60,
   b: 25,
