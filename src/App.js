@@ -19,7 +19,7 @@ const App = () => {
   return <div>hmmm</div>;
 };
 
-// export default App;
+export default App;
 
 // const theme = createTheme({
 //   palette: {
