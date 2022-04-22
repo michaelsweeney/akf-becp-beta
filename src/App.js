@@ -7,13 +7,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"; // << NO ERRO
 
 // import * as api from "./apicalls"; // << CAUSES ERROR (BUT QUICKLY)
 import * as d3 from "d3"; // << NO ERROR
-// import PlotContainer from "./components/plots/plotcontainer"; //<< CAUSES ERROR
-// import CaseControls from "./components/casecontrols"; //<< CAUSES ERROR
-// import GlobalControls from "./components/globalcontrols"; // << CAUSES ERROR
+import PlotContainer from "./components/plots/plotcontainer"; //<< CAUSES ERROR
+import CaseControls from "./components/casecontrols"; //<< CAUSES ERROR
+import GlobalControls from "./components/globalcontrols"; // << CAUSES ERROR
 import { LoadingSpinner } from "./components/loadingspinner"; // << CAUSES ERROR
 import { LoadingScreenError } from "./components/loadingerrorscreen"; // << NO ERROR
 import { Header } from "./components/header"; // << NO ERROR
-// import ResultsTable from "./components/resultstable"; // << CAUSES ERROR
+import ResultsTable from "./components/resultstable"; // << CAUSES ERROR
 
 const theme = createTheme({
   palette: {
@@ -122,23 +122,22 @@ const App = (props) => {
           <div className={classes.topMain}>
             <div className={classes.topLeft}>
               <h6>Global Controls</h6>
-              {/* <GlobalControls /> */}
-              global_controls_here
+              <GlobalControls />
             </div>
             <div className={classes.topRight}>
               {isLoadingError ? (
                 <LoadingScreenError />
               ) : (
                 <>
-                  {/* <ResultsTable /> */}results_table_here
-                  {/* <PlotContainer /> */}plot_container_here
+                  <ResultsTable />
+                  <PlotContainer />
                 </>
               )}
             </div>
           </div>
           <div className={classes.bottom}>
             <div className={classes.bottomMain}>
-              {/* <CaseControls /> */}casecontrols_here
+              <CaseControls />
             </div>
           </div>
         </div>
