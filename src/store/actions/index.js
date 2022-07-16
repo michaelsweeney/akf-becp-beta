@@ -13,6 +13,32 @@ export function setCaseInputs(data) {
   };
 }
 
+export function setCaseHeatingCOP(payload) {
+  return {
+    type: "SET_CASE_HEATING_COP",
+    payload: payload,
+  };
+}
+export function setCaseHeatingFuelSource(payload) {
+  return {
+    type: "SET_CASE_HEATING_FUEL_SOURCE",
+    payload: payload,
+  };
+}
+
+export function setCaseDomesticCOP(payload) {
+  return {
+    type: "SET_CASE_DOMESTIC_COP",
+    payload: payload,
+  };
+}
+export function setCaseDomesticFuelSource(payload) {
+  return {
+    type: "SET_CASE_DOMESTIC_FUEL_SOURCE",
+    payload: payload,
+  };
+}
+
 export function setCaseHeatingAndDomesticCOP(payload) {
   return {
     type: "SET_CASE_HEATING_AND_DOMESTIC_COP",

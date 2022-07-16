@@ -38,6 +38,7 @@ const PlotContainer = (props) => {
     plot_config,
     window_dimensions,
   } = props;
+  console.log(props);
 
   useEffect(() => {
     if (case_results_displayed.length > 0) {

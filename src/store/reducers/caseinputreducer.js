@@ -100,6 +100,48 @@ export default function buildingReducer(state = initialState, action) {
       };
     }
 
+    case "SET_CASE_HEATING_COP": {
+      let { idx, cop } = action.payload;
+
+      let new_state = produce(state, (draft) => {
+        let selected_case = draft.case_inputs.find((d) => d.id === idx);
+        selected_case.design_areas[0].heating_cop = +cop;
+      });
+
+      return new_state;
+    }
+
+    case "SET_CASE_HEATING_FUEL_SOURCE": {
+      let { idx, source } = action.payload;
+
+      let new_state = produce(state, (draft) => {
+        let selected_case = draft.case_inputs.find((d) => d.id === idx);
+        selected_case.design_areas[0].heating_fuel = source;
+      });
+      return new_state;
+    }
+
+    case "SET_CASE_DOMESTIC_COP": {
+      let { idx, cop } = action.payload;
+
+      let new_state = produce(state, (draft) => {
+        let selected_case = draft.case_inputs.find((d) => d.id === idx);
+        selected_case.design_areas[0].dhw_cop = +cop;
+      });
+
+      return new_state;
+    }
+
+    case "SET_CASE_DOMESTIC_FUEL_SOURCE": {
+      let { idx, source } = action.payload;
+
+      let new_state = produce(state, (draft) => {
+        let selected_case = draft.case_inputs.find((d) => d.id === idx);
+        selected_case.design_areas[0].dhw_fuel = source;
+      });
+      return new_state;
+    }
+
     case "SET_CASE_HEATING_AND_DOMESTIC_COP": {
       let { idx, cop } = action.payload;
 

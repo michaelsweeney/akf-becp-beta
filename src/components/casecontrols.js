@@ -23,13 +23,9 @@ import { IconSvg } from "./svgicons";
 const useStyles = makeStyles({
   root: {},
 
-  selectContainer: {
-    // margin: 15,
-    // width: 200,
-  },
+  selectContainer: {},
   table: {
     "&&& td": {
-      //   paddingTop: 5,
       padding: 5,
     },
   },
@@ -84,26 +80,33 @@ const CaseControls = (props) => {
     updateResults();
   }, [case_inputs]);
 
-  const handleChangeHeatingAndDomesticCOP = (idx, cop) => {
-    props.actions.setCaseHeatingAndDomesticCOP({
+  const handleChangeHeatingCOP = (idx, cop) => {
+    props.actions.setCaseHeatingCOP({
       idx,
       cop,
     });
-    // updateResults();
   };
 
-  const handleChangeHeatingAndDomesticFuelSource = (idx, source) => {
-    props.actions.setCaseHeatingAndDomesticFuelSource({ idx, source });
-    // updateResults();
+  const handleChangeHeatingFuelSource = (idx, source) => {
+    props.actions.setCaseHeatingFuelSource({ idx, source });
+  };
+
+  const handleChangeDomesticCOP = (idx, cop) => {
+    props.actions.setCaseDomesticCOP({
+      idx,
+      cop,
+    });
+  };
+
+  const handleChangeDomesticFuelSource = (idx, source) => {
+    props.actions.setCaseDomesticFuelSource({ idx, source });
   };
 
   const handleChangeName = (idx, case_name) => {
     props.actions.setCaseName({ idx: idx, case_name: case_name });
-    // updateResults();
   };
   const handleChangeBaseCase = (idx) => {
     props.actions.setBaseCase({ idx: idx });
-    // updateResults();
   };
   const handleChangeHeatingTemplate = (idx, template) => {
     let template_values = templates.find((d) => d.tag === template);
@@ -119,13 +122,10 @@ const CaseControls = (props) => {
       idx: idx,
       cop: heating_cop,
     });
-
-    // updateResults();
   };
 
   const handleChangeIsDisplayed = (idx, bool) => {
     props.actions.setCaseIsDisplayed({ idx, bool });
-    // updateResults();
   };
 
   let icon_array_all = [];
@@ -154,6 +154,8 @@ const CaseControls = (props) => {
             <TableCell>Template</TableCell>
             <TableCell>Heating Fuel</TableCell>
             <TableCell>Annual Heating COP</TableCell>
+            <TableCell>DHW Fuel</TableCell>
+            <TableCell>Annual DHW Heating COP</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -200,7 +202,6 @@ const CaseControls = (props) => {
                         handleChangeHeatingTemplate(i, e.target.value);
                       }}
                       value={c.starting_template}
-                      //   label="template"
                     >
                       {templates.map((e, i) => {
                         return (
@@ -217,10 +218,7 @@ const CaseControls = (props) => {
                   <FormControl size="small" fullWidth>
                     <Select
                       onChange={(e) =>
-                        handleChangeHeatingAndDomesticFuelSource(
-                          i,
-                          e.target.value
-                        )
+                        handleChangeHeatingFuelSource(i, e.target.value)
                       }
                       value={c.design_areas[0].heating_fuel}
                     >
@@ -232,8 +230,31 @@ const CaseControls = (props) => {
                 <TableCell>
                   <FormControl size="small" fullWidth>
                     <FocusInput
-                      callback={(e) => handleChangeHeatingAndDomesticCOP(i, e)}
+                      callback={(e) => handleChangeHeatingCOP(i, e)}
                       value={c.design_areas[0].heating_cop}
+                      inputType="number"
+                    />
+                  </FormControl>
+                </TableCell>
+
+                <TableCell>
+                  <FormControl size="small" fullWidth>
+                    <Select
+                      onChange={(e) =>
+                        handleChangeDomesticFuelSource(i, e.target.value)
+                      }
+                      value={c.design_areas[0].dhw_fuel}
+                    >
+                      <MenuItem value="Electricity">Electricity</MenuItem>
+                      <MenuItem value="Natural Gas">Natural Gas</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <TableCell>
+                  <FormControl size="small" fullWidth>
+                    <FocusInput
+                      callback={(e) => handleChangeDomesticCOP(i, e)}
+                      value={c.design_areas[0].dhw_cop}
                       inputType="number"
                     />
                   </FormControl>
