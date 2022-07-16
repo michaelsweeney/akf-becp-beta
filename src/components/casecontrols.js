@@ -177,6 +177,7 @@ const CaseControls = (props) => {
                 <TableCell sx={{ textAlign: "center" }}>
                   <FormControl size="small">
                     <Checkbox
+                      disabled={c.is_base_case ? true : false}
                       onChange={() =>
                         handleChangeIsDisplayed(i, !c.is_displayed)
                       }
