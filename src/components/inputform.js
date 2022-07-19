@@ -19,18 +19,12 @@ const useStyles = makeStyles({
         width: 1200,
         padding: 50,
         '& .MuiTableCell-head': {
-            color: 'red !important',
             fontWeight: 700,
-
         },
         tableSpacer: {
             borderBottom: 'solid 2px black',
         },
-        bold: {
-        },
-
     }
-
 })
 
 
@@ -39,18 +33,16 @@ const useStyles = makeStyles({
 const InputForm = (props) => {
     const { case_inputs } = props;
 
-    let design_area_ids = case_inputs[0].design_areas.map(d => d.area_id)
-    let design_areas = case_inputs.map(d => d.design_areas)
+    const sxRotate = { transform: 'rotate(-90deg)' }
+
 
     const classes = useStyles();
-
-
 
     return <div className={classes.tableContainer}>
         <Table>
             <TableBody>
                 <TableRow>
-                    <TableCell variant="head" rowSpan={4}>GLOBAL</TableCell>
+                    <TableCell variant="head" rowSpan={4} sx={sxRotate}>GLOBAL</TableCell>
                     <TableCell variant="head">CASE NAME</TableCell>
                     {case_inputs.map((e, i) => <TableCell key={i}>{e.case_name}</TableCell>)}
                 </TableRow>
@@ -70,24 +62,21 @@ const InputForm = (props) => {
                 </TableRow>
 
 
-
-                {design_area_ids.map(id => {
+                {case_inputs[0].design_areas.map(d => d.area_id).map(id => {
 
                     let area_case = case_inputs.map(d => d.design_areas.filter(e => e.area_id == id)[0])
 
-
                     return (
                         <React.Fragment key={id}>
-                            <TableRow>
-                                <TableCell variant="head" rowSpan={7}>AREA TYPE {id + 1}</TableCell>
-                                <TableCell variant="head">Area</TableCell>
-                                {area_case.map((d, i) => <TableCell key={i}>{d.area}</TableCell>)}
-                            </TableRow>
-
 
                             <TableRow>
+                                <TableCell variant="head" rowSpan={7} sx={sxRotate}>AREA TYPE {id + 1}</TableCell>
                                 <TableCell variant="head">Building Type</TableCell>
                                 {area_case.map((d, i) => <TableCell key={i}>{d.building_type}</TableCell>)}
+                            </TableRow>
+                            <TableRow>
+                                <TableCell variant="head">Area</TableCell>
+                                {area_case.map((d, i) => <TableCell key={i}>{d.area}</TableCell>)}
                             </TableRow>
 
                             <TableRow>
@@ -115,7 +104,6 @@ const InputForm = (props) => {
                             </TableRow>
 
                         </React.Fragment>
-
 
                     )
 
