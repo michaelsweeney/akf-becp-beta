@@ -4,7 +4,7 @@ import { current } from "immer";
 const initialState = {
   case_inputs: [
     {
-      id: 0,
+      case_id: 0,
       is_displayed: true,
       is_base_case: true,
       starting_template: "ng_furnace",
@@ -14,7 +14,8 @@ const initialState = {
       projection_case: "MidCase",
       design_areas: [
         {
-          type: "HighriseApartment",
+          area_id: 0,
+          building_type: "HighriseApartment",
           area: 200000,
           heating_fuel: "Natural Gas",
           dhw_fuel: "Natural Gas",
@@ -22,10 +23,20 @@ const initialState = {
           dhw_cop: 0.8,
           ashrae_standard: "90.1-2016",
         },
+        {
+          area_id: 1,
+          building_type: "MediumOffice",
+          area: 50000,
+          heating_fuel: "Natural Gas",
+          dhw_fuel: "Natural Gas",
+          heating_cop: 0.8,
+          dhw_cop: 0.8,
+          ashrae_standard: "90.1-2013",
+        },
       ],
     },
     {
-      id: 1,
+      case_id: 1,
       is_displayed: true,
       is_base_case: false,
       starting_template: "elec_resistance",
@@ -35,7 +46,8 @@ const initialState = {
       projection_case: "MidCase",
       design_areas: [
         {
-          type: "HighriseApartment",
+          area_id: 0,
+          building_type: "HighriseApartment",
           area: 200000,
           heating_fuel: "Electricity",
           dhw_fuel: "Electricity",
@@ -43,10 +55,20 @@ const initialState = {
           dhw_cop: 1,
           ashrae_standard: "90.1-2016",
         },
+        {
+          area_id: 1,
+          building_type: "MediumOffice",
+          area: 50000,
+          heating_fuel: "Electricity",
+          dhw_fuel: "Electricity",
+          heating_cop: 1,
+          dhw_cop: 1,
+          ashrae_standard: "90.1-2013",
+        },
       ],
     },
     {
-      id: 2,
+      case_id: 2,
       is_displayed: true,
       is_base_case: false,
       starting_template: "elec_ashp",
@@ -56,13 +78,24 @@ const initialState = {
       projection_case: "MidCase",
       design_areas: [
         {
-          type: "HighriseApartment",
+          area_id: 0,
+          building_type: "HighriseApartment",
           area: 200000,
           heating_fuel: "Electricity",
           dhw_fuel: "Electricity",
-          heating_cop: 3.2,
-          dhw_cop: 3.2,
+          heating_cop: 2.5,
+          dhw_cop: 3.5,
           ashrae_standard: "90.1-2016",
+        },
+        {
+          area_id: 1,
+          building_type: "MediumOffice",
+          area: 50000,
+          heating_fuel: "Electricity",
+          dhw_fuel: "Electricity",
+          heating_cop: 2.5,
+          dhw_cop: 3.5,
+          ashrae_standard: "90.1-2013",
         },
       ],
     },

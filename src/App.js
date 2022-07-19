@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react"; // << NO ERROR
-import "./App.css"; // << NO ERROR
-import { conn } from "./store/connect"; // << NO ERROR
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { conn } from "./store/connect";
 
-import { makeStyles } from "@material-ui/styles"; // << NO ERROR
-import { createTheme, ThemeProvider } from "@mui/material/styles"; // << NO ERROR
+import { makeStyles } from "@material-ui/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import * as api from "./apicalls"; // << CAUSES ERROR (BUT QUICKLY)
-import * as d3 from "d3"; // << NO ERROR
-import PlotContainer from "./components/plots/plotcontainer"; //<< CAUSES ERROR
-import CaseControls from "./components/casecontrols"; //<< CAUSES ERROR
-import GlobalControls from "./components/globalcontrols"; // << CAUSES ERROR
-import { LoadingSpinner } from "./components/loadingspinner"; // NO ERROR (fixed)
-import { LoadingScreenError } from "./components/loadingerrorscreen"; // << NO ERROR
-import { Header } from "./components/header"; // << NO ERROR
-import ResultsTable from "./components/resultstable"; // << NO ERROR (fixed)
+import * as api from "./apicalls";
+
+import PlotContainer from "./components/plots/plotcontainer";
+import CaseControls from "./components/casecontrols";
+import GlobalControls from "./components/globalcontrols";
+import { LoadingSpinner } from "./components/loadingspinner";
+import { LoadingScreenError } from "./components/loadingerrorscreen";
+import { Header } from "./components/header";
+import ResultsTable from "./components/resultstable";
+import InputForm from "./components/inputform";
 
 const theme = createTheme({
   palette: {
@@ -112,37 +113,39 @@ const App = (props) => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <div className={classes.main}>
-          <LoadingSpinner isLoading={isLoading} />
-          <div className={classes.header}>
-            <Header />
-          </div>
-          <div className={classes.topMain}>
-            <div className={classes.topLeft}>
-              <h6>Global Controls</h6>
-              <GlobalControls />
-            </div>
-            <div className={classes.topRight}>
-              {isLoadingError ? (
-                <LoadingScreenError />
-              ) : (
-                <>
-                  <ResultsTable />
-                  <PlotContainer />
-                </>
-              )}
-            </div>
-          </div>
-          <div className={classes.bottom}>
-            <div className={classes.bottomMain}>
-              <CaseControls />
-            </div>
-          </div>
-        </div>
-      </div>
-    </ThemeProvider>
+
+    <InputForm />
+    // <ThemeProvider theme={theme}>
+    //   <div className={classes.root}>
+    //     <div className={classes.main}>
+    //       <LoadingSpinner isLoading={isLoading} />
+    //       <div className={classes.header}>
+    //         <Header />
+    //       </div>
+    //       <div className={classes.topMain}>
+    //         <div className={classes.topLeft}>
+    //           <h6>Global Controls</h6>
+    //           <GlobalControls />
+    //         </div>
+    //         <div className={classes.topRight}>
+    //           {isLoadingError ? (
+    //             <LoadingScreenError />
+    //           ) : (
+    //             <>
+    //               <ResultsTable />
+    //               <PlotContainer />
+    //             </>
+    //           )}
+    //         </div>
+    //       </div>
+    //       <div className={classes.bottom}>
+    //         <div className={classes.bottomMain}>
+    //           <CaseControls />
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </ThemeProvider>
   );
 };
 
