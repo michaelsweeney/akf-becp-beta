@@ -202,7 +202,7 @@ const CaseControls = (props) => {
                       onChange={(e) => {
                         handleChangeHeatingTemplate(i, e.target.value);
                       }}
-                      value={c.starting_template}
+                      value={c.hvac_template}
                     >
                       {templates.map((e, i) => {
                         return (
