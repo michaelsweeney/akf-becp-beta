@@ -160,7 +160,7 @@ const GlobalControls = (props) => {
 
 const mapStateToProps = (store) => {
   return {
-    case_inputs: store.case_inputs.case_inputs,
+    case_inputs: store.case_inputs,
     plot_config: store.plot_config,
   };
 };

@@ -15,7 +15,7 @@ import * as api from "./apicalls";
 // import { Header } from "./components/header";
 // import ResultsTable from "./components/resultstable";
 
-import InputForm from "./components/inputform";
+import InputContainer from "./components/inputcontainer";
 
 const theme = createTheme({
   palette: {
@@ -114,18 +114,15 @@ const App = (props) => {
   }, []);
 
   return (
-
     <ThemeProvider theme={theme}>
-
-      <InputForm />
-
+      <InputContainer />
     </ThemeProvider>
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    case_inputs: store.case_inputs.case_inputs,
+    case_inputs: store.case_inputs,
   };
 };
 

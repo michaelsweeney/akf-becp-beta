@@ -271,7 +271,7 @@ const CaseControls = (props) => {
 
 const mapStateToProps = (store) => {
   return {
-    case_inputs: store.case_inputs.case_inputs,
+    case_inputs: store.case_inputs,
     icon_array_displayed: store.case_outputs.icon_array_displayed,
   };
 };
