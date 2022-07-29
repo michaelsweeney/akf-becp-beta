@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { conn } from "./store/connect";
+import { RootState } from "./store/configureStore";
 
 import { makeStyles } from "@material-ui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import * as api from "./apicalls";
 
-// import PlotContainer from "./components/plots/plotcontainer";
-// import CaseControls from "./components/casecontrols";
-// import GlobalControls from "./components/globalcontrols";
-// import { LoadingSpinner } from "./components/loadingspinner";
-// import { LoadingScreenError } from "./components/loadingerrorscreen";
-// import { Header } from "./components/header";
-// import ResultsTable from "./components/resultstable";
-
 import InputContainer from "./components/inputcontainer";
+
+import {
+  InputCaseInputTypes,
+  InputCaseAreaTypes,
+  OutputStateTypes,
+} from "./store/statetypes";
 
 const theme = createTheme({
   palette: {
@@ -86,7 +85,7 @@ const useStyles = makeStyles({
   },
 });
 
-const App = (props) => {
+const App = (props: { case_inputs: OutputStateTypes[] }) => {
   const classes = useStyles();
   let { case_inputs } = props;
 
@@ -102,17 +101,6 @@ const App = (props) => {
     updateResults();
   }, []);
 
-  useEffect(() => {
-    const handleResize = () => {
-      props.actions.setWindowDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <InputContainer />
@@ -120,10 +108,11 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (store: RootState) => {
   return {
     case_inputs: store.case_inputs,
   };
 };
 
+//@ts-ignore
 export default conn(mapStateToProps)(App);

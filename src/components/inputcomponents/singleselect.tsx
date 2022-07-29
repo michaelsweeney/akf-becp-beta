@@ -1,4 +1,5 @@
-import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
+import { MenuItem, Select, FormControl } from "@mui/material";
 
 import { makeStyles } from "@material-ui/styles";
 
@@ -12,15 +13,15 @@ const useStyles = makeStyles({
   },
 });
 
-const SingleSelect = (props) => {
-  const {
-    id,
-    label,
-    value,
-    callback,
-    optionvalues,
-    optiontitles = optionvalues,
-  } = props;
+type Props = {
+  value: string;
+  callback: (d: SelectChangeEvent) => void;
+  optionvalues: string[];
+  optiontitles?: string[];
+};
+
+const SingleSelect = (props: Props) => {
+  const { value, callback, optionvalues, optiontitles = optionvalues } = props;
   const classes = useStyles();
 
   return (

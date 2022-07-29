@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react"; // << NO ERROR
+import React, { useEffect, useState } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { conn } from "../store/connect"; // << NO ERROR
+import { Button } from "@mui/material";
+import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
 
 import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
 import * as lookups from "../lookups";
+import * as types from "../store/statetypes";
+
+import { RootState } from "../store/configureStore";
 
 const {
   states,
@@ -23,6 +26,24 @@ const {
   heating_fuels,
   hvac_templates,
 } = lookups;
+
+type Props = {
+  case_inputs: types.InputCaseInputTypes[];
+  actions: any;
+};
+
+type CaseInputParametersPayload = {
+  key: string;
+  value: string;
+  case_id: number;
+};
+
+type CaseAreaInputParametersPayload = {
+  key: string;
+  value: string;
+  case_id: number;
+  area_id: number;
+};
 
 const useStyles = makeStyles({
   root: {},
@@ -38,7 +59,7 @@ const useStyles = makeStyles({
   },
 });
 
-const InputForm = (props) => {
+const InputForm = (props: Props) => {
   const { case_inputs } = props;
 
   const styles = {
@@ -47,14 +68,13 @@ const InputForm = (props) => {
 
   const classes = useStyles();
 
-  const handleSetCaseInputParameter = (payload) => {
-    // payload: {key, value, case_id}
+  const handleSetCaseInputParameter = (payload: CaseInputParametersPayload) => {
     props.actions.setCaseInputParameter(payload);
   };
 
-  const handleSetCaseAreaInputParameter = (payload) => {
-    // payload: {key, value, case_id, area_id}
-
+  const handleSetCaseAreaInputParameter = (
+    payload: CaseAreaInputParametersPayload
+  ) => {
     props.actions.setCaseAreaInputParameter(payload);
   };
 
@@ -63,11 +83,32 @@ const InputForm = (props) => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell variant="head" rowSpan={5} sx={styles.sxRotate}>
+            <TableCell variant="head" rowSpan={6} sx={styles.sxRotate}>
               GLOBAL
             </TableCell>
+            <TableCell variant="head"></TableCell>
+            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => {
+              return (
+                <TableCell key={i}>
+                  {i == 0 ? (
+                    ""
+                  ) : (
+                    <Button variant="outlined" size="small" color="secondary">
+                      remove case
+                    </Button>
+                  )}
+                </TableCell>
+              );
+            })}
+            <TableCell>
+              <Button variant="contained" size="small">
+                Add Case
+              </Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
             <TableCell variant="head">CASE NAME</TableCell>
-            {case_inputs.map((e, i) => (
+            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
               <TableCell key={i}>
                 <FocusInput
                   inputType="string"
@@ -85,11 +126,9 @@ const InputForm = (props) => {
           </TableRow>
           <TableRow>
             <TableCell variant="head">STATE</TableCell>
-            {case_inputs.map((e, i) => (
+            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
-                  id={i}
-                  label="State"
                   value={e.location_state}
                   callback={(c) =>
                     handleSetCaseInputParameter({
@@ -105,11 +144,9 @@ const InputForm = (props) => {
           </TableRow>
           <TableRow>
             <TableCell variant="head">CLIMATE ZONE</TableCell>
-            {case_inputs.map((e, i) => (
+            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
-                  id={i}
-                  label="Climate Zone"
                   value={e.climate_zone}
                   callback={(c) =>
                     handleSetCaseInputParameter({
@@ -126,11 +163,9 @@ const InputForm = (props) => {
 
           <TableRow>
             <TableCell variant="head">PROJECTION CASE</TableCell>
-            {case_inputs.map((e, i) => (
+            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
-                  id={i}
-                  label="Projection Case"
                   value={e.projection_case}
                   callback={(c) =>
                     handleSetCaseInputParameter({
@@ -147,11 +182,9 @@ const InputForm = (props) => {
 
           <TableRow>
             <TableCell variant="head">HVAC Template</TableCell>
-            {case_inputs.map((e, i) => (
+            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
-                  id={i}
-                  label="HVAC Template"
                   value={e.hvac_template}
                   callback={(c) =>
                     handleSetCaseInputParameter({
@@ -160,33 +193,43 @@ const InputForm = (props) => {
                       key: "hvac_template",
                     })
                   }
-                  optionvalues={hvac_templates.map((d) => d.tag)}
-                  optiontitles={hvac_templates.map((d) => d.case_name)}
+                  optionvalues={hvac_templates.map(
+                    (d: types.HvacTemplate) => d.tag
+                  )}
+                  optiontitles={hvac_templates.map(
+                    (d: types.HvacTemplate) => d.case_name
+                  )}
                 />
               </TableCell>
             ))}
           </TableRow>
 
           {case_inputs[0].design_areas
-            .map((d) => d.area_id)
-            .map((id) => {
+            .map((d: types.InputCaseAreaTypes) => d.area_id)
+            .map((id: number) => {
               let area_case = case_inputs.map(
-                (d) => d.design_areas.filter((e) => e.area_id == id)[0]
+                (d: types.InputCaseInputTypes) =>
+                  d.design_areas.filter(
+                    (e: types.InputCaseAreaTypes) => e.area_id === id
+                  )[0]
               );
-              let case_ids = case_inputs.map((d) => d.case_id);
+              let case_ids = case_inputs.map(
+                (d: types.InputCaseInputTypes) => d.case_id
+              );
 
               return (
                 <React.Fragment key={id}>
                   <TableRow>
                     <TableCell variant="head" rowSpan={7} sx={styles.sxRotate}>
-                      AREA TYPE {id + 1}
+                      <Button size="small" color="secondary">
+                        x
+                      </Button>
+                      AREA TYPE {id + 1}{" "}
                     </TableCell>
                     <TableCell variant="head">Building Type</TableCell>
-                    {area_case.map((d, i) => (
+                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
-                          id={i}
-                          label="Building Type"
                           value={d.building_type}
                           callback={(c) =>
                             handleSetCaseAreaInputParameter({
@@ -204,7 +247,7 @@ const InputForm = (props) => {
                   <TableRow>
                     <TableCell variant="head">Area</TableCell>
 
-                    {area_case.map((d, i) => (
+                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <FocusInput
                           inputType="number"
@@ -225,11 +268,9 @@ const InputForm = (props) => {
                   <TableRow>
                     <TableCell variant="head">ASHRAE Standard</TableCell>
 
-                    {area_case.map((d, i) => (
+                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
-                          id={i}
-                          label="ASHRAE Standard"
                           value={d.ashrae_standard}
                           callback={(c) =>
                             handleSetCaseAreaInputParameter({
@@ -248,11 +289,9 @@ const InputForm = (props) => {
                   <TableRow>
                     <TableCell variant="head">Heating Fuel</TableCell>
 
-                    {area_case.map((d, i) => (
+                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
-                          id={i}
-                          label="Heating Fuel"
                           value={d.heating_fuel}
                           callback={(c) =>
                             handleSetCaseAreaInputParameter({
@@ -271,7 +310,7 @@ const InputForm = (props) => {
                   <TableRow>
                     <TableCell variant="head">Heating COP</TableCell>
 
-                    {area_case.map((d, i) => (
+                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <FocusInput
                           inputType="number"
@@ -291,11 +330,9 @@ const InputForm = (props) => {
                   <TableRow>
                     <TableCell variant="head">DHW Fuel</TableCell>
 
-                    {area_case.map((d, i) => (
+                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
-                          id={i}
-                          label="DHW Fuel"
                           value={d.dhw_fuel}
                           callback={(c) =>
                             handleSetCaseAreaInputParameter({
@@ -314,7 +351,7 @@ const InputForm = (props) => {
                   <TableRow>
                     <TableCell variant="head">DHW COP</TableCell>
 
-                    {area_case.map((d, i) => (
+                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <FocusInput
                           inputType="number"
@@ -334,18 +371,28 @@ const InputForm = (props) => {
                 </React.Fragment>
               );
             })}
+
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+
+            <TableCell colSpan={case_inputs.length}>
+              <Button variant="contained" size="small">
+                Add Area Type
+              </Button>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
   );
 };
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (store: RootState) => {
   return {
-    isLoadingError: store.case_outputs.isLoadingError,
     case_inputs: store.case_inputs,
-    isLoading: store.ui.isLoading,
   };
 };
 
+//@ts-ignore
 export default conn(mapStateToProps)(InputForm);

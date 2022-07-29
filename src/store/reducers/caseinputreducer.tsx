@@ -1,7 +1,13 @@
 import produce from "immer";
 import { current } from "immer";
 
-const initialState = [
+import {
+  InputCaseAreaTypes,
+  InputCaseInputTypes,
+  ActionPayload,
+} from "../statetypes";
+
+const initialState: InputCaseInputTypes[] = [
   {
     case_id: 0,
     is_displayed: true,
@@ -100,7 +106,10 @@ const initialState = [
   },
 ];
 
-export default function buildingReducer(state = initialState, action) {
+export default function buildingReducer(
+  state = initialState,
+  action: ActionPayload
+) {
   switch (action.type) {
     case "SET_CASE_INPUTS": {
       return [...action.payload];
@@ -108,20 +117,33 @@ export default function buildingReducer(state = initialState, action) {
 
     case "SET_CASE_INPUT_PARAMETER": {
       let { case_id, key, value } = action.payload;
-      let new_state = produce(state, (draft) => {
-        let selection = draft.find((d) => d.case_id === case_id);
-        selection[key] = value;
-      });
+      let new_state: InputCaseInputTypes[] = produce(
+        state,
+        (draft: InputCaseInputTypes[]) => {
+          let selection = draft.find(
+            (d: InputCaseInputTypes) => d.case_id === case_id
+          );
+
+          //@ts-ignore
+          selection[key] = value;
+        }
+      );
       return [...new_state];
     }
 
     case "SET_CASE_AREA_INPUT_PARAMETER": {
       let { case_id, area_id, key, value } = action.payload;
-      let new_state = produce(state, (draft) => {
-        let case_selection = draft.find((d) => d.case_id === case_id);
-        let area_selection = case_selection.design_areas.find(
-          (d) => d.area_id == area_id
+      let new_state = produce(state, (draft: InputCaseInputTypes[]) => {
+        let case_selection = draft.find(
+          (d: InputCaseInputTypes) => d.case_id === case_id
         );
+
+        //@ts-ignore
+        let area_selection = case_selection.design_areas.find(
+          (d: InputCaseAreaTypes) => d.area_id == area_id
+        );
+
+        //@ts-ignore
         area_selection[key] = value;
       });
       return [...new_state];

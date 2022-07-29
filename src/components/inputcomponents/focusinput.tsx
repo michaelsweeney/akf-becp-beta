@@ -2,20 +2,23 @@ import { useEffect, useState } from "react";
 
 import { Input, FormControl } from "@mui/material";
 
+type Props = {
+  value: string | number;
+  callback: (d: string) => void;
+  inputType: string;
+};
 
-
-
-const FocusInput = (props) => {
+const FocusInput = (props: Props) => {
   const { callback, value, inputType } = props;
 
   let [inputValue, setInputValue] = useState(value);
 
-  const handleInput = (v) => {
+  const handleInput = (v: string) => {
     setInputValue(v);
   };
 
   useEffect(() => {
-    if (value != inputValue) {
+    if (value !== inputValue) {
       setInputValue(value);
     }
   }, [value]);
@@ -23,9 +26,9 @@ const FocusInput = (props) => {
   return (
     <FormControl size="small" fullWidth>
       <Input
-        sx={{ paddingLeft: 1, }}
+        sx={{ paddingLeft: 1 }}
         type={inputType}
-        onFocus={(e) => { }}
+        onFocus={(e) => {}}
         onChange={(e) => {
           handleInput(e.target.value);
         }}
@@ -35,8 +38,6 @@ const FocusInput = (props) => {
         value={inputValue}
       />
     </FormControl>
-
-
   );
 };
 export { FocusInput };

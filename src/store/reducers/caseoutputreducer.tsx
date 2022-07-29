@@ -1,24 +1,30 @@
-const initialState = {
+import { OutputStateTypes, ActionPayload } from "../statetypes";
+
+// todo .api work should go here: each of these should be specifically typed.
+const initialState: OutputStateTypes = {
   case_results: [],
   case_comparison_displayed: [],
   case_results_displayed: [],
   icon_array_displayed: [],
-  isLoadingError: false,
+  is_loading_error: false,
 };
 
-export default function buildingReducer(state = initialState, action) {
+export default function buildingReducer(
+  state = initialState,
+  action: ActionPayload
+) {
   switch (action.type) {
     case "SET_CASE_RESULTS": {
       if (action.payload === false) {
         return {
           ...state,
-          isLoadingError: true,
+          is_loading_error: true,
         };
       } else {
         return {
           ...state,
           ...action.payload,
-          isLoadingError: false,
+          is_loading_error: false,
         };
       }
     }

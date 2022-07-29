@@ -111,14 +111,12 @@ const GlobalControls = (props) => {
     <div>
       <SingleSelect
         optionvalues={building_types}
-        id="building-type-selector"
         value={building_type}
         label="Reference Building Type"
         callback={handleBuildingTypeCallback}
       />
       <SingleSelect
         optionvalues={states}
-        id="state-selector"
         value={state}
         label="State"
         callback={handleStateCallback}
@@ -126,14 +124,12 @@ const GlobalControls = (props) => {
 
       <SingleSelect
         optionvalues={climate_zones}
-        id="climate-zone-case-selector"
         value={climate_zone}
         label="Climate Zone"
         callback={handleClimateZoneCallback}
       />
       <SingleSelect
         optionvalues={ashrae_standards}
-        id="ashrae-standard-case-selector"
         value={fake_ashrae_standard}
         label="ASHRAE Standards"
         callback={handleASHRAEStandardCallback}
@@ -141,13 +137,11 @@ const GlobalControls = (props) => {
 
       <SingleSelect
         optionvalues={coefficient_cases}
-        id="cambium-case-selector"
         value={projection_case}
         label="Elec-GHG Coefficient Case"
         callback={handleCambiumCaseCallback}
       />
       <SingleSelect
-        id="threshold-type-selector"
         label="Threshold Overlay"
         callback={handleThresholdTypeSelector}
         value={plot_config.thresholdView}
