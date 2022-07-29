@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState, AppThunk } from ".";
-import { OutputStateTypes, ActionPayload } from "./statetypes";
+import { OutputStateTypes } from "./statetypes";
 
-export interface OutputState {
+export interface OutputStateTypes {
   case_results: any[];
   case_comparison_displayed: any[];
   case_results_displayed: any[];
@@ -11,7 +11,7 @@ export interface OutputState {
   is_loading_error: boolean;
 }
 
-const initialState: OutputState = {
+const initialState: OutputStateTypes = {
   case_results: [],
   case_comparison_displayed: [],
   case_results_displayed: [],
@@ -35,7 +35,7 @@ export const caseOutputSlice = createSlice({
       }
     },
 
-    setIsLoadingError: (state, action: any) => {
+    setIsLoadingError: (state, action: PayloadAction<boolean>) => {
       state.is_loading_error = action.payload;
     },
   },

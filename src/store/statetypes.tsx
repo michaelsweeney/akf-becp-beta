@@ -29,11 +29,6 @@ export type OutputStateTypes = {
   is_loading_error: boolean;
 };
 
-export type ActionPayload = {
-  type: string;
-  payload: any;
-};
-
 export type HvacTemplate = {
   tag: string;
   case_name: string;

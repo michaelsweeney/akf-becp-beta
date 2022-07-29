@@ -1,11 +1,7 @@
 import produce from "immer";
 import { current } from "immer";
 
-import {
-  InputCaseAreaTypes,
-  InputCaseInputTypes,
-  ActionPayload,
-} from "./statetypes";
+import { InputCaseAreaTypes, InputCaseInputTypes } from "./statetypes";
 
 const initialState: InputCaseInputTypes[] = [
   {
