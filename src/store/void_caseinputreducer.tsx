@@ -5,7 +5,7 @@ import {
   InputCaseAreaTypes,
   InputCaseInputTypes,
   ActionPayload,
-} from "../statetypes";
+} from "./statetypes";
 
 const initialState: InputCaseInputTypes[] = [
   {

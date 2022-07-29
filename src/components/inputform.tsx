@@ -6,7 +6,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
-import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
 
 import { SingleSelect } from "./inputcomponents/singleselect";
@@ -14,8 +13,6 @@ import { FocusInput } from "./inputcomponents/focusinput";
 
 import * as lookups from "../lookups";
 import * as types from "../store/statetypes";
-
-import { RootState } from "../store/configureStore";
 
 const {
   states,
@@ -388,11 +385,4 @@ const InputForm = (props: Props) => {
   );
 };
 
-const mapStateToProps = (store: RootState) => {
-  return {
-    case_inputs: store.case_inputs,
-  };
-};
-
-//@ts-ignore
-export default conn(mapStateToProps)(InputForm);
+export default InputForm;

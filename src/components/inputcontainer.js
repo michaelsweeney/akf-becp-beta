@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"; // << NO ERROR
-import { conn } from "../store/connect"; // << NO ERROR
 import { Button } from "@mui/material";
 import InputForm from "./inputform";
 
@@ -22,10 +21,4 @@ const InputContainer = (props) => {
   );
 };
 
-const mapStateToProps = (store) => {
-  return {
-    case_inputs: store.case_inputs,
-  };
-};
-
-export default conn(mapStateToProps)(InputContainer);
+export default InputContainer;
