@@ -1,4 +1,4 @@
-export interface InputAreaTypes  {
+export type InputAreaTypes  ={
   area_id: number;
   building_type: string;
   area: number;
@@ -9,7 +9,7 @@ export interface InputAreaTypes  {
   ashrae_standard: string;
 };
 
-export interface InputCaseTypes {
+export type InputCaseTypes = {
   case_id: number;
   is_displayed: boolean;
   is_base_case: boolean;
@@ -21,7 +21,7 @@ export interface InputCaseTypes {
   design_areas: InputAreaTypes[];
 };
 
-export interface OutputStateTypes  {
+export type OutputStateTypes =  {
   case_results: any[];
   case_comparison_displayed: any[];
   case_results_displayed: any[];
@@ -29,7 +29,7 @@ export interface OutputStateTypes  {
   is_loading_error: boolean;
 };
 
-export interface HvacTemplate {
+export type HvacTemplate ={
   tag: string;
   case_name: string;
   heating_fuel: string;
