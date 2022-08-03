@@ -1,15 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState, AppThunk } from ".";
-import { OutputStateTypes } from "./statetypes";
-
-export interface OutputStateTypes {
-  case_results: any[];
-  case_comparison_displayed: any[];
-  case_results_displayed: any[];
-  icon_array_displayed: any[];
-  is_loading_error: boolean;
-}
+import { OutputStateTypes } from "./types";
 
 const initialState: OutputStateTypes = {
   case_results: [],

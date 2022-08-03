@@ -1,12 +1,14 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 import caseOutputSlice from "./caseoutputslice";
+import caseInputSlice from "./caseinputslice";
 
 // ...
 
 export const store = configureStore({
   reducer: {
     outputs: caseOutputSlice,
+    inputs: caseInputSlice,
   },
 });
 

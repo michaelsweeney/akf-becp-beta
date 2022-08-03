@@ -1,4 +1,4 @@
-import { HvacTemplate } from "./store/statetypes";
+import { HvacTemplate } from "./store/types";
 
 export const states: string[] = [
   "AL",

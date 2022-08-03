@@ -12,7 +12,7 @@ import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
 import * as lookups from "../lookups";
-import * as types from "../store/statetypes";
+import * as types from "../store/types";
 
 const {
   states,
@@ -25,7 +25,7 @@ const {
 } = lookups;
 
 type Props = {
-  case_inputs: types.InputCaseInputTypes[];
+  case_inputs: types.InputCaseTypes[];
   actions: any;
 };
 
@@ -84,7 +84,7 @@ const InputForm = (props: Props) => {
               GLOBAL
             </TableCell>
             <TableCell variant="head"></TableCell>
-            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => {
+            {case_inputs.map((e: types.InputCaseTypes, i: number) => {
               return (
                 <TableCell key={i}>
                   {i == 0 ? (
@@ -105,7 +105,7 @@ const InputForm = (props: Props) => {
           </TableRow>
           <TableRow>
             <TableCell variant="head">CASE NAME</TableCell>
-            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
+            {case_inputs.map((e: types.InputCaseTypes, i: number) => (
               <TableCell key={i}>
                 <FocusInput
                   inputType="string"
@@ -123,7 +123,7 @@ const InputForm = (props: Props) => {
           </TableRow>
           <TableRow>
             <TableCell variant="head">STATE</TableCell>
-            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
+            {case_inputs.map((e: types.InputCaseTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
                   value={e.location_state}
@@ -141,7 +141,7 @@ const InputForm = (props: Props) => {
           </TableRow>
           <TableRow>
             <TableCell variant="head">CLIMATE ZONE</TableCell>
-            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
+            {case_inputs.map((e: types.InputCaseTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
                   value={e.climate_zone}
@@ -160,7 +160,7 @@ const InputForm = (props: Props) => {
 
           <TableRow>
             <TableCell variant="head">PROJECTION CASE</TableCell>
-            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
+            {case_inputs.map((e: types.InputCaseTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
                   value={e.projection_case}
@@ -179,7 +179,7 @@ const InputForm = (props: Props) => {
 
           <TableRow>
             <TableCell variant="head">HVAC Template</TableCell>
-            {case_inputs.map((e: types.InputCaseInputTypes, i: number) => (
+            {case_inputs.map((e: types.InputCaseTypes, i: number) => (
               <TableCell key={i}>
                 <SingleSelect
                   value={e.hvac_template}
@@ -202,16 +202,16 @@ const InputForm = (props: Props) => {
           </TableRow>
 
           {case_inputs[0].design_areas
-            .map((d: types.InputCaseAreaTypes) => d.area_id)
+            .map((d: types.InputAreaTypes) => d.area_id)
             .map((id: number) => {
               let area_case = case_inputs.map(
-                (d: types.InputCaseInputTypes) =>
+                (d: types.InputCaseTypes) =>
                   d.design_areas.filter(
-                    (e: types.InputCaseAreaTypes) => e.area_id === id
+                    (e: types.InputAreaTypes) => e.area_id === id
                   )[0]
               );
               let case_ids = case_inputs.map(
-                (d: types.InputCaseInputTypes) => d.case_id
+                (d: types.InputCaseTypes) => d.case_id
               );
 
               return (
@@ -224,7 +224,7 @@ const InputForm = (props: Props) => {
                       AREA TYPE {id + 1}{" "}
                     </TableCell>
                     <TableCell variant="head">Building Type</TableCell>
-                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
+                    {area_case.map((d: types.InputAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
                           value={d.building_type}
@@ -244,7 +244,7 @@ const InputForm = (props: Props) => {
                   <TableRow>
                     <TableCell variant="head">Area</TableCell>
 
-                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
+                    {area_case.map((d: types.InputAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <FocusInput
                           inputType="number"
@@ -265,7 +265,7 @@ const InputForm = (props: Props) => {
                   <TableRow>
                     <TableCell variant="head">ASHRAE Standard</TableCell>
 
-                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
+                    {area_case.map((d: types.InputAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
                           value={d.ashrae_standard}
@@ -286,7 +286,7 @@ const InputForm = (props: Props) => {
                   <TableRow>
                     <TableCell variant="head">Heating Fuel</TableCell>
 
-                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
+                    {area_case.map((d: types.InputAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
                           value={d.heating_fuel}
@@ -307,7 +307,7 @@ const InputForm = (props: Props) => {
                   <TableRow>
                     <TableCell variant="head">Heating COP</TableCell>
 
-                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
+                    {area_case.map((d: types.InputAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <FocusInput
                           inputType="number"
@@ -327,7 +327,7 @@ const InputForm = (props: Props) => {
                   <TableRow>
                     <TableCell variant="head">DHW Fuel</TableCell>
 
-                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
+                    {area_case.map((d: types.InputAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <SingleSelect
                           value={d.dhw_fuel}
@@ -348,7 +348,7 @@ const InputForm = (props: Props) => {
                   <TableRow>
                     <TableCell variant="head">DHW COP</TableCell>
 
-                    {area_case.map((d: types.InputCaseAreaTypes, i: number) => (
+                    {area_case.map((d: types.InputAreaTypes, i: number) => (
                       <TableCell key={i}>
                         <FocusInput
                           inputType="number"
