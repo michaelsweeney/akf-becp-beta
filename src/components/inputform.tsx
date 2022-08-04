@@ -34,7 +34,7 @@ const {
 const useStyles = makeStyles({
   root: {},
   tableContainer: {
-    // width: 1200,
+    width: 1200,
     padding: 50,
     "& .MuiTableCell-head": {
       fontWeight: 700,
