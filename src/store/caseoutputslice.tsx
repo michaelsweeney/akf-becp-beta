@@ -1,9 +1,8 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { RootState, AppThunk } from ".";
-import { OutputStateTypes } from "./types";
+import * as types from "types";
 
-const initialState: OutputStateTypes = {
+const initialState: types.OutputStateTypes = {
   case_results: [],
   case_comparison_displayed: [],
   case_results_displayed: [],
@@ -15,16 +14,19 @@ export const caseOutputSlice = createSlice({
   name: "case_outputs",
   initialState: initialState,
   reducers: {
-    setCaseResults: (state, action: any) => {
-      if (action.payload === false) {
-        state.is_loading_error = true;
-      } else {
-        state.case_results = action.case_results;
-        state.case_comparison_displayed = action.case_comparison_displayed;
-        state.case_results_displayed = action.case_results_displayed;
-        state.icon_array_displayed = action.icon_array_displayed;
-        state.is_loading_error = false;
-      }
+    setCaseResults: (state, action: PayloadAction<types.OutputStateTypes>) => {
+      let {
+        case_results,
+        case_comparison_displayed,
+        case_results_displayed,
+        icon_array_displayed,
+      } = action.payload;
+
+      state.case_results = case_results;
+      state.case_comparison_displayed = case_comparison_displayed;
+      state.case_results_displayed = case_results_displayed;
+      state.icon_array_displayed = icon_array_displayed;
+      state.is_loading_error = false;
     },
 
     setIsLoadingError: (state, action: PayloadAction<boolean>) => {
@@ -34,8 +36,5 @@ export const caseOutputSlice = createSlice({
 });
 
 export const { setCaseResults, setIsLoadingError } = caseOutputSlice.actions;
-
-export const select_is_loading_error = (state: RootState) =>
-  state.outputs.is_loading_error;
 
 export default caseOutputSlice.reducer;

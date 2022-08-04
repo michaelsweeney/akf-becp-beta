@@ -1,4 +1,4 @@
-export type InputAreaTypes  ={
+export type InputAreaTypes = {
   area_id: number;
   building_type: string;
   area: number;
@@ -21,7 +21,7 @@ export type InputCaseTypes = {
   design_areas: InputAreaTypes[];
 };
 
-export type OutputStateTypes =  {
+export type OutputStateTypes = {
   case_results: any[];
   case_comparison_displayed: any[];
   case_results_displayed: any[];
@@ -29,13 +29,22 @@ export type OutputStateTypes =  {
   is_loading_error: boolean;
 };
 
-export type HvacTemplate ={
+export type HvacTemplate = {
   tag: string;
   case_name: string;
   heating_fuel: string;
   heating_cop: string | number;
 };
 
+export type CaseInputParametersPayload = {
+  key: string;
+  value: string;
+  case_id: number;
+};
 
-
-
+export type CaseAreaInputParametersPayload = {
+  key: string;
+  value: string;
+  case_id: number;
+  area_id: number;
+};

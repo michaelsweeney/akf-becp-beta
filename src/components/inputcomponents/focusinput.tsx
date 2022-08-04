@@ -21,7 +21,7 @@ const FocusInput = (props: Props) => {
     if (value !== inputValue) {
       setInputValue(value);
     }
-  }, [value]);
+  }, [value, inputValue]);
 
   return (
     <FormControl size="small" fullWidth>

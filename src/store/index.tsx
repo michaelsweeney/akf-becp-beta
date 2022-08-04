@@ -7,8 +7,8 @@ import caseInputSlice from "./caseinputslice";
 
 export const store = configureStore({
   reducer: {
-    outputs: caseOutputSlice,
-    inputs: caseInputSlice,
+    case_outputs: caseOutputSlice,
+    case_inputs: caseInputSlice,
   },
 });
 
