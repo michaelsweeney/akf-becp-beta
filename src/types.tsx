@@ -38,13 +38,13 @@ export type HvacTemplate = {
 
 export type CaseInputParametersPayload = {
   key: string;
-  value: string;
+  value: string | number | boolean;
   case_id: number;
 };
 
 export type CaseAreaInputParametersPayload = {
   key: string;
-  value: string;
+  value: string | number | boolean;
   case_id: number;
   area_id: number;
 };

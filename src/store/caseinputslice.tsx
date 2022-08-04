@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { current } from "@reduxjs/toolkit";
 
 import * as types from "types";
 
@@ -114,11 +115,10 @@ export const caseInputSlice = createSlice({
     ) => {
       let { case_id, key, value } = action.payload;
 
-      let selection = state.find(
-        (d: types.InputCaseTypes) => d.case_id === case_id
-      );
+      let selection = state.find((d) => d.case_id === case_id);
       //@ts-ignore
-      selection[key] = value;
+      selection[key as keyof typeof selection] = value;
+      return state;
     },
     setCaseAreaInputParameter: (
       state,
@@ -126,16 +126,26 @@ export const caseInputSlice = createSlice({
     ) => {
       let { case_id, area_id, key, value } = action.payload;
 
-      let case_selection = state.find(
+      let case_selection: types.InputCaseTypes | undefined = state.find(
         (d: types.InputCaseTypes) => d.case_id === case_id
       );
 
+      if (case_selection) {
+        let area_selection: types.InputAreaTypes | undefined =
+          case_selection.design_areas.find(
+            (d: types.InputAreaTypes) => d.area_id === area_id
+          );
+
+        //@ts-ignore
+        area_selection[key as keyof typeof area_selection] = value;
+      }
+    },
+    addCase: (state) => {
+      let to_copy = { ...state[0] };
+
+      to_copy.case_id = state.length;
       //@ts-ignore
-      let area_selection = case_selection.design_areas.find(
-        (d: types.InputAreaTypes) => d.area_id === area_id
-      );
-      //@ts-ignore
-      area_selection[key] = value;
+      state.push(to_copy);
     },
   },
 });
@@ -144,6 +154,7 @@ export const {
   setCaseInputs,
   setCaseInputParameter,
   setCaseAreaInputParameter,
+  addCase,
 } = caseInputSlice.actions;
 
 export default caseInputSlice.reducer;

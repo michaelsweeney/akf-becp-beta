@@ -14,6 +14,7 @@ import { FocusInput } from "./inputcomponents/focusinput";
 import {
   setCaseAreaInputParameter,
   setCaseInputParameter,
+  addCase,
 } from "store/caseinputslice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import * as types from "types";
@@ -33,7 +34,7 @@ const {
 const useStyles = makeStyles({
   root: {},
   tableContainer: {
-    width: 1200,
+    // width: 1200,
     padding: 50,
     "& .MuiTableCell-head": {
       fontWeight: 700,
@@ -66,6 +67,10 @@ const InputForm = () => {
     dispatch(setCaseAreaInputParameter(payload));
   };
 
+  const handleAddCase = () => {
+    dispatch(addCase());
+  };
+
   return (
     <div className={classes.root}>
       <TableContainer>
@@ -90,7 +95,11 @@ const InputForm = () => {
                 );
               })}
               <TableCell>
-                <Button variant="contained" size="small">
+                <Button
+                  onClick={() => handleAddCase()}
+                  variant="contained"
+                  size="small"
+                >
                   Add Case
                 </Button>
               </TableCell>
