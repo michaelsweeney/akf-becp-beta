@@ -48,3 +48,5 @@ export type CaseAreaInputParametersPayload = {
   case_id: number;
   area_id: number;
 };
+
+

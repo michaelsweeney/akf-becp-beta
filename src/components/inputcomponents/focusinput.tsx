@@ -1,27 +1,19 @@
 import { useEffect, useState } from "react";
-
+import React from "react";
 import { Input, FormControl } from "@mui/material";
 
 type Props = {
   value: string | number;
-  callback: (d: string) => void;
+  callback: (d: string | number) => void;
   inputType: string;
 };
 
 const FocusInput = (props: Props) => {
   const { callback, value, inputType } = props;
 
-  let [inputValue, setInputValue] = useState(value);
-
-  const handleInput = (v: string) => {
-    setInputValue(v);
+  const handleInput = (v: string | number) => {
+    callback(v)
   };
-
-  useEffect(() => {
-    if (value !== inputValue) {
-      setInputValue(value);
-    }
-  }, [value, inputValue]);
 
   return (
     <FormControl size="small" fullWidth>
@@ -29,13 +21,11 @@ const FocusInput = (props: Props) => {
         sx={{ paddingLeft: 1 }}
         type={inputType}
         onFocus={(e) => {}}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput(e.target.value);
         }}
-        onBlur={(e) => {
-          callback(e.target.value);
-        }}
-        value={inputValue}
+
+        value={value}
       />
     </FormControl>
   );

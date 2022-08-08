@@ -126,14 +126,14 @@ export const caseInputSlice = createSlice({
     ) => {
       let { case_id, area_id, key, value } = action.payload;
 
-      let case_selection: types.InputCaseTypes | undefined = state.find(
-        (d: types.InputCaseTypes) => d.case_id === case_id
+      let case_selection = state.find(
+        (d) => d.case_id === case_id
       );
 
       if (case_selection) {
-        let area_selection: types.InputAreaTypes | undefined =
+        let area_selection=
           case_selection.design_areas.find(
-            (d: types.InputAreaTypes) => d.area_id === area_id
+            (d) => d.area_id === area_id
           );
 
         //@ts-ignore
@@ -141,12 +141,47 @@ export const caseInputSlice = createSlice({
       }
     },
     addCase: (state) => {
-      let to_copy = { ...state[0] };
-
-      to_copy.case_id = state.length;
-      //@ts-ignore
+      let ids = state.map(d => d.case_id)
+      let new_id = Math.max(...ids) + 1
+      let to_copy = { ...state[0] }; // default object to copy for a new case
+      to_copy.case_id = new_id
       state.push(to_copy);
     },
+
+    removeCase: (state, action: PayloadAction<{case_id: number}>) => {
+      let {case_id} = action.payload;
+      return state.filter(d => d.case_id !== case_id)  
+    },
+
+    addAreaType: (state) => {
+      let ids = state[0].design_areas.map(d => d.area_id)
+      let new_id = Math.max(...ids) + 1
+      
+      let to_copy = {...state[0].design_areas[0]}; // default object to copy for a new case
+      to_copy.area_id = new_id
+
+      state.forEach(c => {
+        c.design_areas.push(to_copy)
+      })
+    },
+
+    removeAreaType: (state, action: PayloadAction<{area_id: number}>)  => {
+
+      let {area_id} = action.payload;
+
+      for (let i = 0; i< state.length; i++) {
+
+        let design_areas = state[i].design_areas
+
+        let filtered_areas = design_areas.filter(d => d.area_id !== area_id)
+
+        state[i].design_areas = filtered_areas
+
+      
+      }
+
+
+    }
   },
 });
 
@@ -155,6 +190,9 @@ export const {
   setCaseInputParameter,
   setCaseAreaInputParameter,
   addCase,
+  removeCase,
+  addAreaType,
+  removeAreaType
 } = caseInputSlice.actions;
 
 export default caseInputSlice.reducer;

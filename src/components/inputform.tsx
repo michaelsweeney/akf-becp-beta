@@ -15,6 +15,9 @@ import {
   setCaseAreaInputParameter,
   setCaseInputParameter,
   addCase,
+  removeCase,
+  addAreaType,
+  removeAreaType
 } from "store/caseinputslice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import * as types from "types";
@@ -55,6 +58,7 @@ const InputForm = () => {
 
   const classes = useStyles();
 
+
   const handleSetCaseInputParameter = (
     payload: types.CaseInputParametersPayload
   ) => {
@@ -70,6 +74,20 @@ const InputForm = () => {
   const handleAddCase = () => {
     dispatch(addCase());
   };
+
+  const handleRemoveCase = (case_id: number) => {    
+    dispatch(removeCase({case_id: case_id}))
+  }
+
+
+  const handleAddAreaType = () => {
+    dispatch(addAreaType())
+  }
+
+  const handleRemoveAreaType = (area_id: number) => {
+    dispatch(removeAreaType({area_id: area_id}))
+  }
+  
 
   return (
     <div className={classes.root}>
@@ -87,7 +105,9 @@ const InputForm = () => {
                     {i === 0 ? (
                       ""
                     ) : (
-                      <Button variant="outlined" size="small" color="secondary">
+                      <Button variant="outlined" size="small" color="secondary"
+                        onClick={() => handleRemoveCase(e.case_id)}
+                      >
                         remove case
                       </Button>
                     )}
@@ -204,11 +224,11 @@ const InputForm = () => {
 
             {case_inputs[0].design_areas
               .map((d: types.InputAreaTypes) => d.area_id)
-              .map((id: number) => {
+              .map((area_id: number, i) => {
                 let area_case = case_inputs.map(
                   (d: types.InputCaseTypes) =>
                     d.design_areas.filter(
-                      (e: types.InputAreaTypes) => e.area_id === id
+                      (e: types.InputAreaTypes) => e.area_id === area_id
                     )[0]
                 );
                 let case_ids = case_inputs.map(
@@ -216,17 +236,24 @@ const InputForm = () => {
                 );
 
                 return (
-                  <React.Fragment key={id}>
+                  <React.Fragment key={area_id}>
                     <TableRow>
                       <TableCell
                         variant="head"
                         rowSpan={7}
                         sx={styles.sxRotate}
                       >
-                        <Button size="small" color="secondary">
+                    
+                    {i === 0 ? (
+                      ""
+                    ) : (
+                        <Button size="small" color="secondary"
+                        onClick={() => handleRemoveAreaType(area_id)}
+                        >
                           x
                         </Button>
-                        AREA TYPE {id + 1}{" "}
+                    )}
+                        AREA TYPE {i + 1}{" "}
                       </TableCell>
                       <TableCell variant="head">Building Type</TableCell>
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
@@ -379,7 +406,9 @@ const InputForm = () => {
               <TableCell></TableCell>
 
               <TableCell colSpan={case_inputs.length}>
-                <Button variant="contained" size="small">
+                <Button 
+                  onClick={() => handleAddAreaType()}
+                variant="contained" size="small">
                   Add Area Type
                 </Button>
               </TableCell>
