@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     case_outputs: caseOutputSlice,
     case_inputs: caseInputSlice,
-    ui_settings: uiSlice 
+    ui_settings: uiSlice,
   },
 });
 

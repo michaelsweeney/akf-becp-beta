@@ -22,10 +22,18 @@ export const UiSlice = createSlice({
   name: "ui_settings",
   initialState: initialState,
   reducers: {
-    doSomething: () => {},
+    setLinkedAttribute: (
+      state,
+      action: PayloadAction<{ key: string; bool: boolean }>
+    ) => {
+      let { key, bool } = action.payload;
+
+      let typed_key = key as keyof types.LinkedAttributeTypes;
+      state.linked_attributes[typed_key] = bool;
+    },
   },
 });
 
-export const { doSomething } = UiSlice.actions;
+export const { setLinkedAttribute } = UiSlice.actions;
 
 export default UiSlice.reducer;

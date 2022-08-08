@@ -21,6 +21,8 @@ import {
   addAreaType,
   removeAreaType,
 } from "store/caseinputslice";
+
+import { setLinkedAttribute } from "store/uislice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import * as types from "types";
 
@@ -74,8 +76,18 @@ const InputForm = () => {
     dispatch(removeAreaType({ area_id }));
   };
 
-  const handleAttributeLinkClick = (e: any) => {
-    console.log(e);
+  const handleAttributeLinkClick = (e: string) => {
+    let key = e as keyof types.LinkedAttributeTypes;
+    let current_attribute_val = linked_attributes[key];
+
+    //todo : handle logic here, via separate dispatch, to overwrite values if changing from unlinked to linked.
+
+    dispatch(
+      setLinkedAttribute({
+        key: e,
+        bool: !current_attribute_val,
+      })
+    );
   };
 
   return (
@@ -137,10 +149,13 @@ const InputForm = () => {
                 </TableCell>
               ))}
             </TableRow>
+
+            {/* -- todo try the maprow thing*/}
+
             <TableRow>
               <TableCell>
                 <AttributeLinkButton
-                  callback={handleAttributeLinkClick}
+                  callback={() => handleAttributeLinkClick("location_state")}
                   is_linked={linked_attributes.location_state}
                 />
               </TableCell>
@@ -161,10 +176,12 @@ const InputForm = () => {
                 </TableCell>
               ))}
             </TableRow>
+
+            {/* -- end todo */}
             <TableRow>
               <TableCell>
                 <AttributeLinkButton
-                  callback={handleAttributeLinkClick}
+                  callback={() => handleAttributeLinkClick("climate_zone")}
                   is_linked={linked_attributes.climate_zone}
                 />
               </TableCell>
@@ -189,7 +206,7 @@ const InputForm = () => {
             <TableRow>
               <TableCell>
                 <AttributeLinkButton
-                  callback={handleAttributeLinkClick}
+                  callback={() => handleAttributeLinkClick("projection_case")}
                   is_linked={linked_attributes.projection_case}
                 />
               </TableCell>
@@ -214,7 +231,7 @@ const InputForm = () => {
             <TableRow>
               <TableCell>
                 <AttributeLinkButton
-                  callback={handleAttributeLinkClick}
+                  callback={() => handleAttributeLinkClick("hvac_template")}
                   is_linked={linked_attributes.hvac_template}
                 />
               </TableCell>
@@ -279,7 +296,9 @@ const InputForm = () => {
                       </TableCell>
                       <TableCell>
                         <AttributeLinkButton
-                          callback={handleAttributeLinkClick}
+                          callback={() =>
+                            handleAttributeLinkClick("building_type")
+                          }
                           is_linked={linked_attributes.building_type}
                         />
                       </TableCell>
@@ -304,7 +323,9 @@ const InputForm = () => {
                     <TableRow>
                       <TableCell>
                         <AttributeLinkButton
-                          callback={handleAttributeLinkClick}
+                          callback={() =>
+                            handleAttributeLinkClick("building_area")
+                          }
                           is_linked={linked_attributes.building_area}
                         />
                       </TableCell>
@@ -333,7 +354,9 @@ const InputForm = () => {
                       <TableCell>
                         <AttributeLinkButton
                           is_linked={linked_attributes.ashrae_standard}
-                          callback={handleAttributeLinkClick}
+                          callback={() =>
+                            handleAttributeLinkClick("ashrae_standard")
+                          }
                         />
                       </TableCell>
 
@@ -360,7 +383,9 @@ const InputForm = () => {
                       <TableCell>
                         <AttributeLinkButton
                           is_linked={linked_attributes.heating_fuel}
-                          callback={handleAttributeLinkClick}
+                          callback={() =>
+                            handleAttributeLinkClick("heating_fuel")
+                          }
                         />
                       </TableCell>
 
@@ -388,7 +413,9 @@ const InputForm = () => {
                       <TableCell>
                         <AttributeLinkButton
                           is_linked={linked_attributes.heating_cop}
-                          callback={handleAttributeLinkClick}
+                          callback={() =>
+                            handleAttributeLinkClick("heating_cop")
+                          }
                         />
                       </TableCell>
                       <TableCell variant="head">Heating COP</TableCell>
@@ -413,7 +440,7 @@ const InputForm = () => {
                       <TableCell>
                         <AttributeLinkButton
                           is_linked={linked_attributes.dhw_fuel}
-                          callback={handleAttributeLinkClick}
+                          callback={() => handleAttributeLinkClick("dhw_fuel")}
                         />
                       </TableCell>
                       <TableCell variant="head">DHW Fuel</TableCell>
@@ -440,7 +467,7 @@ const InputForm = () => {
                       <TableCell>
                         <AttributeLinkButton
                           is_linked={linked_attributes.dhw_cop}
-                          callback={handleAttributeLinkClick}
+                          callback={() => handleAttributeLinkClick("dhw_cop")}
                         />
                       </TableCell>
 

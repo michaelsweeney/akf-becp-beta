@@ -23,8 +23,7 @@ const initialState: types.InputCaseTypes[] = [
         heating_cop: 0.8,
         dhw_cop: 0.8,
         ashrae_standard: "90.1-2016",
-      }
-
+      },
     ],
   },
   {
@@ -49,7 +48,6 @@ const initialState: types.InputCaseTypes[] = [
       },
     ],
   },
-
 ];
 
 export const caseInputSlice = createSlice({
@@ -63,11 +61,15 @@ export const caseInputSlice = createSlice({
       state,
       action: PayloadAction<types.CaseInputParametersPayload>
     ) => {
-      let { case_id, key, value } = action.payload;
+      const { case_id, key, value } = action.payload;
 
       let selection = state.find((d) => d.case_id === case_id);
+
+      let typed_key = key as keyof types.InputCaseTypes;
+
       //@ts-ignore
-      selection[key as keyof typeof selection] = value;
+      selection[key] = value;
+
       return state;
     },
     setCaseAreaInputParameter: (
@@ -76,55 +78,53 @@ export const caseInputSlice = createSlice({
     ) => {
       let { case_id, area_id, key, value } = action.payload;
 
-      let case_selection = state.find(
-        (d) => d.case_id === case_id
-      );
+      let case_selection = state.find((d) => d.case_id === case_id);
 
       if (case_selection) {
-        let area_selection=
-          case_selection.design_areas.find(
-            (d) => d.area_id === area_id
-          );
+        let area_selection = case_selection.design_areas.find(
+          (d) => d.area_id === area_id
+        );
+
+        let typed_key = key as keyof typeof area_selection;
 
         //@ts-ignore
-        area_selection[key as keyof typeof area_selection] = value;
+        area_selection[typed_key] = value;
       }
     },
     addCase: (state) => {
-      let ids = state.map(d => d.case_id)
-      let new_id = Math.max(...ids) + 1
+      let ids = state.map((d) => d.case_id);
+      let new_id = Math.max(...ids) + 1;
       let to_copy = { ...state[0] }; // default object to copy for a new case
-      to_copy.case_id = new_id
+      to_copy.case_id = new_id;
       state.push(to_copy);
     },
 
-    removeCase: (state, action: PayloadAction<{case_id: number}>) => {
-      let {case_id} = action.payload;
-      return state.filter(d => d.case_id !== case_id)  
+    removeCase: (state, action: PayloadAction<{ case_id: number }>) => {
+      let { case_id } = action.payload;
+      return state.filter((d) => d.case_id !== case_id);
     },
 
     addAreaType: (state) => {
-      let ids = state[0].design_areas.map(d => d.area_id)
-      let new_id = Math.max(...ids) + 1
-      
-      let to_copy = {...state[0].design_areas[0]}; // default object to copy for a new case
-      to_copy.area_id = new_id
+      let ids = state[0].design_areas.map((d) => d.area_id);
+      let new_id = Math.max(...ids) + 1;
 
-      state.forEach(c => {
-        c.design_areas.push(to_copy)
-      })
+      let to_copy = { ...state[0].design_areas[0] }; // default object to copy for a new case
+      to_copy.area_id = new_id;
+
+      state.forEach((c) => {
+        c.design_areas.push(to_copy);
+      });
     },
 
-    removeAreaType: (state, action: PayloadAction<{area_id: number}>)  => {
+    removeAreaType: (state, action: PayloadAction<{ area_id: number }>) => {
+      let { area_id } = action.payload;
 
-      let {area_id} = action.payload;
-
-      for (let i = 0; i< state.length; i++) {
-        let design_areas = state[i].design_areas
-        let filtered_areas = design_areas.filter(d => d.area_id !== area_id)
-        state[i].design_areas = filtered_areas
+      for (let i = 0; i < state.length; i++) {
+        let design_areas = state[i].design_areas;
+        let filtered_areas = design_areas.filter((d) => d.area_id !== area_id);
+        state[i].design_areas = filtered_areas;
       }
-    }
+    },
   },
 });
 
@@ -135,7 +135,7 @@ export const {
   addCase,
   removeCase,
   addAreaType,
-  removeAreaType
+  removeAreaType,
 } = caseInputSlice.actions;
 
 export default caseInputSlice.reducer;
