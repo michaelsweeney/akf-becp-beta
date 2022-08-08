@@ -49,4 +49,20 @@ export type CaseAreaInputParametersPayload = {
   area_id: number;
 };
 
+export type LinkedAttributeTypes = {
+  location_state: boolean;
+  climate_zone: boolean;
+  projection_case: boolean;
+  hvac_template: boolean;
+  building_type: boolean;
+  building_area: boolean;
+  ashrae_standard: boolean;
+  heating_fuel: boolean;
+  heating_cop: boolean;
+  dhw_fuel: boolean;
+  dhw_cop: boolean;
+};
 
+export type UiSliceTypes = {
+  linked_attributes: LinkedAttributeTypes;
+};

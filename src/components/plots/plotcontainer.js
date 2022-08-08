@@ -3,8 +3,8 @@ import { color } from "d3";
 
 import {
   HeatPumpIconPath,
-  ElectricityIconPath,
-  GasIconPath,
+  ELECTRICITY_ICON_PATH,
+  GAS_ICON_PATH,
 } from "../svgicons";
 
 import { useRef, useEffect } from "react";
@@ -352,9 +352,8 @@ const PlotContainer = (props) => {
       .transition()
       .duration(transition_duration)
       .attr("transform", (d, i) => {
-        return `translate(${chartdims.width + margins.l + 15}, ${
-          margins.t + d - 12
-        }) scale(1.25 1.25)`;
+        return `translate(${chartdims.width + margins.l + 15}, ${margins.t + d - 12
+          }) scale(1.25 1.25)`;
       })
       .attr("opacity", 1);
 
@@ -413,8 +412,7 @@ const PlotContainer = (props) => {
       .attr("class", "y-axis-title-g")
       .attr(
         "transform",
-        `translate(${margins.l / 2},${
-          margins.t + chartdims.height / 2
+        `translate(${margins.l / 2},${margins.t + chartdims.height / 2
         })rotate(-90)`
       )
       .attr("text-anchor", "middle")

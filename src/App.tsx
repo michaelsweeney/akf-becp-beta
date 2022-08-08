@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import InputContainer from "components/inputcontainer";
+import InputForm from "components/inputform";
 
 const theme = createTheme({
   palette: {
@@ -16,7 +16,7 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <InputContainer />
+      <InputForm />
     </ThemeProvider>
   );
 };

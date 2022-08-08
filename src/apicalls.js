@@ -1,7 +1,7 @@
 import {
   HeatPumpIconPath,
-  ElectricityIconPath,
-  GasIconPath,
+  ELECTRICITY_ICON_PATH,
+  GAS_ICON_PATH,
 } from "./components/svgicons";
 
 import * as d3 from "d3";
@@ -172,10 +172,10 @@ async function getProjectionFromReferenceBuildings(
   // MOVE TO APICALLS
   let getCaseIcon = (fuel_type, cop) => {
     if (fuel_type == "Natural Gas") {
-      return GasIconPath;
+      return GAS_ICON_PATH;
     } else if (fuel_type == "Electricity") {
       if (cop == 1) {
-        return ElectricityIconPath;
+        return ELECTRICITY_ICON_PATH;
       } else {
         return HeatPumpIconPath;
       }

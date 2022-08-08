@@ -5,11 +5,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+
 import { Button } from "@mui/material";
-import { makeStyles } from "@material-ui/styles";
 
 import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
+
+import { AttributeLinkButton } from "./inputcomponents/attributelinkbutton";
 
 import {
   setCaseAreaInputParameter,
@@ -17,7 +19,7 @@ import {
   addCase,
   removeCase,
   addAreaType,
-  removeAreaType
+  removeAreaType,
 } from "store/caseinputslice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import * as types from "types";
@@ -34,30 +36,15 @@ const {
   hvac_templates,
 } = lookups;
 
-const useStyles = makeStyles({
-  root: {},
-  tableContainer: {
-    width: 1200,
-    padding: 50,
-    "& .MuiTableCell-head": {
-      fontWeight: 700,
-    },
-    tableSpacer: {
-      borderBottom: "solid 2px black",
-    },
-  },
-});
-
 const InputForm = () => {
-  let case_inputs = useAppSelector((state) => state.case_inputs);
+  let { case_inputs, ui_settings } = useAppSelector((state) => state);
+  let { linked_attributes } = ui_settings;
+
   let dispatch = useAppDispatch();
 
   const styles = {
-    sxRotate: { transform: "rotate(-90deg)" },
+    sxRotate: { transform: "rotate(-90deg)", textAlign: "center" },
   };
-
-  const classes = useStyles();
-
 
   const handleSetCaseInputParameter = (
     payload: types.CaseInputParametersPayload
@@ -75,40 +62,44 @@ const InputForm = () => {
     dispatch(addCase());
   };
 
-  const handleRemoveCase = (case_id: number) => {    
-    dispatch(removeCase({case_id: case_id}))
-  }
-
+  const handleRemoveCase = (case_id: number) => {
+    dispatch(removeCase({ case_id }));
+  };
 
   const handleAddAreaType = () => {
-    dispatch(addAreaType())
-  }
+    dispatch(addAreaType());
+  };
 
   const handleRemoveAreaType = (area_id: number) => {
-    dispatch(removeAreaType({area_id: area_id}))
-  }
-  
+    dispatch(removeAreaType({ area_id }));
+  };
+
+  const handleAttributeLinkClick = (e: any) => {
+    console.log(e);
+  };
 
   return (
-    <div className={classes.root}>
+    <div style={{ margin: 30 }}>
       <TableContainer>
         <Table>
           <TableBody>
             <TableRow>
-              <TableCell variant="head" rowSpan={6} sx={styles.sxRotate}>
-                GLOBAL
-              </TableCell>
-              <TableCell variant="head"></TableCell>
+              <TableCell variant="head"></TableCell> <TableCell></TableCell>
+              <TableCell></TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => {
+                console.log(case_inputs.length);
                 return (
                   <TableCell key={i}>
-                    {i === 0 ? (
+                    {case_inputs.length === 1 ? (
                       ""
                     ) : (
-                      <Button variant="outlined" size="small" color="secondary"
+                      <Button
+                        variant="text"
+                        size="small"
+                        color="secondary"
                         onClick={() => handleRemoveCase(e.case_id)}
                       >
-                        remove case
+                        delete case
                       </Button>
                     )}
                   </TableCell>
@@ -125,6 +116,10 @@ const InputForm = () => {
               </TableCell>
             </TableRow>
             <TableRow>
+              <TableCell variant="head" rowSpan={5} sx={styles.sxRotate}>
+                GLOBAL
+              </TableCell>
+              <TableCell></TableCell>
               <TableCell variant="head">CASE NAME</TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => (
                 <TableCell key={i}>
@@ -143,6 +138,12 @@ const InputForm = () => {
               ))}
             </TableRow>
             <TableRow>
+              <TableCell>
+                <AttributeLinkButton
+                  callback={handleAttributeLinkClick}
+                  is_linked={linked_attributes.location_state}
+                />
+              </TableCell>
               <TableCell variant="head">STATE</TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => (
                 <TableCell key={i}>
@@ -161,6 +162,12 @@ const InputForm = () => {
               ))}
             </TableRow>
             <TableRow>
+              <TableCell>
+                <AttributeLinkButton
+                  callback={handleAttributeLinkClick}
+                  is_linked={linked_attributes.climate_zone}
+                />
+              </TableCell>
               <TableCell variant="head">CLIMATE ZONE</TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => (
                 <TableCell key={i}>
@@ -180,6 +187,12 @@ const InputForm = () => {
             </TableRow>
 
             <TableRow>
+              <TableCell>
+                <AttributeLinkButton
+                  callback={handleAttributeLinkClick}
+                  is_linked={linked_attributes.projection_case}
+                />
+              </TableCell>
               <TableCell variant="head">PROJECTION CASE</TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => (
                 <TableCell key={i}>
@@ -199,6 +212,12 @@ const InputForm = () => {
             </TableRow>
 
             <TableRow>
+              <TableCell>
+                <AttributeLinkButton
+                  callback={handleAttributeLinkClick}
+                  is_linked={linked_attributes.hvac_template}
+                />
+              </TableCell>
               <TableCell variant="head">HVAC Template</TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => (
                 <TableCell key={i}>
@@ -243,17 +262,26 @@ const InputForm = () => {
                         rowSpan={7}
                         sx={styles.sxRotate}
                       >
-                    
-                    {i === 0 ? (
-                      ""
-                    ) : (
-                        <Button size="small" color="secondary"
-                        onClick={() => handleRemoveAreaType(area_id)}
-                        >
-                          x
-                        </Button>
-                    )}
-                        AREA TYPE {i + 1}{" "}
+                        <div>AREA TYPE {i + 1}</div>
+                        <div>
+                          {case_inputs[0].design_areas.length === 1 ? (
+                            ""
+                          ) : (
+                            <Button
+                              size="small"
+                              color="secondary"
+                              onClick={() => handleRemoveAreaType(area_id)}
+                            >
+                              remove area type
+                            </Button>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <AttributeLinkButton
+                          callback={handleAttributeLinkClick}
+                          is_linked={linked_attributes.building_type}
+                        />
                       </TableCell>
                       <TableCell variant="head">Building Type</TableCell>
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
@@ -274,6 +302,13 @@ const InputForm = () => {
                       ))}
                     </TableRow>
                     <TableRow>
+                      <TableCell>
+                        <AttributeLinkButton
+                          callback={handleAttributeLinkClick}
+                          is_linked={linked_attributes.building_area}
+                        />
+                      </TableCell>
+
                       <TableCell variant="head">Area</TableCell>
 
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
@@ -295,8 +330,14 @@ const InputForm = () => {
                     </TableRow>
 
                     <TableRow>
-                      <TableCell variant="head">ASHRAE Standard</TableCell>
+                      <TableCell>
+                        <AttributeLinkButton
+                          is_linked={linked_attributes.ashrae_standard}
+                          callback={handleAttributeLinkClick}
+                        />
+                      </TableCell>
 
+                      <TableCell variant="head">ASHRAE Standard</TableCell>
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
                         <TableCell key={i}>
                           <SingleSelect
@@ -316,6 +357,13 @@ const InputForm = () => {
                     </TableRow>
 
                     <TableRow>
+                      <TableCell>
+                        <AttributeLinkButton
+                          is_linked={linked_attributes.heating_fuel}
+                          callback={handleAttributeLinkClick}
+                        />
+                      </TableCell>
+
                       <TableCell variant="head">Heating Fuel</TableCell>
 
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
@@ -337,8 +385,13 @@ const InputForm = () => {
                     </TableRow>
 
                     <TableRow>
+                      <TableCell>
+                        <AttributeLinkButton
+                          is_linked={linked_attributes.heating_cop}
+                          callback={handleAttributeLinkClick}
+                        />
+                      </TableCell>
                       <TableCell variant="head">Heating COP</TableCell>
-
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
                         <TableCell key={i}>
                           <FocusInput
@@ -357,6 +410,12 @@ const InputForm = () => {
                       ))}
                     </TableRow>
                     <TableRow>
+                      <TableCell>
+                        <AttributeLinkButton
+                          is_linked={linked_attributes.dhw_fuel}
+                          callback={handleAttributeLinkClick}
+                        />
+                      </TableCell>
                       <TableCell variant="head">DHW Fuel</TableCell>
 
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
@@ -378,6 +437,13 @@ const InputForm = () => {
                     </TableRow>
 
                     <TableRow>
+                      <TableCell>
+                        <AttributeLinkButton
+                          is_linked={linked_attributes.dhw_cop}
+                          callback={handleAttributeLinkClick}
+                        />
+                      </TableCell>
+
                       <TableCell variant="head">DHW COP</TableCell>
 
                       {area_case.map((d: types.InputAreaTypes, i: number) => (
@@ -405,10 +471,12 @@ const InputForm = () => {
               <TableCell></TableCell>
               <TableCell></TableCell>
 
-              <TableCell colSpan={case_inputs.length}>
-                <Button 
+              <TableCell colSpan={case_inputs.length + 1}>
+                <Button
                   onClick={() => handleAddAreaType()}
-                variant="contained" size="small">
+                  variant="contained"
+                  size="small"
+                >
                   Add Area Type
                 </Button>
               </TableCell>
