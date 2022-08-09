@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { Input, FormControl } from "@mui/material";
 
-type Props = {
+type PropTypes = {
   value: string | number;
   callback: (d: string | number) => void;
   inputType: string;
 };
 
-const FocusInput = (props: Props) => {
+const FocusInput = (props: PropTypes) => {
   const { callback, value, inputType } = props;
 
   const handleInput = (v: string | number) => {
-    callback(v)
+    callback(v);
   };
 
   return (
@@ -24,7 +24,6 @@ const FocusInput = (props: Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput(e.target.value);
         }}
-
         value={value}
       />
     </FormControl>

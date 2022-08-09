@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,7 +12,7 @@ import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
 import { AttributeLinkButton } from "./inputcomponents/attributelinkbutton";
-
+import { AttributeRowMap } from "./inputcomponents/attributerowmap";
 import {
   setCaseAreaInputParameter,
   setCaseInputParameter,
@@ -29,7 +29,7 @@ import * as types from "types";
 import * as lookups from "../lookups";
 
 const {
-  states,
+  location_states,
   climate_zones,
   coefficient_cases,
   ashrae_standards,
@@ -42,7 +42,7 @@ const InputForm = () => {
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
 
-  let dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const styles = {
     sxRotate: { transform: "rotate(-90deg)", textAlign: "center" },
@@ -77,7 +77,7 @@ const InputForm = () => {
   };
 
   const handleAttributeLinkClick = (e: string) => {
-    let key = e as keyof types.LinkedAttributeTypes;
+    let key = e as keyof typeof linked_attributes;
     let current_attribute_val = linked_attributes[key];
 
     //todo : handle logic here, via separate dispatch, to overwrite values if changing from unlinked to linked.
@@ -99,7 +99,6 @@ const InputForm = () => {
               <TableCell variant="head"></TableCell> <TableCell></TableCell>
               <TableCell></TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => {
-                console.log(case_inputs.length);
                 return (
                   <TableCell key={i}>
                     {case_inputs.length === 1 ? (
@@ -150,16 +149,23 @@ const InputForm = () => {
               ))}
             </TableRow>
 
-            {/* -- todo try the maprow thing*/}
-
             <TableRow>
-              <TableCell>
+              <AttributeRowMap
+                input_key="location_state"
+                title="STATE"
+                child_component={SingleSelect as FunctionComponent}
+                child_props={{
+                  optionvalues: lookups.location_states,
+                }}
+              />
+              {/* <TableCell>
                 <AttributeLinkButton
                   callback={() => handleAttributeLinkClick("location_state")}
                   is_linked={linked_attributes.location_state}
                 />
-              </TableCell>
-              <TableCell variant="head">STATE</TableCell>
+              </TableCell> */}
+
+              {/* <TableCell variant="head">STATE</TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => (
                 <TableCell key={i}>
                   <SingleSelect
@@ -174,10 +180,9 @@ const InputForm = () => {
                     optionvalues={states}
                   />
                 </TableCell>
-              ))}
+              ))} */}
             </TableRow>
 
-            {/* -- end todo */}
             <TableRow>
               <TableCell>
                 <AttributeLinkButton

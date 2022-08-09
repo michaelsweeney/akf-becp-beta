@@ -1,6 +1,6 @@
 import { HvacTemplate } from "./types";
 
-export const states: string[] = [
+export const location_states: string[] = [
   "AL",
   "AR",
   "AZ",

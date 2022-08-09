@@ -1,3 +1,4 @@
+/** case input types **/
 export type InputAreaTypes = {
   area_id: number;
   building_type: string;
@@ -11,8 +12,6 @@ export type InputAreaTypes = {
 
 export type InputCaseTypes = {
   case_id: number;
-  is_displayed: boolean;
-  is_base_case: boolean;
   hvac_template: string;
   case_name: string;
   location_state: string;
@@ -49,6 +48,7 @@ export type CaseAreaInputParametersPayload = {
   area_id: number;
 };
 
+/** ui types **/
 export type LinkedAttributeTypes = {
   location_state: boolean;
   climate_zone: boolean;
@@ -63,6 +63,13 @@ export type LinkedAttributeTypes = {
   dhw_cop: boolean;
 };
 
+export type CaseDisplaySettingTypes = {
+  id: number;
+  is_displayed: boolean;
+  is_base_case: boolean;
+};
+
 export type UiSliceTypes = {
   linked_attributes: LinkedAttributeTypes;
+  case_display_settings: CaseDisplaySettingTypes[];
 };

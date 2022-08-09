@@ -1,15 +1,14 @@
 import { SelectChangeEvent } from "@mui/material";
 import { MenuItem, Select, FormControl } from "@mui/material";
 
-
-type Props = {
+type PropTypes = {
   value: string;
   callback: (d: SelectChangeEvent) => void;
   optionvalues: string[];
   optiontitles?: string[];
 };
 
-const SingleSelect = (props: Props) => {
+const SingleSelect = (props: PropTypes) => {
   const { value, callback, optionvalues, optiontitles = optionvalues } = props;
 
   return (

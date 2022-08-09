@@ -16,6 +16,10 @@ const initialState: types.UiSliceTypes = {
     dhw_fuel: false,
     dhw_cop: false,
   },
+  case_display_settings: [
+    { id: 0, is_displayed: true, is_base_case: true },
+    { id: 1, is_displayed: true, is_base_case: false },
+  ],
 };
 
 export const UiSlice = createSlice({

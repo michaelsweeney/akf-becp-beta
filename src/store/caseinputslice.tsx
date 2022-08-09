@@ -6,8 +6,6 @@ import * as types from "types";
 const initialState: types.InputCaseTypes[] = [
   {
     case_id: 0,
-    is_displayed: true,
-    is_base_case: true,
     hvac_template: "ng_furnace",
     case_name: "NG Heating",
     location_state: "NY",
@@ -28,8 +26,6 @@ const initialState: types.InputCaseTypes[] = [
   },
   {
     case_id: 1,
-    is_displayed: true,
-    is_base_case: false,
     hvac_template: "elec_resistance",
     case_name: "Electric Resistance Heating",
     location_state: "NY",
@@ -85,7 +81,7 @@ export const caseInputSlice = createSlice({
           (d) => d.area_id === area_id
         );
 
-        let typed_key = key as keyof typeof area_selection;
+        let typed_key: string = key as keyof typeof area_selection;
 
         //@ts-ignore
         area_selection[typed_key] = value;
