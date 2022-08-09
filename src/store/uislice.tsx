@@ -17,8 +17,8 @@ const initialState: types.UiSliceTypes = {
     dhw_cop: false,
   },
   case_display_settings: [
-    { id: 0, is_displayed: true, is_base_case: true },
-    { id: 1, is_displayed: true, is_base_case: false },
+    { case_id: 0, is_displayed: true, is_base_case: true },
+    { case_id: 1, is_displayed: true, is_base_case: false },
   ],
 };
 

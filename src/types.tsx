@@ -1,5 +1,6 @@
 /** case input types **/
 export type InputAreaTypes = {
+  case_id: number;
   area_id: number;
   building_type: string;
   area: number;
@@ -17,7 +18,6 @@ export type InputCaseTypes = {
   location_state: string;
   climate_zone: string;
   projection_case: string;
-  design_areas: InputAreaTypes[];
 };
 
 export type OutputStateTypes = {
@@ -64,7 +64,7 @@ export type LinkedAttributeTypes = {
 };
 
 export type CaseDisplaySettingTypes = {
-  id: number;
+  case_id: number;
   is_displayed: boolean;
   is_base_case: boolean;
 };
