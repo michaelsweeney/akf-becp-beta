@@ -12,7 +12,6 @@ import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
 import { AttributeLinkButton } from "./inputcomponents/attributelinkbutton";
-import { AttributeRowMap } from "./inputcomponents/attributerowmap";
 import {
   setCaseAreaInputParameter,
   setCaseInputParameter,
@@ -96,13 +95,14 @@ const InputForm = () => {
         <Table>
           <TableBody>
             <TableRow>
-              <TableCell variant="head"></TableCell> <TableCell></TableCell>
+              <TableCell variant="head"></TableCell>
+              <TableCell></TableCell>
               <TableCell></TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => {
                 return (
                   <TableCell key={i}>
                     {case_inputs.length === 1 ? (
-                      ""
+                      <span></span>
                     ) : (
                       <Button
                         variant="text"
@@ -150,22 +150,14 @@ const InputForm = () => {
             </TableRow>
 
             <TableRow>
-              <AttributeRowMap
-                input_key="location_state"
-                title="STATE"
-                child_component={SingleSelect as FunctionComponent}
-                child_props={{
-                  optionvalues: lookups.location_states,
-                }}
-              />
-              {/* <TableCell>
+              <TableCell>
                 <AttributeLinkButton
                   callback={() => handleAttributeLinkClick("location_state")}
                   is_linked={linked_attributes.location_state}
                 />
-              </TableCell> */}
+              </TableCell>
 
-              {/* <TableCell variant="head">STATE</TableCell>
+              <TableCell variant="head">STATE</TableCell>
               {case_inputs.map((e: types.InputCaseTypes, i: number) => (
                 <TableCell key={i}>
                   <SingleSelect
@@ -177,10 +169,10 @@ const InputForm = () => {
                         key: "location_state",
                       })
                     }
-                    optionvalues={states}
+                    optionvalues={location_states}
                   />
                 </TableCell>
-              ))} */}
+              ))}
             </TableRow>
 
             <TableRow>
@@ -287,7 +279,7 @@ const InputForm = () => {
                         <div>AREA TYPE {i + 1}</div>
                         <div>
                           {case_inputs[0].design_areas.length === 1 ? (
-                            ""
+                            <span></span>
                           ) : (
                             <Button
                               size="small"
