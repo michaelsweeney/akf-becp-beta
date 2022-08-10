@@ -3,22 +3,31 @@ import { MenuItem, Select, FormControl } from "@mui/material";
 
 type PropTypes = {
   value: string;
-  callback: (d: SelectChangeEvent) => void;
-  optionvalues: string[];
-  optiontitles?: string[];
+  callback: (d: string | number) => void;
+  option_values: string[];
+  option_titles?: string[];
 };
 
 const SingleSelect = (props: PropTypes) => {
-  const { value, callback, optionvalues, optiontitles = optionvalues } = props;
+  const {
+    value,
+    callback,
+    option_values,
+    option_titles = option_values,
+  } = props;
+
+  const handleChange = (e: SelectChangeEvent) => {
+    callback(e.target.value);
+  };
 
   return (
     <div>
       <FormControl variant="standard" size="small" fullWidth>
-        <Select value={value} onChange={callback}>
-          {optionvalues.map((d, i) => {
+        <Select value={value} onChange={handleChange}>
+          {option_values.map((d, i) => {
             return (
               <MenuItem key={i} value={d}>
-                {optiontitles[i]}
+                {option_titles[i]}
               </MenuItem>
             );
           })}

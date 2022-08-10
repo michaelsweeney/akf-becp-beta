@@ -11,10 +11,7 @@ import { Button } from "@mui/material";
 import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
-import { AttributeLinkButton } from "./inputcomponents/attributelinkbutton";
 import {
-  setCaseAreaInputParameter,
-  setCaseInputParameter,
   addCase,
   removeCase,
   addAreaType,
@@ -27,6 +24,7 @@ import * as types from "types";
 
 import * as lookups from "../lookups";
 import { AreaRowMap } from "./inputcomponents/arearowmap";
+import { GlobalRowMap } from "./inputcomponents/globalrowmap";
 
 const {
   location_states,
@@ -52,18 +50,6 @@ const InputForm = () => {
     sxRotate: { transform: "rotate(-90deg)", textAlign: "center" },
   };
 
-  const handleSetCaseInputParameter = (
-    payload: types.CaseInputParametersPayload
-  ) => {
-    dispatch(setCaseInputParameter(payload));
-  };
-
-  const handleSetCaseAreaInputParameter = (
-    payload: types.CaseAreaInputParametersPayload
-  ) => {
-    dispatch(setCaseAreaInputParameter(payload));
-  };
-
   const handleAddCase = () => {
     dispatch(addCase());
   };
@@ -76,29 +62,12 @@ const InputForm = () => {
     dispatch(addAreaType());
   };
 
-  const handleRemoveAreaType = (area_id: number) => {
-    dispatch(removeAreaType({ area_id }));
-  };
-
-  const handleAttributeLinkClick = (e: string) => {
-    let key = e as keyof typeof linked_attributes;
-    let current_attribute_val = linked_attributes[key];
-
-    dispatch(
-      setLinkedAttribute({
-        key: e,
-        bool: !current_attribute_val,
-      })
-    );
-  };
-
   return (
     <div style={{ margin: 30 }}>
       <TableContainer>
-        <Table>
+        <Table size="small">
           <TableBody>
             {/*---------- ADD / REMOVE CASES ----------*/}
-
             <TableRow>
               <TableCell variant="head"></TableCell>
               <TableCell></TableCell>
@@ -132,134 +101,69 @@ const InputForm = () => {
               </TableCell>
             </TableRow>
 
-            {/*---------- GLOBAL TABLE INPUTS ----------*/}
+            {/*---------- GLOBAL MAPPING ----------*/}
             <TableRow>
               <TableCell variant="head" rowSpan={5} sx={styles.sxRotate}>
                 GLOBAL
               </TableCell>
-              <TableCell></TableCell>
-              <TableCell variant="head">CASE NAME</TableCell>
-              {global_inputs.map((e: types.InputCaseTypes, i: number) => (
-                <TableCell key={i}>
-                  <FocusInput
-                    inputType="string"
-                    callback={(c) =>
-                      handleSetCaseInputParameter({
-                        case_id: e.case_id,
-                        value: c,
-                        key: "case_name",
-                      })
-                    }
-                    value={e.case_name}
-                  />
-                </TableCell>
-              ))}
+
+              <GlobalRowMap
+                title="Case Name"
+                global_key="case_name"
+                component={FocusInput as React.FunctionComponent}
+                child_props={{
+                  input_type: "string",
+                }}
+              />
             </TableRow>
 
             <TableRow>
-              <TableCell>
-                <AttributeLinkButton
-                  callback={() => handleAttributeLinkClick("location_state")}
-                  is_linked={linked_attributes.location_state}
-                />
-              </TableCell>
-
-              <TableCell variant="head">STATE</TableCell>
-              {global_inputs.map((e: types.InputCaseTypes, i: number) => (
-                <TableCell key={i}>
-                  <SingleSelect
-                    value={e.location_state}
-                    callback={(c) =>
-                      handleSetCaseInputParameter({
-                        case_id: e.case_id,
-                        value: c.target.value,
-                        key: "location_state",
-                      })
-                    }
-                    optionvalues={location_states}
-                  />
-                </TableCell>
-              ))}
+              <GlobalRowMap
+                title="State"
+                global_key="location_state"
+                component={SingleSelect as React.FunctionComponent}
+                child_props={{
+                  option_values: location_states,
+                }}
+              />
             </TableRow>
 
             <TableRow>
-              <TableCell>
-                <AttributeLinkButton
-                  callback={() => handleAttributeLinkClick("climate_zone")}
-                  is_linked={linked_attributes.climate_zone}
-                />
-              </TableCell>
-              <TableCell variant="head">CLIMATE ZONE</TableCell>
-              {global_inputs.map((e: types.InputCaseTypes, i: number) => (
-                <TableCell key={i}>
-                  <SingleSelect
-                    value={e.climate_zone}
-                    callback={(c) =>
-                      handleSetCaseInputParameter({
-                        case_id: e.case_id,
-                        value: c.target.value,
-                        key: "climate_zone",
-                      })
-                    }
-                    optionvalues={climate_zones}
-                  />
-                </TableCell>
-              ))}
+              <GlobalRowMap
+                title="Climate Zone"
+                global_key="climate_zone"
+                component={SingleSelect as React.FunctionComponent}
+                child_props={{
+                  option_values: climate_zones,
+                }}
+              />
             </TableRow>
 
             <TableRow>
-              <TableCell>
-                <AttributeLinkButton
-                  callback={() => handleAttributeLinkClick("projection_case")}
-                  is_linked={linked_attributes.projection_case}
-                />
-              </TableCell>
-              <TableCell variant="head">PROJECTION CASE</TableCell>
-              {global_inputs.map((e: types.InputCaseTypes, i: number) => (
-                <TableCell key={i}>
-                  <SingleSelect
-                    value={e.projection_case}
-                    callback={(c) =>
-                      handleSetCaseInputParameter({
-                        case_id: e.case_id,
-                        value: c.target.value,
-                        key: "projection_case",
-                      })
-                    }
-                    optionvalues={coefficient_cases}
-                  />
-                </TableCell>
-              ))}
+              <GlobalRowMap
+                title="Projection Case"
+                global_key="projection_case"
+                component={SingleSelect as React.FunctionComponent}
+                child_props={{
+                  option_values: coefficient_cases,
+                }}
+              />
             </TableRow>
 
             <TableRow>
-              <TableCell>
-                <AttributeLinkButton
-                  callback={() => handleAttributeLinkClick("hvac_template")}
-                  is_linked={linked_attributes.hvac_template}
-                />
-              </TableCell>
-              <TableCell variant="head">HVAC Template</TableCell>
-              {global_inputs.map((e: types.InputCaseTypes, i: number) => (
-                <TableCell key={i}>
-                  <SingleSelect
-                    value={e.hvac_template}
-                    callback={(c) =>
-                      handleSetCaseInputParameter({
-                        case_id: e.case_id,
-                        value: c.target.value,
-                        key: "hvac_template",
-                      })
-                    }
-                    optionvalues={hvac_templates.map(
-                      (d: types.HvacTemplate) => d.tag
-                    )}
-                    optiontitles={hvac_templates.map(
-                      (d: types.HvacTemplate) => d.case_name
-                    )}
-                  />
-                </TableCell>
-              ))}
+              <GlobalRowMap
+                title="HVAC Template"
+                global_key="hvac_template"
+                component={SingleSelect as React.FunctionComponent}
+                child_props={{
+                  option_values: hvac_templates.map(
+                    (d: types.HvacTemplate) => d.tag
+                  ),
+                  option_titles: hvac_templates.map(
+                    (d: types.HvacTemplate) => d.case_name
+                  ),
+                }}
+              />
             </TableRow>
 
             {/*---------- AREA MAP ----------*/}
@@ -267,58 +171,87 @@ const InputForm = () => {
             {area_ids.map((area_id, i) => {
               return (
                 <React.Fragment key={i}>
-                  {/* --AREA BUILDING TYPE--*/}
+                  <TableRow>
+                    <TableCell variant="head" rowSpan={7} sx={styles.sxRotate}>
+                      {`AREA TYPE ${i + 1}`}
+                    </TableCell>
+
+                    <AreaRowMap
+                      area_id={area_id}
+                      title="Building Type"
+                      area_key="building_type"
+                      component={SingleSelect as React.FunctionComponent}
+                      child_props={{
+                        option_values: building_types,
+                      }}
+                    />
+                  </TableRow>
+
+                  <TableRow>
+                    <AreaRowMap
+                      area_id={area_id}
+                      title="ASHRAE Standard"
+                      area_key="ashrae_standard"
+                      component={SingleSelect as React.FunctionComponent}
+                      child_props={{
+                        option_values: ashrae_standards,
+                      }}
+                    />
+                  </TableRow>
+
+                  <TableRow>
+                    <AreaRowMap
+                      area_id={area_id}
+                      title="Area"
+                      area_key="area"
+                      component={FocusInput as React.FunctionComponent}
+                      child_props={{
+                        input_type: "number",
+                      }}
+                    />
+                  </TableRow>
+                  <TableRow>
+                    <AreaRowMap
+                      area_id={area_id}
+                      title="Heating Fuel"
+                      area_key="heating_fuel"
+                      component={SingleSelect as React.FunctionComponent}
+                      child_props={{
+                        option_values: heating_fuels,
+                      }}
+                    />
+                  </TableRow>
+                  <TableRow>
+                    <AreaRowMap
+                      area_id={area_id}
+                      title="Heating COP"
+                      area_key="heating_cop"
+                      component={FocusInput as React.FunctionComponent}
+                      child_props={{
+                        input_type: "number",
+                      }}
+                    />
+                  </TableRow>
 
                   <AreaRowMap
                     area_id={area_id}
-                    title="Building Type"
-                    area_key="building_type"
+                    title="DHW Fuel"
+                    area_key="dhw_fuel"
                     component={SingleSelect as React.FunctionComponent}
                     child_props={{
-                      optionvalues: building_types,
+                      option_values: heating_fuels,
                     }}
                   />
-                  {/* 
                   <TableRow>
-                    <TableCell />
-                    <TableCell>
-                      <AttributeLinkButton
-                        callback={() =>
-                          handleAttributeLinkClick("building_type")
-                        }
-                        is_linked={linked_attributes.building_type}
-                      />
-                    </TableCell>
-                    <TableCell variant="head">Building Type</TableCell>
-                    {case_ids.map((case_id, i) => {
-                      let area_obj = design_areas.find(
-                        (d) => d.case_id === case_id && d.area_id === area_id
-                      );
-
-                      return (
-                        <TableCell key={i}>{area_obj?.building_type}</TableCell>
-                      );
-                    })}
-                  </TableRow> */}
-
-                  {/* --AREA BUILDING AREA--*/}
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>
-                      <AttributeLinkButton
-                        callback={() =>
-                          handleAttributeLinkClick("building_area")
-                        }
-                        is_linked={linked_attributes.building_area}
-                      />
-                    </TableCell>
-                    <TableCell variant="head">Building Area</TableCell>
-                    {case_ids.map((case_id, i) => {
-                      let area_obj = design_areas.find(
-                        (d) => d.case_id === case_id && d.area_id === area_id
-                      );
-                      return <TableCell key={i}>{area_obj?.area}</TableCell>;
-                    })}
+                    <AreaRowMap
+                      area_id={area_id}
+                      title="DHW COP"
+                      area_key="dhw_cop"
+                      component={FocusInput as React.FunctionComponent}
+                      child_props={{
+                        input_type: "number",
+                      }}
+                    />
                   </TableRow>
                 </React.Fragment>
               );

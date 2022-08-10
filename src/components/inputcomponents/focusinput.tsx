@@ -5,11 +5,11 @@ import { Input, FormControl } from "@mui/material";
 type PropTypes = {
   value: string | number;
   callback: (d: string | number) => void;
-  inputType: string;
+  input_type: string;
 };
 
 const FocusInput = (props: PropTypes) => {
-  const { callback, value, inputType } = props;
+  const { callback, value, input_type } = props;
 
   const handleInput = (v: string | number) => {
     callback(v);
@@ -19,7 +19,7 @@ const FocusInput = (props: PropTypes) => {
     <FormControl size="small" fullWidth>
       <Input
         sx={{ paddingLeft: 1 }}
-        type={inputType}
+        type={input_type}
         onFocus={(e) => {}}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput(e.target.value);

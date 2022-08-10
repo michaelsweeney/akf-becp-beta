@@ -4,7 +4,7 @@ import * as types from "types";
 import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { setCaseAreaInputParameter } from "store/caseinputslice";
+import { setCaseInputParameter } from "store/caseinputslice";
 
 import { setLinkedAttribute } from "store/uislice";
 
@@ -15,27 +15,26 @@ type OptionalChildPropTypes = {
 };
 
 type PropTypes = {
-  area_id: number;
   title: string;
-  area_key: string;
+  global_key: string;
   child_props: OptionalChildPropTypes;
   component: React.FunctionComponent<OptionalChildPropTypes>;
 };
 
-const AreaRowMap = (props: PropTypes) => {
-  const { area_id, title, area_key, child_props, component } = props;
+const GlobalRowMap = (props: PropTypes) => {
+  const { title, global_key, child_props, component } = props;
   const ChildComponent = component;
 
   const dispatch = useAppDispatch();
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
-  let { global_inputs, design_areas } = case_inputs;
+  let { global_inputs } = case_inputs;
   let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
 
-  const handleSetCaseAreaInputParameter = (
-    payload: types.CaseAreaInputParametersPayload
+  const handleSetCaseInputParameter = (
+    payload: types.CaseInputParametersPayload
   ) => {
-    dispatch(setCaseAreaInputParameter(payload));
+    dispatch(setCaseInputParameter(payload));
   };
 
   const handleAttributeLinkClick = (e: string) => {
@@ -54,29 +53,26 @@ const AreaRowMap = (props: PropTypes) => {
     <React.Fragment>
       <TableCell>
         <AttributeLinkButton
-          callback={() => handleAttributeLinkClick(area_key)}
+          callback={() => handleAttributeLinkClick(global_key)}
           is_linked={
-            linked_attributes[area_key as keyof typeof linked_attributes]
+            linked_attributes[global_key as keyof typeof linked_attributes]
           }
         />
       </TableCell>
       <TableCell variant="head">{title}</TableCell>
 
       {case_ids.map((case_id, i) => {
-        let area_obj = design_areas.find(
-          (d) => d.case_id === case_id && d.area_id === area_id
-        );
+        let area_obj = global_inputs.find((d) => d.case_id === case_id);
 
         let props_to_add = {
           ...child_props,
           //@ts-ignore
-          value: area_obj[area_key],
+          value: area_obj[global_key],
           callback: (c: string | number) =>
-            handleSetCaseAreaInputParameter({
+            handleSetCaseInputParameter({
               case_id: case_id,
-              area_id: area_id,
               value: c,
-              key: area_key,
+              key: global_key,
             }),
         };
 
@@ -90,4 +86,4 @@ const AreaRowMap = (props: PropTypes) => {
   );
 };
 
-export { AreaRowMap };
+export { GlobalRowMap };
