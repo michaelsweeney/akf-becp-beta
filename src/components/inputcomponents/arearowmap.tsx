@@ -69,8 +69,10 @@ const AreaRowMap = (props: PropTypes) => {
 
         let props_to_add = {
           ...child_props,
-          //@ts-ignore
-          value: area_obj[area_key],
+
+          value: area_obj
+            ? area_obj[area_key as keyof typeof area_obj]
+            : undefined,
           callback: (c: string | number) =>
             handleSetCaseAreaInputParameter({
               case_id: case_id,
