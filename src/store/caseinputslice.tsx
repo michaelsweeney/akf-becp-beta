@@ -112,12 +112,12 @@ export const caseInputSlice = createSlice({
 
       let new_id = Math.max(...case_ids) + 1;
 
-      let global_copy = {
-        ...global_inputs.find((d) => d.case_id === id_to_copy),
-        case_id: new_id,
-      };
+      let new_obj = { ...global_inputs.find((d) => d.case_id === id_to_copy) };
 
-      global_inputs.push(global_copy as types.InputCaseTypes);
+      new_obj.case_id = new_id;
+      new_obj.case_name = new_obj.case_name + " (copy)";
+
+      global_inputs.push(new_obj as types.InputCaseTypes);
 
       let areas_to_copy = area_inputs.filter((d) => d.case_id === id_to_copy);
 
@@ -133,33 +133,45 @@ export const caseInputSlice = createSlice({
     },
 
     removeCase: (state, action: PayloadAction<{ case_id: number }>) => {
-      return;
-      // let { case_id } = action.payload;
-      // return state.filter((d) => d.case_id !== case_id);
+      let { case_id } = action.payload;
+
+      state.global_inputs = state.global_inputs.filter(
+        (d) => d.case_id !== case_id
+      );
+      state.area_inputs = state.area_inputs.filter(
+        (d) => d.case_id !== case_id
+      );
     },
 
     addAreaType: (state) => {
-      return;
-      // let ids = state[0].area_inputs.map((d) => d.area_id);
-      // let new_id = Math.max(...ids) + 1;
+      let { global_inputs, area_inputs } = state;
 
-      // let to_copy = { ...state[0].area_inputs[0] }; // default object to copy for a new case
-      // to_copy.area_id = new_id;
+      let area_ids = [...new Set(area_inputs.map((d) => d.area_id))];
+      let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
+      let case_id_to_copy = Math.min(...case_ids);
 
-      // state.forEach((c) => {
-      //   c.area_inputs.push(to_copy);
-      // });
+      let area_id_to_copy = Math.min(...area_ids);
+      let new_area_id = Math.max(...area_ids) + 1;
+
+      let copied_area_obj = {
+        ...area_inputs.filter(
+          (d) => d.case_id === case_id_to_copy && d.area_id === area_id_to_copy
+        )[0],
+      };
+
+      case_ids.forEach((case_id) => {
+        let a_obj = { ...copied_area_obj };
+        a_obj.case_id = case_id;
+        a_obj.area_id = new_area_id;
+        area_inputs.push(a_obj);
+      });
     },
 
     removeAreaType: (state, action: PayloadAction<{ area_id: number }>) => {
-      return;
-      // let { area_id } = action.payload;
-
-      // for (let i = 0; i < state.length; i++) {
-      //   let area_inputs = state[i].area_inputs;
-      //   let filtered_areas = area_inputs.filter((d) => d.area_id !== area_id);
-      //   state[i].area_inputs = filtered_areas;
-      // }
+      let { area_id } = action.payload;
+      state.area_inputs = state.area_inputs.filter(
+        (d) => d.area_id !== area_id
+      );
     },
   },
 });

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -18,7 +18,6 @@ import {
   removeAreaType,
 } from "store/caseinputslice";
 
-import { setLinkedAttribute } from "store/uislice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import * as types from "types";
 
@@ -60,6 +59,10 @@ const InputForm = () => {
 
   const handleAddAreaType = () => {
     dispatch(addAreaType());
+  };
+
+  const handleRemoveAreaType = (area_id: number) => {
+    dispatch(removeAreaType({ area_id }));
   };
 
   return (
@@ -173,7 +176,21 @@ const InputForm = () => {
                 <React.Fragment key={i}>
                   <TableRow>
                     <TableCell variant="head" rowSpan={7} sx={styles.sxRotate}>
-                      {`AREA TYPE ${i + 1}`}
+                      <div>{`AREA TYPE ${i + 1}`}</div>
+                      <div>
+                        {area_ids.length === 1 ? (
+                          <span></span>
+                        ) : (
+                          <Button
+                            onClick={() => handleRemoveAreaType(area_id)}
+                            variant="text"
+                            size="small"
+                            color="secondary"
+                          >
+                            Delete Area Type
+                          </Button>
+                        )}
+                      </div>
                     </TableCell>
 
                     <AreaRowMap
@@ -233,15 +250,18 @@ const InputForm = () => {
                     />
                   </TableRow>
 
-                  <AreaRowMap
-                    area_id={area_id}
-                    title="DHW Fuel"
-                    area_key="dhw_fuel"
-                    component={SingleSelect as React.FunctionComponent}
-                    child_props={{
-                      option_values: heating_fuels,
-                    }}
-                  />
+                  <TableRow>
+                    <AreaRowMap
+                      area_id={area_id}
+                      title="DHW Fuel"
+                      area_key="dhw_fuel"
+                      component={SingleSelect as React.FunctionComponent}
+                      child_props={{
+                        option_values: heating_fuels,
+                      }}
+                    />
+                  </TableRow>
+
                   <TableRow>
                     <AreaRowMap
                       area_id={area_id}
