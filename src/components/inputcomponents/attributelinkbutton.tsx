@@ -15,7 +15,7 @@ const AttributeLinkButton = (props: Props) => {
     <Button onClick={() => callback()}>
       <IconSvg
         d={is_linked ? link_on_path : link_off_path}
-        fill={is_linked ? "black" : "gray"}
+        fill={is_linked ? "gray" : "black"}
       />
     </Button>
   );

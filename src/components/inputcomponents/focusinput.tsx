@@ -6,10 +6,11 @@ type PropTypes = {
   value: string | number;
   callback: (d: string | number) => void;
   input_type: string;
+  is_disabled?: boolean;
 };
 
 const FocusInput = (props: PropTypes) => {
-  const { callback, value, input_type } = props;
+  const { callback, value, input_type, is_disabled = false } = props;
 
   const handleInput = (v: string | number) => {
     callback(v);
@@ -18,9 +19,9 @@ const FocusInput = (props: PropTypes) => {
   return (
     <FormControl size="small" fullWidth>
       <Input
+        disabled={is_disabled}
         sx={{ paddingLeft: 1 }}
         type={input_type}
-        onFocus={(e) => {}}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           handleInput(e.target.value);
         }}

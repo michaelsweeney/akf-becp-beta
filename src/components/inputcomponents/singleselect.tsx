@@ -6,6 +6,7 @@ type PropTypes = {
   callback: (d: string | number) => void;
   option_values: string[];
   option_titles?: string[];
+  is_disabled?: boolean;
 };
 
 const SingleSelect = (props: PropTypes) => {
@@ -14,6 +15,7 @@ const SingleSelect = (props: PropTypes) => {
     callback,
     option_values,
     option_titles = option_values,
+    is_disabled = false,
   } = props;
 
   const handleChange = (e: SelectChangeEvent) => {
@@ -23,7 +25,7 @@ const SingleSelect = (props: PropTypes) => {
   return (
     <div>
       <FormControl variant="standard" size="small" fullWidth>
-        <Select value={value} onChange={handleChange}>
+        <Select disabled={is_disabled} value={value} onChange={handleChange}>
           {option_values.map((d, i) => {
             return (
               <MenuItem key={i} value={d}>

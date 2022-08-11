@@ -4,6 +4,7 @@ import * as types from "types";
 
 const initialState: types.UiSliceTypes = {
   linked_attributes: {
+    case_name: false,
     location_state: true,
     climate_zone: true,
     projection_case: true,

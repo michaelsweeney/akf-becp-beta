@@ -7,11 +7,13 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 import { setCaseAreaInputParameter } from "store/caseinputslice";
 
 import { setLinkedAttribute } from "store/uislice";
+import { current } from "immer";
 
 type OptionalChildPropTypes = {
   option_values?: string[];
   option_titles?: string[];
   input_type?: string;
+  is_disabled?: boolean;
 };
 
 type PropTypes = {
@@ -35,19 +37,66 @@ const AreaRowMap = (props: PropTypes) => {
   const handleSetCaseAreaInputParameter = (
     payload: types.CaseAreaInputParametersPayload
   ) => {
-    dispatch(setCaseAreaInputParameter(payload));
+    let is_linked =
+      linked_attributes[payload.key as keyof typeof linked_attributes];
+
+    if (is_linked) {
+      // hard-set all cases
+      case_ids.forEach((id) => {
+        let proxy_payload: types.CaseAreaInputParametersPayload = {
+          area_id: payload.area_id,
+          case_id: id,
+          key: payload.key,
+          value: payload.value,
+        };
+        dispatch(setCaseAreaInputParameter(proxy_payload));
+      });
+    } else {
+      // set only the specified case
+      dispatch(setCaseAreaInputParameter(payload));
+    }
   };
 
   const handleAttributeLinkClick = (e: string) => {
     let key = e as keyof typeof linked_attributes;
     let current_attribute_val = linked_attributes[key];
 
-    dispatch(
-      setLinkedAttribute({
-        key: e,
-        bool: !current_attribute_val,
-      })
-    );
+    if (!current_attribute_val) {
+      // need to copy first column over to all others.
+      let first_case_obj = global_inputs[0];
+      let first_case_id = first_case_obj.case_id;
+
+      let first_case_area_objects = area_inputs.filter(
+        (d) => d.case_id == first_case_id
+      );
+
+      first_case_area_objects.forEach((area_obj) => {
+        case_ids.forEach((case_id) => {
+          let proxy_payload: types.CaseAreaInputParametersPayload = {
+            key: e,
+            area_id: area_obj.area_id,
+            value: area_obj[e as keyof typeof area_obj],
+            case_id: case_id,
+          };
+
+          dispatch(setCaseAreaInputParameter(proxy_payload));
+        });
+      });
+
+      dispatch(
+        setLinkedAttribute({
+          key: e,
+          bool: !current_attribute_val,
+        })
+      );
+    } else {
+      dispatch(
+        setLinkedAttribute({
+          key: e,
+          bool: !current_attribute_val,
+        })
+      );
+    }
   };
 
   return (
@@ -67,12 +116,20 @@ const AreaRowMap = (props: PropTypes) => {
           (d) => d.case_id === case_id && d.area_id === area_id
         );
 
+        let is_row_linked =
+          linked_attributes[area_key as keyof typeof linked_attributes];
+        let is_disabled: boolean = false;
+        if (i !== 0) {
+          is_disabled = is_row_linked;
+        }
+
         let props_to_add = {
           ...child_props,
 
           value: area_obj
             ? area_obj[area_key as keyof typeof area_obj]
             : undefined,
+
           callback: (c: string | number) =>
             handleSetCaseAreaInputParameter({
               case_id: case_id,
@@ -80,6 +137,8 @@ const AreaRowMap = (props: PropTypes) => {
               value: c,
               key: area_key,
             }),
+
+          is_disabled: is_disabled,
         };
 
         return (

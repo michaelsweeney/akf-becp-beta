@@ -50,6 +50,7 @@ export type CaseAreaInputParametersPayload = {
 
 /** ui types **/
 export type LinkedAttributeTypes = {
+  case_name: boolean;
   location_state: boolean;
   climate_zone: boolean;
   projection_case: boolean;
