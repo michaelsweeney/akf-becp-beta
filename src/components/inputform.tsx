@@ -220,7 +220,7 @@ const InputForm = () => {
                     <AreaRowMap
                       area_id={area_id}
                       title="Area"
-                      area_key="area"
+                      area_key="building_area"
                       component={FocusInput as React.FunctionComponent}
                       child_props={{
                         input_type: "number",

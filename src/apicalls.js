@@ -44,14 +44,14 @@ async function getProjectionFromReferenceBuildings(
     let berdo_types = alt["design_areas"].map((e) => {
       return {
         type: ref_bldg_to_berdo_type[e["type"]],
-        area: e["area"],
+        area: e["building_area"],
       };
     });
 
     let ll97_types = alt["design_areas"].map((e) => {
       return {
         type: ref_bldg_to_ll97_type[e["type"]],
-        area: e["area"],
+        area: e["building_area"],
       };
     });
 

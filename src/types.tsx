@@ -3,7 +3,7 @@ export type InputAreaTypes = {
   case_id: number;
   area_id: number;
   building_type: string;
-  area: number;
+  building_area: number;
   heating_fuel: string;
   dhw_fuel: string;
   heating_cop: number;
