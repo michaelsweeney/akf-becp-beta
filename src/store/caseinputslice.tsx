@@ -5,7 +5,7 @@ import * as types from "types";
 
 type InitialStateType = {
   global_inputs: types.InputCaseTypes[];
-  design_areas: types.InputAreaTypes[];
+  area_inputs: types.InputAreaTypes[];
 };
 
 const initialState: InitialStateType = {
@@ -27,7 +27,7 @@ const initialState: InitialStateType = {
       projection_case: "MidCase",
     },
   ],
-  design_areas: [
+  area_inputs: [
     {
       case_id: 1,
       area_id: 0,
@@ -96,7 +96,7 @@ export const caseInputSlice = createSlice({
     ) => {
       let { case_id, area_id, key, value } = action.payload;
 
-      let area_selection = state.design_areas.find(
+      let area_selection = state.area_inputs.find(
         (d) => d.case_id === case_id && d.area_id === area_id
       );
       //@ts-ignore
@@ -104,13 +104,32 @@ export const caseInputSlice = createSlice({
     },
 
     addCase: (state) => {
-      return;
-      // let ids = state.global_inputs.map((d) => d.case_id);
-      // let new_id = Math.max(...ids) + 1;
-      // let to_copy = { ...state[0] }; // default object to copy for a new case
+      let { global_inputs, area_inputs } = state;
 
-      // py.case_id = new_id;
-      // state.push(to_copy);
+      let case_ids = [...new Set(state.global_inputs.map((d) => d.case_id))];
+
+      let id_to_copy = Math.min(...case_ids);
+
+      let new_id = Math.max(...case_ids) + 1;
+
+      let global_copy = {
+        ...global_inputs.find((d) => d.case_id === id_to_copy),
+        case_id: new_id,
+      };
+
+      global_inputs.push(global_copy as types.InputCaseTypes);
+
+      let areas_to_copy = area_inputs.filter((d) => d.case_id === id_to_copy);
+
+      let new_area_array: types.InputAreaTypes[] = [];
+      for (let i = 0; i < areas_to_copy.length; i++) {
+        let new_obj: types.InputAreaTypes = {
+          ...areas_to_copy[i],
+          case_id: new_id,
+        };
+        new_area_array.push(new_obj);
+      }
+      new_area_array.forEach((a) => area_inputs.push(a));
     },
 
     removeCase: (state, action: PayloadAction<{ case_id: number }>) => {
@@ -121,14 +140,14 @@ export const caseInputSlice = createSlice({
 
     addAreaType: (state) => {
       return;
-      // let ids = state[0].design_areas.map((d) => d.area_id);
+      // let ids = state[0].area_inputs.map((d) => d.area_id);
       // let new_id = Math.max(...ids) + 1;
 
-      // let to_copy = { ...state[0].design_areas[0] }; // default object to copy for a new case
+      // let to_copy = { ...state[0].area_inputs[0] }; // default object to copy for a new case
       // to_copy.area_id = new_id;
 
       // state.forEach((c) => {
-      //   c.design_areas.push(to_copy);
+      //   c.area_inputs.push(to_copy);
       // });
     },
 
@@ -137,9 +156,9 @@ export const caseInputSlice = createSlice({
       // let { area_id } = action.payload;
 
       // for (let i = 0; i < state.length; i++) {
-      //   let design_areas = state[i].design_areas;
-      //   let filtered_areas = design_areas.filter((d) => d.area_id !== area_id);
-      //   state[i].design_areas = filtered_areas;
+      //   let area_inputs = state[i].area_inputs;
+      //   let filtered_areas = area_inputs.filter((d) => d.area_id !== area_id);
+      //   state[i].area_inputs = filtered_areas;
       // }
     },
   },

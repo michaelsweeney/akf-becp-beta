@@ -66,7 +66,9 @@ const GlobalRowMap = (props: PropTypes) => {
 
         let props_to_add = {
           ...child_props,
-          value: area_obj ? [global_key as keyof typeof area_obj] : undefined,
+          value: area_obj
+            ? area_obj[global_key as keyof typeof area_obj]
+            : undefined,
           callback: (c: string | number) =>
             handleSetCaseInputParameter({
               case_id: case_id,

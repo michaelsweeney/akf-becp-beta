@@ -29,7 +29,7 @@ const AreaRowMap = (props: PropTypes) => {
   const dispatch = useAppDispatch();
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
-  let { global_inputs, design_areas } = case_inputs;
+  let { global_inputs, area_inputs } = case_inputs;
   let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
 
   const handleSetCaseAreaInputParameter = (
@@ -63,7 +63,7 @@ const AreaRowMap = (props: PropTypes) => {
       <TableCell variant="head">{title}</TableCell>
 
       {case_ids.map((case_id, i) => {
-        let area_obj = design_areas.find(
+        let area_obj = area_inputs.find(
           (d) => d.case_id === case_id && d.area_id === area_id
         );
 

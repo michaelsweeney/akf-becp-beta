@@ -39,10 +39,10 @@ const {
 const InputForm = () => {
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
-  let { global_inputs, design_areas } = case_inputs;
+  let { global_inputs, area_inputs } = case_inputs;
 
   let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
-  let area_ids = [...new Set(design_areas.map((d) => d.area_id))];
+  let area_ids = [...new Set(area_inputs.map((d) => d.area_id))];
 
   const dispatch = useAppDispatch();
 
