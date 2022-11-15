@@ -1,5 +1,5 @@
 import React from "react";
-
+import { styled } from "@mui/system";
 import * as types from "types";
 import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
@@ -23,6 +23,10 @@ type PropTypes = {
   child_props: OptionalChildPropTypes;
   component: React.FunctionComponent<OptionalChildPropTypes>;
 };
+
+const TD = styled(TableCell)`
+  padding: 0px !important;
+`;
 
 const AreaRowMap = (props: PropTypes) => {
   const { area_id, title, area_key, child_props, component } = props;
@@ -101,15 +105,15 @@ const AreaRowMap = (props: PropTypes) => {
 
   return (
     <React.Fragment>
-      <TableCell>
+      <TD>
         <AttributeLinkButton
           callback={() => handleAttributeLinkClick(area_key)}
           is_linked={
             linked_attributes[area_key as keyof typeof linked_attributes]
           }
         />
-      </TableCell>
-      <TableCell variant="head">{title}</TableCell>
+      </TD>
+      <TD variant="head">{title}</TD>
 
       {case_ids.map((case_id, i) => {
         let area_obj = area_inputs.find(
@@ -142,9 +146,9 @@ const AreaRowMap = (props: PropTypes) => {
         };
 
         return (
-          <TableCell key={i}>
+          <TD key={i}>
             <ChildComponent {...props_to_add} />
-          </TableCell>
+          </TD>
         );
       })}
     </React.Fragment>

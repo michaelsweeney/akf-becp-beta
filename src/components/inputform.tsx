@@ -1,5 +1,6 @@
 import React from "react";
 
+import { styled } from "@mui/system";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -65,6 +66,10 @@ const InputForm = () => {
     dispatch(removeAreaType({ area_id }));
   };
 
+  const TD = styled(TableCell)`
+    padding: 0px !important;
+  `;
+
   return (
     <div style={{ margin: 30 }}>
       <TableContainer>
@@ -72,12 +77,12 @@ const InputForm = () => {
           <TableBody>
             {/*---------- ADD / REMOVE CASES ----------*/}
             <TableRow>
-              <TableCell variant="head"></TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
+              <TD variant="head"></TD>
+              <TD></TD>
+              <TD></TD>
               {global_inputs.map((e: types.InputCaseTypes, i: number) => {
                 return (
-                  <TableCell key={i}>
+                  <TD key={i}>
                     {global_inputs.length === 1 ? (
                       <span></span>
                     ) : (
@@ -90,10 +95,10 @@ const InputForm = () => {
                         delete case
                       </Button>
                     )}
-                  </TableCell>
+                  </TD>
                 );
               })}
-              <TableCell>
+              <TD>
                 <Button
                   onClick={() => handleAddCase()}
                   variant="contained"
@@ -101,14 +106,14 @@ const InputForm = () => {
                 >
                   Add Case
                 </Button>
-              </TableCell>
+              </TD>
             </TableRow>
 
             {/*---------- GLOBAL MAPPING ----------*/}
             <TableRow>
-              <TableCell variant="head" rowSpan={5} sx={styles.sxRotate}>
+              <TD variant="head" rowSpan={5} sx={styles.sxRotate}>
                 GLOBAL
-              </TableCell>
+              </TD>
 
               <GlobalRowMap
                 title="Case Name"
@@ -175,7 +180,7 @@ const InputForm = () => {
               return (
                 <React.Fragment key={i}>
                   <TableRow>
-                    <TableCell variant="head" rowSpan={7} sx={styles.sxRotate}>
+                    <TD variant="head" rowSpan={7} sx={styles.sxRotate}>
                       <div>{`AREA TYPE ${i + 1}`}</div>
                       <div>
                         {area_ids.length === 1 ? (
@@ -191,7 +196,7 @@ const InputForm = () => {
                           </Button>
                         )}
                       </div>
-                    </TableCell>
+                    </TD>
 
                     <AreaRowMap
                       area_id={area_id}
@@ -279,10 +284,10 @@ const InputForm = () => {
 
             {/*---------- TABLE FOOTER ----------*/}
             <TableRow>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
+              <TD></TD>
+              <TD></TD>
 
-              <TableCell colSpan={global_inputs.length + 1}>
+              <TD colSpan={global_inputs.length + 1}>
                 <Button
                   onClick={() => handleAddAreaType()}
                   variant="contained"
@@ -290,7 +295,7 @@ const InputForm = () => {
                 >
                   Add Area Type
                 </Button>
-              </TableCell>
+              </TD>
             </TableRow>
           </TableBody>
         </Table>

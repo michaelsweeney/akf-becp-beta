@@ -1,17 +1,13 @@
 import * as d3 from "d3";
 import { color } from "d3";
 
-import {
-  HeatPumpIconPath,
-  ELECTRICITY_ICON_PATH,
-  GAS_ICON_PATH,
-} from "../svgicons";
+
 
 import { useRef, useEffect } from "react";
 
 import { conn } from "../../store/connect";
 
-import { getIdealSpacing } from "./spacing";
+import { getIdealSpacing } from "./_spacing";
 import { makeStyles } from "@material-ui/styles";
 let plot_margins = {
   t: 60,
@@ -90,8 +86,8 @@ const PlotContainer = (props) => {
     let y_padding = 1.1;
 
     let max_threshold_val = d3.max([
-      plot_config.thresholdView == "berdo" ? berdo_thresholds[0][0]["val"] : 0,
-      plot_config.thresholdView == "ll97" ? ll97_thresholds[0][0]["val"] : 0,
+      plot_config.thresholdView === "berdo" ? berdo_thresholds[0][0]["val"] : 0,
+      plot_config.thresholdView === "ll97" ? ll97_thresholds[0][0]["val"] : 0,
     ]);
 
     let max_emission_val = () => {

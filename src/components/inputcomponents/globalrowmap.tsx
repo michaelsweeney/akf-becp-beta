@@ -1,4 +1,5 @@
 import React from "react";
+import { styled } from "@mui/system";
 
 import * as types from "types";
 import TableCell from "@mui/material/TableCell";
@@ -21,6 +22,10 @@ type PropTypes = {
   child_props: OptionalChildPropTypes;
   component: React.FunctionComponent<OptionalChildPropTypes>;
 };
+
+const TD = styled(TableCell)`
+  padding: 0px !important;
+`;
 
 const GlobalRowMap = (props: PropTypes) => {
   const { title, global_key, child_props, component } = props;
@@ -88,7 +93,7 @@ const GlobalRowMap = (props: PropTypes) => {
 
   return (
     <React.Fragment>
-      <TableCell>
+      <TD>
         {global_key === "case_name" ? (
           <span></span>
         ) : (
@@ -99,8 +104,8 @@ const GlobalRowMap = (props: PropTypes) => {
             }
           />
         )}
-      </TableCell>
-      <TableCell variant="head">{title}</TableCell>
+      </TD>
+      <TD variant="head">{title}</TD>
 
       {case_ids.map((case_id, i) => {
         let area_obj = global_inputs.find((d) => d.case_id === case_id);
@@ -127,9 +132,9 @@ const GlobalRowMap = (props: PropTypes) => {
         };
 
         return (
-          <TableCell key={i}>
+          <TD key={i}>
             <ChildComponent {...props_to_add} />
-          </TableCell>
+          </TD>
         );
       })}
     </React.Fragment>
