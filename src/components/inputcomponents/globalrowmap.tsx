@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 
-import * as types from "types";
+import { CaseInputParametersPayloadTypes } from "types";
 import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
@@ -38,7 +38,7 @@ const GlobalRowMap = (props: PropTypes) => {
   let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
 
   const handleSetCaseInputParameter = (
-    payload: types.CaseInputParametersPayload
+    payload: CaseInputParametersPayloadTypes
   ) => {
     let is_linked =
       linked_attributes[payload.key as keyof typeof linked_attributes];
@@ -46,7 +46,7 @@ const GlobalRowMap = (props: PropTypes) => {
     if (is_linked) {
       // hard-set all cases
       case_ids.forEach((id) => {
-        let proxy_payload: types.CaseInputParametersPayload = {
+        let proxy_payload: CaseInputParametersPayloadTypes = {
           case_id: id,
           key: payload.key,
           value: payload.value,
@@ -67,7 +67,7 @@ const GlobalRowMap = (props: PropTypes) => {
       // copy first column over to all others.
       let first_case_obj = global_inputs[0];
       case_ids.forEach((id) => {
-        let proxy_payload: types.CaseInputParametersPayload = {
+        let proxy_payload: CaseInputParametersPayloadTypes = {
           key: e,
           value: first_case_obj[e as keyof typeof first_case_obj],
           case_id: id,

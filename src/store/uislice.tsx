@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import * as types from "types";
+import { UiSliceTypes, LinkedAttributeTypes } from "types";
 
-const initialState: types.UiSliceTypes = {
+const initialState: UiSliceTypes = {
   linked_attributes: {
     case_name: false,
     location_state: true,
@@ -33,7 +33,7 @@ export const UiSlice = createSlice({
     ) => {
       let { key, bool } = action.payload;
 
-      let typed_key = key as keyof types.LinkedAttributeTypes;
+      let typed_key = key as keyof LinkedAttributeTypes;
       state.linked_attributes[typed_key] = bool;
     },
   },

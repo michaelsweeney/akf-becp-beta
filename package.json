@@ -29,11 +29,11 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "serve -s build",
+    "dev": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "qq": "git add --all && git commit -m heroku-debug && git push && git push heroku main"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

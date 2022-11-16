@@ -2,6 +2,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import InputForm from "components/inputform";
 import { styled } from "@mui/system";
+import InputListener from "components/inputlistener";
 
 const theme = createTheme({
   palette: {
@@ -39,6 +40,7 @@ const ResultsContainer = styled("div")`
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <InputListener />
       <Body>
         <Sidebar>
           <InputForm />

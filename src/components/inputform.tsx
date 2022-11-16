@@ -20,7 +20,7 @@ import {
 } from "store/caseinputslice";
 
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import * as types from "types";
+import { InputCaseTypes, HvacTemplateTypes } from "types";
 
 import * as lookups from "../lookups";
 import { AreaRowMap } from "./inputcomponents/arearowmap";
@@ -80,7 +80,7 @@ const InputForm = () => {
               <TD variant="head"></TD>
               <TD></TD>
               <TD></TD>
-              {global_inputs.map((e: types.InputCaseTypes, i: number) => {
+              {global_inputs.map((e: InputCaseTypes, i: number) => {
                 return (
                   <TD key={i}>
                     {global_inputs.length === 1 ? (
@@ -164,11 +164,9 @@ const InputForm = () => {
                 global_key="hvac_template"
                 component={SingleSelect as React.FunctionComponent}
                 child_props={{
-                  option_values: hvac_templates.map(
-                    (d: types.HvacTemplate) => d.tag
-                  ),
+                  option_values: hvac_templates.map((d: HvacTemplateTypes) => d.tag),
                   option_titles: hvac_templates.map(
-                    (d: types.HvacTemplate) => d.case_name
+                    (d: HvacTemplateTypes) => d.case_name
                   ),
                 }}
               />

@@ -1,13 +1,12 @@
 import React from "react";
 import { styled } from "@mui/system";
-import * as types from "types";
+import { CaseAreaInputParametersPayloadTypes } from "types";
 import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { setCaseAreaInputParameter } from "store/caseinputslice";
 
 import { setLinkedAttribute } from "store/uislice";
-import { current } from "immer";
 
 type OptionalChildPropTypes = {
   option_values?: string[];
@@ -39,7 +38,7 @@ const AreaRowMap = (props: PropTypes) => {
   let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
 
   const handleSetCaseAreaInputParameter = (
-    payload: types.CaseAreaInputParametersPayload
+    payload: CaseAreaInputParametersPayloadTypes
   ) => {
     let is_linked =
       linked_attributes[payload.key as keyof typeof linked_attributes];
@@ -47,7 +46,7 @@ const AreaRowMap = (props: PropTypes) => {
     if (is_linked) {
       // hard-set all cases
       case_ids.forEach((id) => {
-        let proxy_payload: types.CaseAreaInputParametersPayload = {
+        let proxy_payload: CaseAreaInputParametersPayloadTypes = {
           area_id: payload.area_id,
           case_id: id,
           key: payload.key,
@@ -76,7 +75,7 @@ const AreaRowMap = (props: PropTypes) => {
 
       first_case_area_objects.forEach((area_obj) => {
         case_ids.forEach((case_id) => {
-          let proxy_payload: types.CaseAreaInputParametersPayload = {
+          let proxy_payload: CaseAreaInputParametersPayloadTypes = {
             key: e,
             area_id: area_obj.area_id,
             value: area_obj[e as keyof typeof area_obj],

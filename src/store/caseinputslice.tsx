@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
 
-import * as types from "types";
+import {
+  InputCaseTypes,
+  InputAreaTypes,
+  CaseInputParametersPayloadTypes,
+  CaseAreaInputParametersPayloadTypes,
+  CaseInputSliceTypes,
+} from "types";
 
-type InitialStateType = {
-  global_inputs: types.InputCaseTypes[];
-  area_inputs: types.InputAreaTypes[];
-};
-
-const initialState: InitialStateType = {
+const initialState: CaseInputSliceTypes = {
   global_inputs: [
     {
       case_id: 0,
@@ -31,46 +32,46 @@ const initialState: InitialStateType = {
     {
       case_id: 1,
       area_id: 0,
-      building_type: "HighriseApartment",
+      building_type: "ApartmentHighRise",
       building_area: 200000,
       heating_fuel: "Electricity",
       dhw_fuel: "Electricity",
       heating_cop: 1,
       dhw_cop: 1,
-      ashrae_standard: "90.1-2016",
+      ashrae_standard: "STD2016",
     },
     {
       case_id: 0,
       area_id: 0,
-      building_type: "HighriseApartment",
+      building_type: "ApartmentHighRise",
       building_area: 200000,
       heating_fuel: "Natural Gas",
       dhw_fuel: "Natural Gas",
       heating_cop: 0.8,
       dhw_cop: 0.8,
-      ashrae_standard: "90.1-2016",
+      ashrae_standard: "STD2016",
     },
     {
       case_id: 1,
       area_id: 1,
-      building_type: "SmallOffice",
+      building_type: "OfficeSmall",
       building_area: 200,
       heating_fuel: "Electricity",
       dhw_fuel: "Electricity",
       heating_cop: 1,
       dhw_cop: 1,
-      ashrae_standard: "90.1-2016",
+      ashrae_standard: "STD2016",
     },
     {
       case_id: 0,
       area_id: 1,
-      building_type: "SmallOffice",
+      building_type: "OfficeSmall",
       building_area: 200,
       heating_fuel: "Natural Gas",
       dhw_fuel: "Natural Gas",
       heating_cop: 0.8,
       dhw_cop: 0.8,
-      ashrae_standard: "90.1-2016",
+      ashrae_standard: "STD2016",
     },
   ],
 };
@@ -81,7 +82,7 @@ export const caseInputSlice = createSlice({
   reducers: {
     setCaseInputParameter: (
       state,
-      action: PayloadAction<types.CaseInputParametersPayload>
+      action: PayloadAction<CaseInputParametersPayloadTypes>
     ) => {
       const { case_id, key, value } = action.payload;
 
@@ -92,7 +93,7 @@ export const caseInputSlice = createSlice({
     },
     setCaseAreaInputParameter: (
       state,
-      action: PayloadAction<types.CaseAreaInputParametersPayload>
+      action: PayloadAction<CaseAreaInputParametersPayloadTypes>
     ) => {
       let { case_id, area_id, key, value } = action.payload;
 
@@ -117,13 +118,13 @@ export const caseInputSlice = createSlice({
       new_obj.case_id = new_id;
       new_obj.case_name = new_obj.case_name + " (copy)";
 
-      global_inputs.push(new_obj as types.InputCaseTypes);
+      global_inputs.push(new_obj as InputCaseTypes);
 
       let areas_to_copy = area_inputs.filter((d) => d.case_id === id_to_copy);
 
-      let new_area_array: types.InputAreaTypes[] = [];
+      let new_area_array: InputAreaTypes[] = [];
       for (let i = 0; i < areas_to_copy.length; i++) {
-        let new_obj: types.InputAreaTypes = {
+        let new_obj: InputAreaTypes = {
           ...areas_to_copy[i],
           case_id: new_id,
         };

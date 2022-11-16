@@ -1,6 +1,14 @@
-import { HvacTemplate } from "./types";
+import {
+  HvacTemplateTypes,
+  ClimateZoneTypes,
+  CoefficientCaseTypes,
+  LocationStateTypes,
+  ASHRAEStandardTypes,
+  BuildingTypeTypes,
+  HeatingFuelTypes,
+} from "./types";
 
-export const location_states: string[] = [
+export const location_states: LocationStateTypes[] = [
   "AL",
   "AR",
   "AZ",
@@ -51,7 +59,7 @@ export const location_states: string[] = [
   "WY",
 ];
 
-export const climate_zones: string[] = [
+export const climate_zones: ClimateZoneTypes[] = [
   "1A",
   "2A",
   "2B",
@@ -69,7 +77,7 @@ export const climate_zones: string[] = [
   "8A",
 ];
 
-export const coefficient_cases: string[] = [
+export const coefficient_cases: CoefficientCaseTypes[] = [
   "HighRECost",
   "LowRECost",
   "MidCase",
@@ -78,38 +86,37 @@ export const coefficient_cases: string[] = [
   "BERDO",
 ];
 
-export const ashrae_standards: string[] = [
-  "DOE_Ref_1980-2004",
-  "90.1-2010",
-  "90.1-2007",
-  "DOE_Ref_Pre-1980",
-  "90.1-2016",
-  "90.1-2004",
-  "90.1-2013",
+export const ashrae_standards: ASHRAEStandardTypes[] = [
+  "STD2013",
+  "STD2016",
+  "STD2019",
 ];
 
-export const building_types: string[] = [
-  "SecondarySchool",
-  "MediumOffice",
-  "PrimarySchool",
-  "RetailStripmall",
-  "QuickServiceRestaurant",
-  "SmallHotel",
-  "MidriseApartment",
-  "Warehouse",
-  "RetailStandalone",
-  "SmallOffice",
-  "FullServiceRestaurant",
-  "LargeOffice",
-  "LargeHotel",
+export const building_types: BuildingTypeTypes[] = [
+  "OfficeLarge",
+  "OfficeSmall",
   "Hospital",
-  "Outpatient",
-  "HighriseApartment",
+  "OfficeMedium",
+  "SchoolPrimary",
+  "HotelSmall",
+  "HotelLarge",
+  "RetailStandalone",
+  "RetailStripmall",
+  "ApartmentHighRise",
+  "RestaurantFastFood",
+  "Warehouse",
+  "RestaurantSitDown",
+  "SchoolSecondary",
+  "ApartmentMidRise",
 ];
 
-export const heating_fuels: string[] = ["Electricity", "Natural Gas", "Steam"];
+export const heating_fuels: HeatingFuelTypes[] = [
+  "Electricity",
+  "Natural Gas",
+  "Steam",
+];
 
-export const hvac_templates: HvacTemplate[] = [
+export const hvac_templates: HvacTemplateTypes[] = [
   {
     tag: "elec_ashp",
     case_name: "Air Source HP",
