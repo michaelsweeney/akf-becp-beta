@@ -4,7 +4,7 @@ import { CaseAreaInputParametersPayloadTypes } from "types";
 import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { setCaseAreaInputParameter } from "store/caseinputslice";
+import { caseInputActions } from "store/caseinputslice";
 
 import { setLinkedAttribute } from "store/uislice";
 
@@ -52,11 +52,11 @@ const AreaRowMap = (props: PropTypes) => {
           key: payload.key,
           value: payload.value,
         };
-        dispatch(setCaseAreaInputParameter(proxy_payload));
+        dispatch(caseInputActions.setCaseAreaInputParameter(proxy_payload));
       });
     } else {
       // set only the specified case
-      dispatch(setCaseAreaInputParameter(payload));
+      dispatch(caseInputActions.setCaseAreaInputParameter(payload));
     }
   };
 
@@ -82,7 +82,7 @@ const AreaRowMap = (props: PropTypes) => {
             case_id: case_id,
           };
 
-          dispatch(setCaseAreaInputParameter(proxy_payload));
+          dispatch(caseInputActions.setCaseAreaInputParameter(proxy_payload));
         });
       });
 

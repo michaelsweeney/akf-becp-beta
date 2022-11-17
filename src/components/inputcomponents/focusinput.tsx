@@ -13,7 +13,11 @@ const FocusInput = (props: PropTypes) => {
   const { callback, value, input_type, is_disabled = false } = props;
 
   const handleInput = (v: string | number) => {
-    callback(v);
+    if (input_type === "number") {
+      callback(+v);
+    } else {
+      callback(v);
+    }
   };
 
   return (

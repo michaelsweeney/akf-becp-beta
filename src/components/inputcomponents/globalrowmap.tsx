@@ -5,7 +5,7 @@ import { CaseInputParametersPayloadTypes } from "types";
 import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { setCaseInputParameter } from "store/caseinputslice";
+import { caseInputActions } from "store/caseinputslice";
 
 import { setLinkedAttribute } from "store/uislice";
 
@@ -51,11 +51,11 @@ const GlobalRowMap = (props: PropTypes) => {
           key: payload.key,
           value: payload.value,
         };
-        dispatch(setCaseInputParameter(proxy_payload));
+        dispatch(caseInputActions.setCaseInputParameter(proxy_payload));
       });
     } else {
       // set only the specified case
-      dispatch(setCaseInputParameter(payload));
+      dispatch(caseInputActions.setCaseInputParameter(payload));
     }
   };
 
@@ -72,7 +72,7 @@ const GlobalRowMap = (props: PropTypes) => {
           value: first_case_obj[e as keyof typeof first_case_obj],
           case_id: id,
         };
-        dispatch(setCaseInputParameter(proxy_payload));
+        dispatch(caseInputActions.setCaseInputParameter(proxy_payload));
       });
 
       dispatch(

@@ -62,8 +62,7 @@ export type ClimateZoneTypes =
   | "5B"
   | "6A"
   | "6B"
-  | "7A"
-  | "8A";
+  | "7";
 
 export type CoefficientCaseTypes =
   | "HighRECost"
@@ -119,9 +118,8 @@ export type InputCaseTypes = {
   projection_case: string;
 };
 
-export type OutputStateTypes = {
-  case_results: any[];
-  is_loading_error: boolean;
+export type CaseOutputSliceTypes = {
+  projection_from_reference_response: ProjectionFromReferenceOutputTypes[];
 };
 
 export type HvacTemplateTypes = {
@@ -144,7 +142,6 @@ export type CaseAreaInputParametersPayloadTypes = {
   area_id: number;
 };
 
-/** ui types **/
 export type LinkedAttributeTypes = {
   case_name: boolean;
   location_state: boolean;
@@ -171,19 +168,66 @@ export type UiSliceTypes = {
   case_display_settings: CaseDisplaySettingTypes[];
 };
 
-export type QueryDesignAreaTypes = {
-  type: BuildingTypeTypes;
-  area: number;
-  heating_fuel: HeatingFuelTypes;
-  dhw_fuel: HeatingFuelTypes;
-  heating_cop: number;
-  dhw_cop: number;
-  cooling_cop?: number;
-  ashrae_standard: ASHRAEStandardTypes;
+export type CaseResultsTypes = {
+  emissions_projection: {
+    elec_kg_per_kbtu: number;
+    kg_co2_absolute: number;
+    kg_co2_per_sf: number;
+    year: number;
+  }[];
+
+  emissions_projection_by_fuel: {
+    elec_kg_per_kbtu: number;
+    fuel: string;
+    kg_co2_per_sf: number;
+    year: number;
+  }[];
+
+  enduses: {
+    area: number;
+    enduses_absolute_kbtu: {
+      enduse: string;
+      fuel: string;
+      kbtu_absolute: number;
+      subcategory: string;
+    }[];
+  };
+  enduses_per_sf: {
+    area: number;
+    enduses_absolute_kbtu: {
+      enduse: string;
+      fuel: string;
+      kbtu_absolute: number;
+      subcategory: string;
+    }[];
+  };
+  projection_factors: {
+    case: string;
+    lrmer_co2e_kg_mwh: number;
+    state: string;
+    year: number;
+  }[];
 };
-export type ProjectionFromReferenceQueryTypes = {
-  state: LocationStateTypes;
-  climate_zone: ClimateZoneTypes;
-  projection_case: string;
-  design_areas: QueryDesignAreaTypes[];
+
+export type LL97ResultsTypes = {
+  annual_building_carbon_tons: number;
+  annual_penalties: { penalty: number; period: string }[];
+  carbon_above_thresholds: { val: number; period: string }[];
+  emissions_thresholds: { val: number; period: string }[];
+  emissions_thresholds_per_sf: { val: number; period: string }[];
+};
+
+export type BERDOResultsTypes = {
+  acp_payments: { year: number; val: number }[];
+  annual_building_carbon_kg: { year: number; val: number }[];
+  carbon_above_thresholds: { year: number; val: number }[];
+  emissions_thresholds: { period: string; val: number }[];
+  emissions_thresholds_per_sf: { period: string; val: number }[];
+};
+
+export type ProjectionFromReferenceOutputTypes = {
+  berdo_results: BERDOResultsTypes;
+  ll97_results: LL97ResultsTypes;
+  case_id: number;
+  case_results: CaseResultsTypes;
 };

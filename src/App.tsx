@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import InputForm from "components/inputform";
 import { styled } from "@mui/system";
 import InputListener from "components/inputlistener";
-
+import ResultsContainer from "components/resultscontainer";
 const theme = createTheme({
   palette: {
     secondary: {
@@ -30,13 +30,6 @@ const Sidebar = styled("div")`
   overflow: scroll;
 `;
 
-const ResultsContainer = styled("div")`
-  display: inline-block;
-  width: calc(100% - ${sidebar_width});
-  overflow: scroll;
-  height: 100%;
-`;
-
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -45,7 +38,7 @@ const App = () => {
         <Sidebar>
           <InputForm />
         </Sidebar>
-        <ResultsContainer>jfklds</ResultsContainer>
+        <ResultsContainer />
       </Body>
     </ThemeProvider>
   );

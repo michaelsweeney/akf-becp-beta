@@ -12,12 +12,7 @@ import { Button } from "@mui/material";
 import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
-import {
-  addCase,
-  removeCase,
-  addAreaType,
-  removeAreaType,
-} from "store/caseinputslice";
+import { caseInputActions } from "store/caseinputslice";
 
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { InputCaseTypes, HvacTemplateTypes } from "types";
@@ -51,19 +46,19 @@ const InputForm = () => {
   };
 
   const handleAddCase = () => {
-    dispatch(addCase());
+    dispatch(caseInputActions.addCase());
   };
 
   const handleRemoveCase = (case_id: number) => {
-    dispatch(removeCase({ case_id }));
+    dispatch(caseInputActions.removeCase({ case_id }));
   };
 
   const handleAddAreaType = () => {
-    dispatch(addAreaType());
+    dispatch(caseInputActions.addAreaType());
   };
 
   const handleRemoveAreaType = (area_id: number) => {
-    dispatch(removeAreaType({ area_id }));
+    dispatch(caseInputActions.removeAreaType({ area_id }));
   };
 
   const TD = styled(TableCell)`
@@ -164,7 +159,9 @@ const InputForm = () => {
                 global_key="hvac_template"
                 component={SingleSelect as React.FunctionComponent}
                 child_props={{
-                  option_values: hvac_templates.map((d: HvacTemplateTypes) => d.tag),
+                  option_values: hvac_templates.map(
+                    (d: HvacTemplateTypes) => d.tag
+                  ),
                   option_titles: hvac_templates.map(
                     (d: HvacTemplateTypes) => d.case_name
                   ),

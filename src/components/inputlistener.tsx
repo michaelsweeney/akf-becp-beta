@@ -1,25 +1,27 @@
-import {
-  queryNoParameters,
-  getProjectionFromReferenceBuildings,
-} from "api/apicalls";
+import { getProjectionFromReferenceBuildings } from "api/apicalls";
 import { useEffect } from "react";
-
+import { caseOutputActions } from "store/caseoutputslice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import * as types from "types";
+
+import { ProjectionFromReferenceOutputTypes } from "types";
 
 import * as lookups from "../lookups";
+
 const InputListener = () => {
   const { case_inputs, case_outputs } = useAppSelector((state) => state);
 
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const handleChange = async () => {
-      // let states = await queryNoParameters("get_all_states");
+      let query_results = await getProjectionFromReferenceBuildings(
+        case_inputs
+      );
 
-      // console.log(states);
-
-      let res = await getProjectionFromReferenceBuildings(case_inputs);
-
-      console.log(res);
+      dispatch(
+        caseOutputActions.setQueryResults(
+          query_results as ProjectionFromReferenceOutputTypes[]
+        )
+      );
     };
 
     handleChange();

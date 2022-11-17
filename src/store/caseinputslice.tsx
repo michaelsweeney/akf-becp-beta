@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
+import { Reducer } from "redux";
 
 import {
   InputCaseTypes,
@@ -81,22 +82,21 @@ export const caseInputSlice = createSlice({
   initialState: initialState,
   reducers: {
     setCaseInputParameter: (
-      state,
+      state: CaseInputSliceTypes,
       action: PayloadAction<CaseInputParametersPayloadTypes>
     ) => {
       const { case_id, key, value } = action.payload;
 
       let selection = state.global_inputs.find((d) => d.case_id === case_id);
-
       //@ts-ignore
-      selection[key] = value;
+
+      selection[key as keyof typeof selection] = value;
     },
     setCaseAreaInputParameter: (
       state,
       action: PayloadAction<CaseAreaInputParametersPayloadTypes>
     ) => {
       let { case_id, area_id, key, value } = action.payload;
-
       let area_selection = state.area_inputs.find(
         (d) => d.case_id === case_id && d.area_id === area_id
       );
@@ -177,13 +177,6 @@ export const caseInputSlice = createSlice({
   },
 });
 
-export const {
-  setCaseInputParameter,
-  setCaseAreaInputParameter,
-  addCase,
-  removeCase,
-  addAreaType,
-  removeAreaType,
-} = caseInputSlice.actions;
+export const caseInputActions = caseInputSlice.actions;
 
 export default caseInputSlice.reducer;
