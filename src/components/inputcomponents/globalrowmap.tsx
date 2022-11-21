@@ -7,7 +7,7 @@ import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { caseInputActions } from "store/caseinputslice";
 
-import { setLinkedAttribute } from "store/uislice";
+import { uiActions } from "store/uislice";
 
 type OptionalChildPropTypes = {
   option_values?: string[];
@@ -76,14 +76,14 @@ const GlobalRowMap = (props: PropTypes) => {
       });
 
       dispatch(
-        setLinkedAttribute({
+        uiActions.setLinkedAttribute({
           key: e,
           bool: !current_attribute_val,
         })
       );
     } else {
       dispatch(
-        setLinkedAttribute({
+        uiActions.setLinkedAttribute({
           key: e,
           bool: !current_attribute_val,
         })

@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { UiSliceTypes, LinkedAttributeTypes } from "types";
+import {
+  UiSliceTypes,
+  LinkedAttributeTypes,
+  WindowDimensionTypes,
+} from "types";
 
 const initialState: UiSliceTypes = {
   linked_attributes: {
@@ -21,6 +25,10 @@ const initialState: UiSliceTypes = {
     { case_id: 0, is_displayed: true, is_base_case: true },
     { case_id: 1, is_displayed: true, is_base_case: false },
   ],
+  sidebar_open: true,
+  sidebar_width: 0,
+  window_dimensions: { height: 0, width: 0 },
+  sidebar_ref: null,
 };
 
 export const UiSlice = createSlice({
@@ -36,9 +44,21 @@ export const UiSlice = createSlice({
       let typed_key = key as keyof LinkedAttributeTypes;
       state.linked_attributes[typed_key] = bool;
     },
+    setSidebarOpen: (state, action: PayloadAction<boolean>) => {
+      state.sidebar_open = action.payload;
+    },
+    setSidebarWidth: (state, action: PayloadAction<number>) => {
+      state.sidebar_width = action.payload;
+    },
+    setWindowDimensions: (
+      state,
+      action: PayloadAction<WindowDimensionTypes>
+    ) => {
+      state.window_dimensions = action.payload;
+    },
   },
 });
 
-export const { setLinkedAttribute } = UiSlice.actions;
+export const uiActions = UiSlice.actions;
 
 export default UiSlice.reducer;

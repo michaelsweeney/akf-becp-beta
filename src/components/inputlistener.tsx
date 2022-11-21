@@ -2,6 +2,7 @@ import { getProjectionFromReferenceBuildings } from "api/apicalls";
 import { useEffect } from "react";
 import { caseOutputActions } from "store/caseoutputslice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
+import { uiActions } from "store/uislice";
 
 import { ProjectionFromReferenceOutputTypes } from "types";
 
@@ -26,6 +27,23 @@ const InputListener = () => {
 
     handleChange();
   }, [case_inputs]);
+
+  // window listener
+  useEffect(() => {
+    const handleResize = () => {
+      dispatch(
+        uiActions.setWindowDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        })
+      );
+    };
+
+    // initialize size
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return <div style={{ display: "none" }}></div>;
 };

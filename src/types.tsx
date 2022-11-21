@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export type LocationStateTypes =
   | "AL"
   | "AR"
@@ -163,9 +165,17 @@ export type CaseDisplaySettingTypes = {
   is_base_case: boolean;
 };
 
+export type WindowDimensionTypes = {
+  height: number;
+  width: number;
+};
 export type UiSliceTypes = {
   linked_attributes: LinkedAttributeTypes;
   case_display_settings: CaseDisplaySettingTypes[];
+  sidebar_open: boolean;
+  sidebar_width: number;
+  window_dimensions: WindowDimensionTypes;
+  sidebar_ref: HTMLDivElement | null;
 };
 
 export type CaseResultsTypes = {

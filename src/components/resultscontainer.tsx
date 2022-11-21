@@ -1,16 +1,21 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector } from "store/hooks";
 
-const sidebar_width = "1000px";
+const sidebar_width = "750px";
 
-const Container = styled("div")`
-  display: inline-block;
-  width: calc(100% - ${sidebar_width});
-  overflow: scroll;
-  height: 100%;
-`;
+interface MainPropTypes {
+  open: boolean;
+  sidebarWidth: number;
+}
+const Main = styled("div")<MainPropTypes>(({ open, sidebarWidth }) => ({
+  backgroundColor: open ? "palevioletred" : "yellow",
+  color: open ? "white" : "palevioletred",
+  height: "100%",
+  marginLeft: sidebarWidth,
+  transition: "margin 250ms",
+}));
 
-const Box = styled("div")`
+const ResultsBox = styled("div")`
   margin: 10px;
   padding: 10px;
   border: 1px solid black;
@@ -21,11 +26,14 @@ const ResultsContainer = () => {
     (state) => state.case_outputs
   );
 
-  console.log(projection_from_reference_response);
+  const { sidebar_open, sidebar_width } = useAppSelector(
+    (state) => state.ui_settings
+  );
+
   return (
-    <Container>
+    <Main open={sidebar_open} sidebarWidth={sidebar_width}>
       {projection_from_reference_response.map((d, i) => (
-        <Box key={i}>
+        <ResultsBox key={i}>
           <div>id: {d.case_id}</div>
           <div>
             kg co2 absolute:{" "}
@@ -35,9 +43,9 @@ const ResultsContainer = () => {
             kg co2 per sf:{" "}
             {d.case_results.emissions_projection[0].kg_co2_per_sf}
           </div>
-        </Box>
+        </ResultsBox>
       ))}
-    </Container>
+    </Main>
   );
 };
 

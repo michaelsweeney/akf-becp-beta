@@ -46,7 +46,6 @@ async function getProjectionFromReferenceBuildings(
       design_areas: query_areas,
     };
 
-    console.log(case_query_schema);
     let case_results: any;
     case_results = await getQueryResults(
       case_query_schema,
