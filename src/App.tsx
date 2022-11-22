@@ -4,10 +4,12 @@ import { styled } from "@mui/system";
 import InputListener from "components/inputlistener";
 import ResultsContainer from "components/resultscontainer";
 import Sidebar from "components/sidebar";
+import LoadingSpinner from "components/loadingspinner";
+
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "store/hooks";
-
 import { uiActions } from "store/uislice";
+
 const theme = createTheme({
   palette: {
     secondary: {
@@ -19,11 +21,13 @@ const theme = createTheme({
   },
 });
 
-const Body = styled("div")`
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-`;
+const MainContainer = styled("div")<{}>(() => ({
+  width: "100vw",
+  height: "100vh",
+  overflow: "hidden",
+}));
+
+const Header = styled("div")<{}>(() => ({}));
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -36,13 +40,15 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <InputListener />
-      <Body>
-        <div>
+      <LoadingSpinner />
+      <MainContainer>
+        <Header>
           <Button onClick={toggleSidebar}>open</Button>
-        </div>
+        </Header>
+
         <Sidebar />
         <ResultsContainer />
-      </Body>
+      </MainContainer>
     </ThemeProvider>
   );
 };

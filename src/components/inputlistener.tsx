@@ -13,16 +13,16 @@ const InputListener = () => {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    const handleChange = async () => {
-      let query_results = await getProjectionFromReferenceBuildings(
-        case_inputs
-      );
-
-      dispatch(
-        caseOutputActions.setQueryResults(
-          query_results as ProjectionFromReferenceOutputTypes[]
-        )
-      );
+    const handleChange = () => {
+      dispatch(uiActions.setIsApiLoading(true));
+      getProjectionFromReferenceBuildings(case_inputs).then((query_results) => {
+        dispatch(
+          caseOutputActions.setQueryResults(
+            query_results as ProjectionFromReferenceOutputTypes[]
+          )
+        );
+        dispatch(uiActions.setIsApiLoading(false));
+      });
     };
 
     handleChange();

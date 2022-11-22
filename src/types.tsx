@@ -176,6 +176,7 @@ export type UiSliceTypes = {
   sidebar_width: number;
   window_dimensions: WindowDimensionTypes;
   sidebar_ref: HTMLDivElement | null;
+  is_api_loading: boolean;
 };
 
 export type CaseResultsTypes = {

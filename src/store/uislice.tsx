@@ -29,6 +29,7 @@ const initialState: UiSliceTypes = {
   sidebar_width: 0,
   window_dimensions: { height: 0, width: 0 },
   sidebar_ref: null,
+  is_api_loading: false,
 };
 
 export const UiSlice = createSlice({
@@ -55,6 +56,9 @@ export const UiSlice = createSlice({
       action: PayloadAction<WindowDimensionTypes>
     ) => {
       state.window_dimensions = action.payload;
+    },
+    setIsApiLoading: (state, action: PayloadAction<boolean>) => {
+      state.is_api_loading = action.payload;
     },
   },
 });

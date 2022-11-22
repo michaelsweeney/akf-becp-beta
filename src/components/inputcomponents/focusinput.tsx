@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import React from "react";
+import React, { useEffect, useState, FocusEvent, ChangeEvent } from "react";
 import { Input, FormControl } from "@mui/material";
 
 type PropTypes = {
@@ -11,6 +10,12 @@ type PropTypes = {
 
 const FocusInput = (props: PropTypes) => {
   const { callback, value, input_type, is_disabled = false } = props;
+
+  const [currentValue, setCurrentValue] = useState(value);
+
+  const handleChange = (v: string | number) => {
+    setCurrentValue(v);
+  };
 
   const handleInput = (v: string | number) => {
     if (input_type === "number") {
@@ -26,10 +31,13 @@ const FocusInput = (props: PropTypes) => {
         disabled={is_disabled}
         sx={{ paddingLeft: 1 }}
         type={input_type}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          handleInput(e.target.value);
+        onChange={(e: ChangeEvent) => {
+          handleChange((e.target as HTMLInputElement).value);
         }}
-        value={value}
+        onBlur={(e: FocusEvent) => {
+          handleInput((e.target as HTMLInputElement).value);
+        }}
+        value={currentValue}
       />
     </FormControl>
   );

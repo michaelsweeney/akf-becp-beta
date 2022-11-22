@@ -13,7 +13,7 @@ import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
 import { caseInputActions } from "store/caseinputslice";
-
+import { uiActions } from "store/uislice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { InputCaseTypes, HvacTemplateTypes } from "types";
 
@@ -31,6 +31,21 @@ const {
   hvac_templates,
 } = lookups;
 
+const StyledButton = styled(Button)<{}>(() => ({ margin: "10px" }));
+
+const TD = styled(TableCell)<{}>(() => ({ padding: "0px !important" }));
+
+const TDRotate = styled(TD)<{}>(() => ({
+  transform: "rotate(-90deg)",
+  textAlign: "center",
+  width: "50px",
+}));
+
+const InputContainer = styled("div")<{}>(() => ({
+  marginLeft: "15px",
+  marginRight: "10px",
+}));
+
 const InputForm = () => {
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
@@ -40,10 +55,6 @@ const InputForm = () => {
   let area_ids = [...new Set(area_inputs.map((d) => d.area_id))];
 
   const dispatch = useAppDispatch();
-
-  const styles = {
-    sxRotate: { transform: "rotate(-90deg)", textAlign: "center" },
-  };
 
   const handleAddCase = () => {
     dispatch(caseInputActions.addCase());
@@ -60,13 +71,29 @@ const InputForm = () => {
   const handleRemoveAreaType = (area_id: number) => {
     dispatch(caseInputActions.removeAreaType({ area_id }));
   };
-
-  const TD = styled(TableCell)`
-    padding: 0px !important;
-  `;
+  const handleClose = () => {
+    dispatch(uiActions.setSidebarOpen(false));
+  };
 
   return (
-    <div style={{ margin: 30 }}>
+    <InputContainer>
+      <StyledButton onClick={handleClose}>close</StyledButton>
+      <StyledButton
+        onClick={() => handleAddCase()}
+        variant="outlined"
+        size="small"
+      >
+        Add Case
+      </StyledButton>
+
+      <StyledButton
+        onClick={() => handleAddAreaType()}
+        variant="outlined"
+        size="small"
+      >
+        Add Area Type
+      </StyledButton>
+
       <TableContainer>
         <Table size="small">
           <TableBody>
@@ -87,28 +114,19 @@ const InputForm = () => {
                         color="secondary"
                         onClick={() => handleRemoveCase(e.case_id)}
                       >
-                        delete case
+                        remove case
                       </Button>
                     )}
                   </TD>
                 );
               })}
-              <TD>
-                <Button
-                  onClick={() => handleAddCase()}
-                  variant="contained"
-                  size="small"
-                >
-                  Add Case
-                </Button>
-              </TD>
             </TableRow>
 
             {/*---------- GLOBAL MAPPING ----------*/}
             <TableRow>
-              <TD variant="head" rowSpan={5} sx={styles.sxRotate}>
+              <TDRotate variant="head" rowSpan={5}>
                 GLOBAL
-              </TD>
+              </TDRotate>
 
               <GlobalRowMap
                 title="Case Name"
@@ -175,23 +193,24 @@ const InputForm = () => {
               return (
                 <React.Fragment key={i}>
                   <TableRow>
-                    <TD variant="head" rowSpan={7} sx={styles.sxRotate}>
+                    <TDRotate variant="head" rowSpan={7}>
                       <div>{`AREA TYPE ${i + 1}`}</div>
                       <div>
                         {area_ids.length === 1 ? (
                           <span></span>
                         ) : (
                           <Button
+                            sx={{ width: "100px !important" }}
                             onClick={() => handleRemoveAreaType(area_id)}
                             variant="text"
                             size="small"
                             color="secondary"
                           >
-                            Delete Area Type
+                            remove
                           </Button>
                         )}
                       </div>
-                    </TD>
+                    </TDRotate>
 
                     <AreaRowMap
                       area_id={area_id}
@@ -276,26 +295,10 @@ const InputForm = () => {
                 </React.Fragment>
               );
             })}
-
-            {/*---------- TABLE FOOTER ----------*/}
-            <TableRow>
-              <TD></TD>
-              <TD></TD>
-
-              <TD colSpan={global_inputs.length + 1}>
-                <Button
-                  onClick={() => handleAddAreaType()}
-                  variant="contained"
-                  size="small"
-                >
-                  Add Area Type
-                </Button>
-              </TD>
-            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </InputContainer>
   );
 };
 

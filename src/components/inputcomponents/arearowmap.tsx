@@ -23,9 +23,11 @@ type PropTypes = {
   component: React.FunctionComponent<OptionalChildPropTypes>;
 };
 
-const TD = styled(TableCell)`
-  padding: 0px !important;
-`;
+const TD = styled(TableCell)<{}>(() => ({
+  padding: "0px",
+  paddingLeft: "5px",
+  paddingRight: "5px",
+}));
 
 const AreaRowMap = (props: PropTypes) => {
   const { area_id, title, area_key, child_props, component } = props;

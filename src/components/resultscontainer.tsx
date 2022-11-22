@@ -15,11 +15,11 @@ const Main = styled("div")<MainPropTypes>(({ open, sidebarWidth }) => ({
   transition: "margin 250ms",
 }));
 
-const ResultsBox = styled("div")`
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid black;
-`;
+const ResultsBox = styled("div")<{}>(() => ({
+  margin: "10px",
+  padding: "10px",
+  border: "1px solid black",
+}));
 
 const ResultsContainer = () => {
   const { projection_from_reference_response } = useAppSelector(
