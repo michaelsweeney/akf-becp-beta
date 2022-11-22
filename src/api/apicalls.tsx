@@ -17,14 +17,16 @@ async function getQueryResults(params, subdirectory) {
 async function getProjectionFromReferenceBuildings(
   case_inputs: CaseInputSliceTypes
 ) {
-  const { global_inputs, area_inputs } = case_inputs;
-  const case_ids = new Set(area_inputs.map((d) => d.case_id));
+  const { api_inputs } = case_inputs;
+  const case_ids = new Set(api_inputs.areas.map((d) => d.case_id));
   let projection_results: any[] = [];
 
   /* --- ITERATE EACH CASE --- */
   for (const id of case_ids) {
-    let global = global_inputs.find((d) => d.case_id === id) as InputCaseTypes;
-    let areas = area_inputs.filter((d) => d.case_id === id);
+    let global = api_inputs.global.find(
+      (d) => d.case_id === id
+    ) as InputCaseTypes;
+    let areas = api_inputs.areas.filter((d) => d.case_id === id);
 
     /* --- GET CASE RESULTS --- */
     let query_areas = areas.map((area) => {

@@ -11,7 +11,11 @@ import * as lookups from "../lookups";
 const InputListener = () => {
   const { case_inputs, case_outputs } = useAppSelector((state) => state);
 
+  const { linked_attributes } = useAppSelector((state) => state.ui_settings);
+
   const dispatch = useAppDispatch();
+
+  // update whenever inputs change.
   useEffect(() => {
     const handleChange = () => {
       dispatch(uiActions.setIsApiLoading(true));
@@ -26,7 +30,7 @@ const InputListener = () => {
     };
 
     handleChange();
-  }, [case_inputs]);
+  }, [case_inputs.api_inputs]);
 
   // window listener
   useEffect(() => {

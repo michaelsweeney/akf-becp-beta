@@ -29,17 +29,18 @@ const TD = styled(TableCell)<{}>(() => ({
   paddingRight: "5px",
 }));
 
-const GlobalRowMap = (props: PropTypes) => {
+const CaseAttributeRowMap = (props: PropTypes) => {
   const { title, global_key, child_props, component } = props;
+
   const ChildComponent = component;
 
   const dispatch = useAppDispatch();
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
-  let { api_inputs } = case_inputs;
-  let case_ids = [...new Set(api_inputs.global.map((d) => d.case_id))];
+  let { case_attributes } = case_inputs;
+  let case_ids = [...new Set(case_attributes.map((d) => d.case_id))];
 
-  const handleSetCaseInputParameter = (
+  const handleSetCaseAttributeParameter = (
     payload: CaseInputParametersPayloadTypes
   ) => {
     let is_linked =
@@ -53,11 +54,11 @@ const GlobalRowMap = (props: PropTypes) => {
           key: payload.key,
           value: payload.value,
         };
-        dispatch(caseInputActions.setCaseGlobalParameter(proxy_payload));
+        dispatch(caseInputActions.setCaseAttributeParameter(proxy_payload));
       });
     } else {
       // set only the specified case
-      dispatch(caseInputActions.setCaseGlobalParameter(payload));
+      dispatch(caseInputActions.setCaseAttributeParameter(payload));
     }
   };
 
@@ -67,7 +68,7 @@ const GlobalRowMap = (props: PropTypes) => {
 
     if (!current_attribute_val) {
       // copy first column over to all others.
-      let first_case_obj = api_inputs.global[0];
+      let first_case_obj = case_attributes[0];
       case_ids.forEach((id) => {
         let proxy_payload: CaseInputParametersPayloadTypes = {
           key: e,
@@ -110,7 +111,7 @@ const GlobalRowMap = (props: PropTypes) => {
       <TD variant="head">{title}</TD>
 
       {case_ids.map((case_id, i) => {
-        let area_obj = api_inputs.global.find((d) => d.case_id === case_id);
+        let area_obj = case_attributes.find((d) => d.case_id === case_id);
 
         let is_row_linked =
           linked_attributes[global_key as keyof typeof linked_attributes];
@@ -125,7 +126,7 @@ const GlobalRowMap = (props: PropTypes) => {
             ? area_obj[global_key as keyof typeof area_obj]
             : undefined,
           callback: (c: string | number) =>
-            handleSetCaseInputParameter({
+            handleSetCaseAttributeParameter({
               case_id: case_id,
               value: c,
               key: global_key,
@@ -143,4 +144,4 @@ const GlobalRowMap = (props: PropTypes) => {
   );
 };
 
-export default GlobalRowMap;
+export default CaseAttributeRowMap;

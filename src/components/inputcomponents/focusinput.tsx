@@ -14,16 +14,29 @@ const FocusInput = (props: PropTypes) => {
   const [currentValue, setCurrentValue] = useState(value);
 
   const handleChange = (v: string | number) => {
-    setCurrentValue(v);
+    if (input_type === "number") {
+      setCurrentValue(+v);
+    } else {
+      setCurrentValue(v);
+    }
   };
 
-  const handleInput = (v: string | number) => {
+  const handleBlur = (v: string | number) => {
+    console.log(v, currentValue);
+    if (v === currentValue) {
+      return;
+    }
+
     if (input_type === "number") {
       callback(+v);
     } else {
       callback(v);
     }
   };
+
+  useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
 
   return (
     <FormControl size="small" fullWidth>
@@ -35,7 +48,7 @@ const FocusInput = (props: PropTypes) => {
           handleChange((e.target as HTMLInputElement).value);
         }}
         onBlur={(e: FocusEvent) => {
-          handleInput((e.target as HTMLInputElement).value);
+          handleBlur((e.target as HTMLInputElement).value);
         }}
         value={currentValue}
       />

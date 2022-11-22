@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 export type LocationStateTypes =
   | "AL"
   | "AR"
@@ -95,9 +93,25 @@ export type BuildingTypeTypes =
 
 export type HeatingFuelTypes = "Electricity" | "Natural Gas" | "Steam";
 
+export type HvacTemplateTagTypes =
+  | "elec_ashp"
+  | "elec_resistance"
+  | "ng_furnace"
+  | "vrf"
+  | "gshp";
+
+export type CaseAttributeTypes = {
+  case_name: string;
+  case_id: number;
+  hvac_template: string;
+};
+
 export type CaseInputSliceTypes = {
-  global_inputs: InputCaseTypes[];
-  area_inputs: InputAreaTypes[];
+  case_attributes: CaseAttributeTypes[];
+  api_inputs: {
+    global: InputCaseTypes[];
+    areas: InputAreaTypes[];
+  };
 };
 export type InputAreaTypes = {
   case_id: number;
@@ -113,8 +127,6 @@ export type InputAreaTypes = {
 
 export type InputCaseTypes = {
   case_id: number;
-  hvac_template: string;
-  case_name: string;
   location_state: LocationStateTypes;
   climate_zone: ClimateZoneTypes;
   projection_case: string;
@@ -125,7 +137,7 @@ export type CaseOutputSliceTypes = {
 };
 
 export type HvacTemplateTypes = {
-  tag: string;
+  tag: HvacTemplateTagTypes;
   case_name: string;
   heating_fuel: HeatingFuelTypes;
   heating_cop: number;

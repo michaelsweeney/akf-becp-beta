@@ -17,7 +17,7 @@ const initialState: UiSliceTypes = {
     building_area: true,
     ashrae_standard: true,
     heating_fuel: false,
-    heating_cop: false,
+    heating_cop: true,
     dhw_fuel: false,
     dhw_cop: false,
   },

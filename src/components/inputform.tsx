@@ -15,11 +15,12 @@ import { FocusInput } from "./inputcomponents/focusinput";
 import { caseInputActions } from "store/caseinputslice";
 import { uiActions } from "store/uislice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { InputCaseTypes, HvacTemplateTypes } from "types";
+import { InputCaseTypes, HvacTemplateTypes, CaseAttributeTypes } from "types";
 
 import * as lookups from "../lookups";
-import { AreaRowMap } from "./inputcomponents/arearowmap";
-import { GlobalRowMap } from "./inputcomponents/globalrowmap";
+import AreaRowMap from "./inputcomponents/arearowmap";
+import GlobalRowMap from "./inputcomponents/globalrowmap";
+import CaseAttributeRowMap from "./inputcomponents/caseattributerowmap";
 
 const {
   location_states,
@@ -48,11 +49,10 @@ const InputContainer = styled("div")<{}>(() => ({
 
 const InputForm = () => {
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
-  let { linked_attributes } = ui_settings;
-  let { global_inputs, area_inputs } = case_inputs;
+  let { api_inputs, case_attributes } = case_inputs;
 
-  let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
-  let area_ids = [...new Set(area_inputs.map((d) => d.area_id))];
+  let case_ids = [...new Set(api_inputs.global.map((d) => d.case_id))];
+  let area_ids = [...new Set(api_inputs.areas.map((d) => d.area_id))];
 
   const dispatch = useAppDispatch();
 
@@ -102,17 +102,24 @@ const InputForm = () => {
               <TD variant="head"></TD>
               <TD></TD>
               <TD></TD>
-              {global_inputs.map((e: InputCaseTypes, i: number) => {
+              {case_ids.map((case_id) => {
+                let global_obj = api_inputs.global.find(
+                  (d) => d.case_id === case_id
+                ) as InputCaseTypes;
+                let attribute_obj = case_attributes.find(
+                  (d) => d.case_id === case_id
+                ) as CaseAttributeTypes;
+
                 return (
-                  <TD key={i}>
-                    {global_inputs.length === 1 ? (
+                  <TD key={case_id}>
+                    {api_inputs.global.length === 1 ? (
                       <span></span>
                     ) : (
                       <Button
                         variant="text"
                         size="small"
                         color="secondary"
-                        onClick={() => handleRemoveCase(e.case_id)}
+                        onClick={() => handleRemoveCase(global_obj.case_id)}
                       >
                         remove case
                       </Button>
@@ -122,13 +129,12 @@ const InputForm = () => {
               })}
             </TableRow>
 
-            {/*---------- GLOBAL MAPPING ----------*/}
             <TableRow>
               <TDRotate variant="head" rowSpan={5}>
                 GLOBAL
               </TDRotate>
-
-              <GlobalRowMap
+              {/*---------- CASE ATTRIBUTE  MAPPING ----------*/}
+              <CaseAttributeRowMap
                 title="Case Name"
                 global_key="case_name"
                 component={FocusInput as React.FunctionComponent}
@@ -137,6 +143,22 @@ const InputForm = () => {
                 }}
               />
             </TableRow>
+            <TableRow>
+              <CaseAttributeRowMap
+                title="HVAC Template"
+                global_key="hvac_template"
+                component={SingleSelect as React.FunctionComponent}
+                child_props={{
+                  option_values: hvac_templates.map(
+                    (d: HvacTemplateTypes) => d.tag
+                  ),
+                  option_titles: hvac_templates.map(
+                    (d: HvacTemplateTypes) => d.case_name
+                  ),
+                }}
+              />
+            </TableRow>
+            {/*---------- GLOBAL INPUT  MAPPING ----------*/}
 
             <TableRow>
               <GlobalRowMap
@@ -171,23 +193,7 @@ const InputForm = () => {
               />
             </TableRow>
 
-            <TableRow>
-              <GlobalRowMap
-                title="HVAC Template"
-                global_key="hvac_template"
-                component={SingleSelect as React.FunctionComponent}
-                child_props={{
-                  option_values: hvac_templates.map(
-                    (d: HvacTemplateTypes) => d.tag
-                  ),
-                  option_titles: hvac_templates.map(
-                    (d: HvacTemplateTypes) => d.case_name
-                  ),
-                }}
-              />
-            </TableRow>
-
-            {/*---------- AREA MAP ----------*/}
+            {/*---------- AREA INPUT MAPPING ----------*/}
 
             {area_ids.map((area_id, i) => {
               return (

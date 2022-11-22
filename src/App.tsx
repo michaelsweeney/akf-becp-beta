@@ -10,6 +10,8 @@ import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { uiActions } from "store/uislice";
 
+import "App.css";
+
 const theme = createTheme({
   palette: {
     secondary: {

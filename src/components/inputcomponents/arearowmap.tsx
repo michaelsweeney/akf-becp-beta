@@ -36,8 +36,8 @@ const AreaRowMap = (props: PropTypes) => {
   const dispatch = useAppDispatch();
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
-  let { global_inputs, area_inputs } = case_inputs;
-  let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
+  let { api_inputs } = case_inputs;
+  let case_ids = [...new Set(api_inputs.global.map((d) => d.case_id))];
 
   const handleSetCaseAreaInputParameter = (
     payload: CaseAreaInputParametersPayloadTypes
@@ -68,11 +68,11 @@ const AreaRowMap = (props: PropTypes) => {
 
     if (!current_attribute_val) {
       // need to copy first column over to all others.
-      let first_case_obj = global_inputs[0];
+      let first_case_obj = api_inputs.global[0];
       let first_case_id = first_case_obj.case_id;
 
-      let first_case_area_objects = area_inputs.filter(
-        (d) => d.case_id == first_case_id
+      let first_case_area_objects = api_inputs.areas.filter(
+        (d) => d.case_id === first_case_id
       );
 
       first_case_area_objects.forEach((area_obj) => {
@@ -117,7 +117,7 @@ const AreaRowMap = (props: PropTypes) => {
       <TD variant="head">{title}</TD>
 
       {case_ids.map((case_id, i) => {
-        let area_obj = area_inputs.find(
+        let area_obj = api_inputs.areas.find(
           (d) => d.case_id === case_id && d.area_id === area_id
         );
 
@@ -156,4 +156,4 @@ const AreaRowMap = (props: PropTypes) => {
   );
 };
 
-export { AreaRowMap };
+export default AreaRowMap;

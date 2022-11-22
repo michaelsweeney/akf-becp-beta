@@ -8,86 +8,114 @@ import {
   CaseInputParametersPayloadTypes,
   CaseAreaInputParametersPayloadTypes,
   CaseInputSliceTypes,
+  CaseAttributeTypes,
 } from "types";
 
 const initialState: CaseInputSliceTypes = {
-  global_inputs: [
+  // any data not passed to api
+  case_attributes: [
     {
       case_id: 0,
-      hvac_template: "ng_furnace",
       case_name: "NG Heating",
-      location_state: "NY",
-      climate_zone: "4A",
-      projection_case: "MidCase",
+      hvac_template: "ng_furnace",
     },
     {
       case_id: 1,
-      hvac_template: "elec_resistance",
       case_name: "Electric Resistance Heating",
-      location_state: "NY",
-      climate_zone: "4A",
-      projection_case: "MidCase",
+      hvac_template: "elec_resistance",
     },
   ],
-  area_inputs: [
-    {
-      case_id: 1,
-      area_id: 0,
-      building_type: "ApartmentHighRise",
-      building_area: 200000,
-      heating_fuel: "Electricity",
-      dhw_fuel: "Electricity",
-      heating_cop: 1,
-      dhw_cop: 1,
-      ashrae_standard: "STD2016",
-    },
-    {
-      case_id: 0,
-      area_id: 0,
-      building_type: "ApartmentHighRise",
-      building_area: 200000,
-      heating_fuel: "Natural Gas",
-      dhw_fuel: "Natural Gas",
-      heating_cop: 0.8,
-      dhw_cop: 0.8,
-      ashrae_standard: "STD2016",
-    },
-    {
-      case_id: 1,
-      area_id: 1,
-      building_type: "OfficeSmall",
-      building_area: 200,
-      heating_fuel: "Electricity",
-      dhw_fuel: "Electricity",
-      heating_cop: 1,
-      dhw_cop: 1,
-      ashrae_standard: "STD2016",
-    },
-    {
-      case_id: 0,
-      area_id: 1,
-      building_type: "OfficeSmall",
-      building_area: 200,
-      heating_fuel: "Natural Gas",
-      dhw_fuel: "Natural Gas",
-      heating_cop: 0.8,
-      dhw_cop: 0.8,
-      ashrae_standard: "STD2016",
-    },
-  ],
+  api_inputs: {
+    global: [
+      {
+        case_id: 0,
+        location_state: "NY",
+        climate_zone: "4A",
+        projection_case: "MidCase",
+      },
+      {
+        case_id: 1,
+        location_state: "NY",
+        climate_zone: "4A",
+        projection_case: "MidCase",
+      },
+    ],
+    // area input api data
+    areas: [
+      {
+        case_id: 1,
+        area_id: 0,
+        building_type: "ApartmentHighRise",
+        building_area: 200000,
+        heating_fuel: "Electricity",
+        dhw_fuel: "Electricity",
+        heating_cop: 1,
+        dhw_cop: 1,
+        ashrae_standard: "STD2016",
+      },
+      {
+        case_id: 0,
+        area_id: 0,
+        building_type: "ApartmentHighRise",
+        building_area: 200000,
+        heating_fuel: "Natural Gas",
+        dhw_fuel: "Natural Gas",
+        heating_cop: 0.8,
+        dhw_cop: 0.8,
+        ashrae_standard: "STD2016",
+      },
+      // {
+      //   case_id: 1,
+      //   area_id: 1,
+      //   building_type: "OfficeSmall",
+      //   building_area: 200,
+      //   heating_fuel: "Electricity",
+      //   dhw_fuel: "Electricity",
+      //   heating_cop: 1,
+      //   dhw_cop: 1,
+      //   ashrae_standard: "STD2016",
+      // },
+      // {
+      //   case_id: 0,
+      //   area_id: 1,
+      //   building_type: "OfficeSmall",
+      //   building_area: 200,
+      //   heating_fuel: "Natural Gas",
+      //   dhw_fuel: "Natural Gas",
+      //   heating_cop: 0.8,
+      //   dhw_cop: 0.8,
+      //   ashrae_standard: "STD2016",
+      // },
+    ],
+  },
+  // global input api data
 };
 
 export const caseInputSlice = createSlice({
   name: "case_inputs",
   initialState: initialState,
   reducers: {
-    setCaseInputParameter: (
+    setCaseAttributeParameter: (
       state: CaseInputSliceTypes,
       action: PayloadAction<CaseInputParametersPayloadTypes>
     ) => {
       const { case_id, key, value } = action.payload;
 
-      let selection = state.global_inputs.find((d) => d.case_id === case_id);
+      let selection = state.case_attributes.find((d) => d.case_id === case_id);
+      //@ts-ignore
+
+      selection[key as keyof typeof selection] = value;
+    },
+
+    setCaseGlobalParameter: (
+      state: CaseInputSliceTypes,
+      action: PayloadAction<CaseInputParametersPayloadTypes>
+    ) => {
+      const { case_id, key, value } = action.payload;
+
+      let selection = state.api_inputs.global.find(
+        (d) => d.case_id === case_id
+      );
       //@ts-ignore
 
       selection[key as keyof typeof selection] = value;
@@ -97,7 +125,7 @@ export const caseInputSlice = createSlice({
       action: PayloadAction<CaseAreaInputParametersPayloadTypes>
     ) => {
       let { case_id, area_id, key, value } = action.payload;
-      let area_selection = state.area_inputs.find(
+      let area_selection = state.api_inputs.areas.find(
         (d) => d.case_id === case_id && d.area_id === area_id
       );
       //@ts-ignore
@@ -105,23 +133,33 @@ export const caseInputSlice = createSlice({
     },
 
     addCase: (state) => {
-      let { global_inputs, area_inputs } = state;
+      let { api_inputs, case_attributes } = state;
 
-      let case_ids = [...new Set(state.global_inputs.map((d) => d.case_id))];
+      let case_ids = [...new Set(api_inputs.global.map((d) => d.case_id))];
 
       let id_to_copy = Math.min(...case_ids);
 
       let new_id = Math.max(...case_ids) + 1;
 
-      let new_obj = { ...global_inputs.find((d) => d.case_id === id_to_copy) };
+      // add new attributes
+      let new_attribute_obj = {
+        ...case_attributes.find((d) => d.case_id === id_to_copy),
+      };
+      new_attribute_obj.case_id = new_id;
+      new_attribute_obj.case_name = new_attribute_obj.case_name + " (copy)";
+      case_attributes.push(new_attribute_obj as CaseAttributeTypes);
 
-      new_obj.case_id = new_id;
-      new_obj.case_name = new_obj.case_name + " (copy)";
+      // add global
+      let new_global_obj = {
+        ...api_inputs.global.find((d) => d.case_id === id_to_copy),
+      };
+      new_global_obj.case_id = new_id;
+      api_inputs.global.push(new_global_obj as InputCaseTypes);
 
-      global_inputs.push(new_obj as InputCaseTypes);
-
-      let areas_to_copy = area_inputs.filter((d) => d.case_id === id_to_copy);
-
+      // add areas
+      let areas_to_copy = api_inputs.areas.filter(
+        (d) => d.case_id === id_to_copy
+      );
       let new_area_array: InputAreaTypes[] = [];
       for (let i = 0; i < areas_to_copy.length; i++) {
         let new_obj: InputAreaTypes = {
@@ -130,32 +168,36 @@ export const caseInputSlice = createSlice({
         };
         new_area_array.push(new_obj);
       }
-      new_area_array.forEach((a) => area_inputs.push(a));
+      new_area_array.forEach((a) => api_inputs.areas.push(a));
     },
 
     removeCase: (state, action: PayloadAction<{ case_id: number }>) => {
       let { case_id } = action.payload;
 
-      state.global_inputs = state.global_inputs.filter(
+      state.api_inputs.global = state.api_inputs.global.filter(
         (d) => d.case_id !== case_id
       );
-      state.area_inputs = state.area_inputs.filter(
+      state.api_inputs.areas = state.api_inputs.areas.filter(
+        (d) => d.case_id !== case_id
+      );
+
+      state.case_attributes = state.case_attributes.filter(
         (d) => d.case_id !== case_id
       );
     },
 
     addAreaType: (state) => {
-      let { global_inputs, area_inputs } = state;
+      let { api_inputs } = state;
 
-      let area_ids = [...new Set(area_inputs.map((d) => d.area_id))];
-      let case_ids = [...new Set(global_inputs.map((d) => d.case_id))];
+      let area_ids = [...new Set(api_inputs.areas.map((d) => d.area_id))];
+      let case_ids = [...new Set(api_inputs.global.map((d) => d.case_id))];
       let case_id_to_copy = Math.min(...case_ids);
 
       let area_id_to_copy = Math.min(...area_ids);
       let new_area_id = Math.max(...area_ids) + 1;
 
       let copied_area_obj = {
-        ...area_inputs.filter(
+        ...api_inputs.areas.filter(
           (d) => d.case_id === case_id_to_copy && d.area_id === area_id_to_copy
         )[0],
       };
@@ -164,13 +206,13 @@ export const caseInputSlice = createSlice({
         let a_obj = { ...copied_area_obj };
         a_obj.case_id = case_id;
         a_obj.area_id = new_area_id;
-        area_inputs.push(a_obj);
+        api_inputs.areas.push(a_obj);
       });
     },
 
     removeAreaType: (state, action: PayloadAction<{ area_id: number }>) => {
       let { area_id } = action.payload;
-      state.area_inputs = state.area_inputs.filter(
+      state.api_inputs.areas = state.api_inputs.areas.filter(
         (d) => d.area_id !== area_id
       );
     },
