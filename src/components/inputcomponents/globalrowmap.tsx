@@ -61,7 +61,7 @@ const GlobalRowMap = (props: PropTypes) => {
     }
   };
 
-  const handleAttributeLinkClick = (e: string) => {
+  const handleToggleAttributeLink = (e: string) => {
     let key = e as keyof typeof linked_attributes;
     let current_attribute_val = linked_attributes[key];
 
@@ -100,7 +100,7 @@ const GlobalRowMap = (props: PropTypes) => {
           <span></span>
         ) : (
           <AttributeLinkButton
-            callback={() => handleAttributeLinkClick(global_key)}
+            callback={() => handleToggleAttributeLink(global_key)}
             is_linked={
               linked_attributes[global_key as keyof typeof linked_attributes]
             }

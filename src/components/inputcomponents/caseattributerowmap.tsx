@@ -54,15 +54,22 @@ const CaseAttributeRowMap = (props: PropTypes) => {
           key: payload.key,
           value: payload.value,
         };
+
         dispatch(caseInputActions.setCaseAttributeParameter(proxy_payload));
+        if (payload.key === "hvac_template") {
+          dispatch(caseInputActions.setInputsFromHVACTemplate(proxy_payload));
+        }
       });
     } else {
       // set only the specified case
       dispatch(caseInputActions.setCaseAttributeParameter(payload));
+      if (payload.key === "hvac_template") {
+        dispatch(caseInputActions.setInputsFromHVACTemplate(payload));
+      }
     }
   };
 
-  const handleAttributeLinkClick = (e: string) => {
+  const handleToggleAttributeLink = (e: string) => {
     let key = e as keyof typeof linked_attributes;
     let current_attribute_val = linked_attributes[key];
 
@@ -75,7 +82,10 @@ const CaseAttributeRowMap = (props: PropTypes) => {
           value: first_case_obj[e as keyof typeof first_case_obj],
           case_id: id,
         };
-        dispatch(caseInputActions.setCaseGlobalParameter(proxy_payload));
+        dispatch(caseInputActions.setCaseAttributeParameter(proxy_payload));
+        if (proxy_payload.key === "hvac_template") {
+          dispatch(caseInputActions.setInputsFromHVACTemplate(proxy_payload));
+        }
       });
 
       dispatch(
@@ -101,7 +111,7 @@ const CaseAttributeRowMap = (props: PropTypes) => {
           <span></span>
         ) : (
           <AttributeLinkButton
-            callback={() => handleAttributeLinkClick(global_key)}
+            callback={() => handleToggleAttributeLink(global_key)}
             is_linked={
               linked_attributes[global_key as keyof typeof linked_attributes]
             }

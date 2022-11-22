@@ -62,7 +62,7 @@ const AreaRowMap = (props: PropTypes) => {
     }
   };
 
-  const handleAttributeLinkClick = (e: string) => {
+  const handleToggleAttributeLink = (e: string) => {
     let key = e as keyof typeof linked_attributes;
     let current_attribute_val = linked_attributes[key];
 
@@ -108,7 +108,7 @@ const AreaRowMap = (props: PropTypes) => {
     <React.Fragment>
       <TD>
         <AttributeLinkButton
-          callback={() => handleAttributeLinkClick(area_key)}
+          callback={() => handleToggleAttributeLink(area_key)}
           is_linked={
             linked_attributes[area_key as keyof typeof linked_attributes]
           }

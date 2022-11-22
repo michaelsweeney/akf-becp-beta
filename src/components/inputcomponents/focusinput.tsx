@@ -22,7 +22,6 @@ const FocusInput = (props: PropTypes) => {
   };
 
   const handleBlur = (v: string | number) => {
-    console.log(v, currentValue);
     if (v === currentValue) {
       return;
     }

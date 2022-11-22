@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { current } from "@reduxjs/toolkit";
-import { Reducer } from "redux";
+
+import { hvac_templates } from "lookups";
 
 import {
   InputCaseTypes,
@@ -9,6 +9,7 @@ import {
   CaseAreaInputParametersPayloadTypes,
   CaseInputSliceTypes,
   CaseAttributeTypes,
+  HvacTemplateTypes,
 } from "types";
 
 const initialState: CaseInputSliceTypes = {
@@ -107,6 +108,29 @@ export const caseInputSlice = createSlice({
       selection[key as keyof typeof selection] = value;
     },
 
+    setInputsFromHVACTemplate: (
+      state: CaseInputSliceTypes,
+      action: PayloadAction<CaseInputParametersPayloadTypes>
+    ) => {
+      console.log(action.payload);
+      let template_key = action.payload.value;
+
+      let template = hvac_templates.find(
+        (d) => d.tag === template_key
+      ) as HvacTemplateTypes;
+
+      let case_id = action.payload.case_id;
+
+      state.api_inputs.areas.forEach((area, i) => {
+        if (area.case_id === case_id) {
+          let area_obj = state.api_inputs.areas[i];
+          area_obj.dhw_cop = template.heating_cop;
+          area_obj.heating_cop = template.heating_cop;
+          area_obj.dhw_fuel = template.heating_fuel;
+          area_obj.heating_fuel = template.heating_fuel;
+        }
+      });
+    },
     setCaseGlobalParameter: (
       state: CaseInputSliceTypes,
       action: PayloadAction<CaseInputParametersPayloadTypes>
