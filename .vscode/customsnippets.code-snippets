@@ -15,9 +15,14 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
+	"Styled MUI Component with Props": {
+		"prefix": ["muistyledprops", "styledprops"],
+		"body": ["styled('div')<{}>(() => ({\n\n}));"],
+		"description": "Setup for Styled MUI Component including Props."
+	},
 	"Styled MUI Component": {
 		"prefix": ["muistyled", "styled"],
-		"body": ["styled('div')<{}>(() => ({}));"],
+		"body": ["styled('div')({\n\n});"],
 		"description": "Setup for Styled MUI Component including Props."
-	}
+	},
 }

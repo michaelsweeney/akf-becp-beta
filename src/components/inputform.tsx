@@ -13,16 +13,14 @@ import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
 
 import { caseInputActions } from "store/caseinputslice";
-import { uiActions } from "store/uislice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { InputCaseTypes, HvacTemplateTypes, CaseAttributeTypes } from "types";
+import { InputCaseTypes, HvacTemplateTypes } from "types";
 
 import * as lookups from "../lookups";
 import AreaRowMap from "./inputcomponents/arearowmap";
 import GlobalRowMap from "./inputcomponents/globalrowmap";
 import CaseAttributeRowMap from "./inputcomponents/caseattributerowmap";
-import { arrow_back, arrow_forward, IconSvg } from "./svgicons";
-import { colors } from "./styles/colors";
+
 const {
   location_states,
   climate_zones,
@@ -49,8 +47,8 @@ const InputContainer = styled("div")<{}>(() => ({
 }));
 
 const InputForm = () => {
-  let { case_inputs, ui_settings } = useAppSelector((state) => state);
-  let { api_inputs, case_attributes } = case_inputs;
+  let { case_inputs } = useAppSelector((state) => state);
+  let { api_inputs } = case_inputs;
 
   let case_ids = [...new Set(api_inputs.global.map((d) => d.case_id))];
   let area_ids = [...new Set(api_inputs.areas.map((d) => d.area_id))];
@@ -72,15 +70,9 @@ const InputForm = () => {
   const handleRemoveAreaType = (area_id: number) => {
     dispatch(caseInputActions.removeAreaType({ area_id }));
   };
-  const handleClose = () => {
-    dispatch(uiActions.setSidebarOpen(false));
-  };
 
   return (
     <InputContainer>
-      <StyledButton onClick={handleClose}>
-        <IconSvg fill={colors.primary} d={arrow_back} />
-      </StyledButton>
       <StyledButton
         onClick={() => handleAddCase()}
         variant="outlined"
@@ -109,10 +101,6 @@ const InputForm = () => {
                 let global_obj = api_inputs.global.find(
                   (d) => d.case_id === case_id
                 ) as InputCaseTypes;
-                let attribute_obj = case_attributes.find(
-                  (d) => d.case_id === case_id
-                ) as CaseAttributeTypes;
-
                 return (
                   <TD key={case_id}>
                     {api_inputs.global.length === 1 ? (

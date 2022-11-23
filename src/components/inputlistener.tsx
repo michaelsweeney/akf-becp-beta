@@ -6,12 +6,8 @@ import { uiActions } from "store/uislice";
 
 import { ProjectionFromReferenceOutputTypes } from "types";
 
-import * as lookups from "../lookups";
-
 const InputListener = () => {
-  const { case_inputs, case_outputs } = useAppSelector((state) => state);
-
-  const { linked_attributes } = useAppSelector((state) => state.ui_settings);
+  const { case_inputs } = useAppSelector((state) => state);
 
   const dispatch = useAppDispatch();
 

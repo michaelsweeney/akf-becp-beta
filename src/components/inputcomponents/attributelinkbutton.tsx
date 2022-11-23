@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import React from "react";
-
 import { IconSvg, link_off_path, link_on_path } from "../svgicons";
 import { Button } from "@mui/material";
 

@@ -5,15 +5,24 @@ import { uiActions } from "store/uislice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { Drawer, Button } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { current } from "immer";
+import { arrow_back, IconSvg } from "./svgicons";
+import { colors } from "./styles/colors";
+
+const Title = styled("div")({
+  display: "inline-block",
+  fontSize: "24px",
+  margin: "20px",
+});
+const StyledButton = styled(Button)<{}>(() => ({
+  display: "inline-block",
+  margin: "10px",
+}));
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const ref = useRef(null);
 
-  const { sidebar_open, sidebar_width } = useAppSelector(
-    (state) => state.ui_settings
-  );
+  const { sidebar_open } = useAppSelector((state) => state.ui_settings);
 
   const { case_inputs } = useAppSelector((state) => state);
 
@@ -44,7 +53,14 @@ const Sidebar = () => {
       variant="persistent"
       ref={ref}
     >
-      <InputForm />
+      <div>
+        <StyledButton onClick={handleClose}>
+          <IconSvg fill={colors.primary} d={arrow_back} />
+        </StyledButton>
+        <Title>Building Inputs</Title>
+
+        <InputForm />
+      </div>
     </Drawer>
   );
 };

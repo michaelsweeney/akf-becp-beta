@@ -1,8 +1,6 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector } from "store/hooks";
 
-const sidebar_width = "750px";
-
 interface MainPropTypes {
   open: boolean;
   sidebarWidth: number;

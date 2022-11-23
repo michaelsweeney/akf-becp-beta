@@ -124,8 +124,6 @@ const CaseAttributeRowMap = (props: PropTypes) => {
       {case_ids.map((case_id, i) => {
         let attribute_obj = case_attributes.find((d) => d.case_id === case_id);
 
-        console.log(attribute_obj);
-
         let is_row_linked =
           linked_attributes[global_key as keyof typeof linked_attributes];
         let is_disabled: boolean = false;
