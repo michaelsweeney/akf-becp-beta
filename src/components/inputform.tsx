@@ -21,7 +21,8 @@ import * as lookups from "../lookups";
 import AreaRowMap from "./inputcomponents/arearowmap";
 import GlobalRowMap from "./inputcomponents/globalrowmap";
 import CaseAttributeRowMap from "./inputcomponents/caseattributerowmap";
-
+import { arrow_back, arrow_forward, IconSvg } from "./svgicons";
+import { colors } from "./styles/colors";
 const {
   location_states,
   climate_zones,
@@ -77,7 +78,9 @@ const InputForm = () => {
 
   return (
     <InputContainer>
-      <StyledButton onClick={handleClose}>close</StyledButton>
+      <StyledButton onClick={handleClose}>
+        <IconSvg fill={colors.primary} d={arrow_back} />
+      </StyledButton>
       <StyledButton
         onClick={() => handleAddCase()}
         variant="outlined"

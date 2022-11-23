@@ -109,11 +109,7 @@ export const building_types: BuildingTypeTypes[] = [
   "ApartmentMidRise",
 ];
 
-export const heating_fuels: HeatingFuelTypes[] = [
-  "Electricity",
-  "Natural Gas",
-  "Steam",
-];
+export const heating_fuels: HeatingFuelTypes[] = ["Electricity", "Natural Gas"];
 
 export const hvac_templates: HvacTemplateTypes[] = [
   {

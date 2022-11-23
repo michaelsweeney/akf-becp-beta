@@ -35,6 +35,7 @@ const CaseAttributeRowMap = (props: PropTypes) => {
   const ChildComponent = component;
 
   const dispatch = useAppDispatch();
+
   let { case_inputs, ui_settings } = useAppSelector((state) => state);
   let { linked_attributes } = ui_settings;
   let { case_attributes } = case_inputs;
@@ -121,7 +122,9 @@ const CaseAttributeRowMap = (props: PropTypes) => {
       <TD variant="head">{title}</TD>
 
       {case_ids.map((case_id, i) => {
-        let area_obj = case_attributes.find((d) => d.case_id === case_id);
+        let attribute_obj = case_attributes.find((d) => d.case_id === case_id);
+
+        console.log(attribute_obj);
 
         let is_row_linked =
           linked_attributes[global_key as keyof typeof linked_attributes];
@@ -132,8 +135,8 @@ const CaseAttributeRowMap = (props: PropTypes) => {
 
         let props_to_add = {
           ...child_props,
-          value: area_obj
-            ? area_obj[global_key as keyof typeof area_obj]
+          value: attribute_obj
+            ? attribute_obj[global_key as keyof typeof attribute_obj]
             : undefined,
           callback: (c: string | number) =>
             handleSetCaseAttributeParameter({
@@ -142,6 +145,7 @@ const CaseAttributeRowMap = (props: PropTypes) => {
               key: global_key,
             }),
           is_disabled: is_disabled,
+          is_blank: attribute_obj?.template_overridden,
         };
 
         return (

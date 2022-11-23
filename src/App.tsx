@@ -9,16 +9,17 @@ import LoadingSpinner from "components/loadingspinner";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { uiActions } from "store/uislice";
-
+import { colors } from "components/styles/colors";
 import "App.css";
+import { arrow_forward, IconSvg } from "components/svgicons";
 
 const theme = createTheme({
   palette: {
     secondary: {
-      main: "#cf202e",
+      main: colors.secondary,
     },
     primary: {
-      main: "#283759",
+      main: colors.primary,
     },
   },
 });
@@ -45,7 +46,9 @@ const App = () => {
       <LoadingSpinner />
       <MainContainer>
         <Header>
-          <Button onClick={toggleSidebar}>open</Button>
+          <Button onClick={toggleSidebar}>
+            <IconSvg fill={colors.primary} d={arrow_forward} />
+          </Button>
         </Header>
 
         <Sidebar />

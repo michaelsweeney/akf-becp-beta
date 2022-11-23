@@ -15,7 +15,7 @@ const InputListener = () => {
 
   const dispatch = useAppDispatch();
 
-  // update whenever inputs change.
+  /* -- fire whenever inputs change -- */
   useEffect(() => {
     const handleChange = () => {
       dispatch(uiActions.setIsApiLoading(true));
@@ -32,7 +32,7 @@ const InputListener = () => {
     handleChange();
   }, [case_inputs.api_inputs]);
 
-  // window listener
+  /* -- window listeners -- */
   useEffect(() => {
     const handleResize = () => {
       dispatch(

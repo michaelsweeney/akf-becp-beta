@@ -10,6 +10,7 @@ import {
   CaseInputSliceTypes,
   CaseAttributeTypes,
   HvacTemplateTypes,
+  HeatingFuelTypes,
 } from "types";
 
 const initialState: CaseInputSliceTypes = {
@@ -19,11 +20,13 @@ const initialState: CaseInputSliceTypes = {
       case_id: 0,
       case_name: "NG Heating",
       hvac_template: "ng_furnace",
+      template_overridden: false,
     },
     {
       case_id: 1,
       case_name: "Electric Resistance Heating",
       hvac_template: "elec_resistance",
+      template_overridden: false,
     },
   ],
   api_inputs: {
@@ -112,7 +115,6 @@ export const caseInputSlice = createSlice({
       state: CaseInputSliceTypes,
       action: PayloadAction<CaseInputParametersPayloadTypes>
     ) => {
-      console.log(action.payload);
       let template_key = action.payload.value;
 
       let template = hvac_templates.find(
@@ -120,16 +122,22 @@ export const caseInputSlice = createSlice({
       ) as HvacTemplateTypes;
 
       let case_id = action.payload.case_id;
-
+      /*---hardset inputs to hvac template values---*/
       state.api_inputs.areas.forEach((area, i) => {
         if (area.case_id === case_id) {
           let area_obj = state.api_inputs.areas[i];
-          area_obj.dhw_cop = template.heating_cop;
-          area_obj.heating_cop = template.heating_cop;
-          area_obj.dhw_fuel = template.heating_fuel;
-          area_obj.heating_fuel = template.heating_fuel;
+          area_obj.dhw_cop = template.heating_cop as number;
+          area_obj.heating_cop = template.heating_cop as number;
+          area_obj.dhw_fuel = template.heating_fuel as HeatingFuelTypes;
+          area_obj.heating_fuel = template.heating_fuel as HeatingFuelTypes;
         }
       });
+
+      /*---set hvac override to false---*/
+      let attribute_obj = state.case_attributes.find(
+        (d) => d.case_id === case_id
+      ) as CaseAttributeTypes;
+      attribute_obj.template_overridden = false;
     },
     setCaseGlobalParameter: (
       state: CaseInputSliceTypes,
@@ -152,8 +160,26 @@ export const caseInputSlice = createSlice({
       let area_selection = state.api_inputs.areas.find(
         (d) => d.case_id === case_id && d.area_id === area_id
       );
+
+      //@ts-ignore
+      let prev_val = area_selection[key];
+
       //@ts-ignore
       area_selection[key] = value;
+
+      /* -- set case hvac template to 'user-defined' if value is different than existing value */
+      if (
+        ["heating_cop", "heating_fuel", "dhw_fuel", "dhw_cop"].includes(key)
+      ) {
+        if (prev_val !== value) {
+          let case_attribute_obj = state.case_attributes.find(
+            (d) => d.case_id === case_id
+          );
+          if (case_attribute_obj) {
+            case_attribute_obj.template_overridden = true;
+          }
+        }
+      }
     },
 
     addCase: (state) => {

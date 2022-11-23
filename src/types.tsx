@@ -103,7 +103,8 @@ export type HvacTemplateTagTypes =
 export type CaseAttributeTypes = {
   case_name: string;
   case_id: number;
-  hvac_template: string;
+  hvac_template: HvacTemplateTagTypes;
+  template_overridden: boolean;
 };
 
 export type CaseInputSliceTypes = {
@@ -139,8 +140,8 @@ export type CaseOutputSliceTypes = {
 export type HvacTemplateTypes = {
   tag: HvacTemplateTagTypes;
   case_name: string;
-  heating_fuel: HeatingFuelTypes;
-  heating_cop: number;
+  heating_fuel: HeatingFuelTypes | null;
+  heating_cop: number | null;
 };
 
 export type CaseInputParametersPayloadTypes = {
