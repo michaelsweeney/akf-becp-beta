@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { CaseAreaInputParametersPayloadTypes } from "types";
-import TableCell from "@mui/material/TableCell";
+import { TD } from "components/styles/components";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { caseInputActions } from "store/caseinputslice";
@@ -22,12 +22,6 @@ type PropTypes = {
   child_props: OptionalChildPropTypes;
   component: React.FunctionComponent<OptionalChildPropTypes>;
 };
-
-const TD = styled(TableCell)<{}>(() => ({
-  padding: "0px",
-  paddingLeft: "5px",
-  paddingRight: "5px",
-}));
 
 const AreaRowMap = (props: PropTypes) => {
   const { area_id, title, area_key, child_props, component } = props;

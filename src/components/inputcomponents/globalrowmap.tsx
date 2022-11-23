@@ -8,6 +8,7 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 import { caseInputActions } from "store/caseinputslice";
 
 import { uiActions } from "store/uislice";
+import { TD } from "components/styles/components";
 
 type OptionalChildPropTypes = {
   option_values?: string[];
@@ -22,12 +23,6 @@ type PropTypes = {
   child_props: OptionalChildPropTypes;
   component: React.FunctionComponent<OptionalChildPropTypes>;
 };
-
-const TD = styled(TableCell)<{}>(() => ({
-  padding: "0px",
-  paddingLeft: "5px",
-  paddingRight: "5px",
-}));
 
 const GlobalRowMap = (props: PropTypes) => {
   const { title, global_key, child_props, component } = props;

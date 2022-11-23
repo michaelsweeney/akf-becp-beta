@@ -6,6 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { caseInputActions } from "store/caseinputslice";
+import { TD } from "components/styles/components";
 
 import { uiActions } from "store/uislice";
 
@@ -22,12 +23,6 @@ type PropTypes = {
   child_props: OptionalChildPropTypes;
   component: React.FunctionComponent<OptionalChildPropTypes>;
 };
-
-const TD = styled(TableCell)<{}>(() => ({
-  padding: "0px",
-  paddingLeft: "5px",
-  paddingRight: "5px",
-}));
 
 const CaseAttributeRowMap = (props: PropTypes) => {
   const { title, global_key, child_props, component } = props;

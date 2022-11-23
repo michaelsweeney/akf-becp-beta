@@ -20,6 +20,7 @@ import * as lookups from "../lookups";
 import AreaRowMap from "./inputcomponents/arearowmap";
 import GlobalRowMap from "./inputcomponents/globalrowmap";
 import CaseAttributeRowMap from "./inputcomponents/caseattributerowmap";
+import { TD, TDRotate, StyledButton } from "components/styles/components";
 
 const {
   location_states,
@@ -30,16 +31,6 @@ const {
   heating_fuels,
   hvac_templates,
 } = lookups;
-
-const StyledButton = styled(Button)<{}>(() => ({ margin: "10px" }));
-
-const TD = styled(TableCell)<{}>(() => ({ padding: "0px !important" }));
-
-const TDRotate = styled(TD)<{}>(() => ({
-  transform: "rotate(-90deg)",
-  textAlign: "center",
-  width: "50px",
-}));
 
 const InputContainer = styled("div")<{}>(() => ({
   marginLeft: "15px",

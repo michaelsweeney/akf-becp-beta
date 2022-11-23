@@ -3,7 +3,7 @@ import styled from "@mui/styled-engine";
 import { Button } from "@mui/material";
 import { IconSvg, arrow_forward } from "./svgicons";
 import { colors } from "./styles/colors";
-
+import { Title } from "components/styles/components";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 
 import { uiActions } from "store/uislice";
@@ -29,10 +29,6 @@ const TitleContainer = styled("div")<{ sidebar_width: number }>((props) => ({
   marginLeft: props.sidebar_width,
   transition: "margin 250ms",
 }));
-
-const Title = styled("div")({
-  fontSize: 24,
-});
 
 const Header = () => {
   const dispatch = useAppDispatch();

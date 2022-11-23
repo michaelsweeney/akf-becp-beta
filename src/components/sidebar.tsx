@@ -8,15 +8,7 @@ import { useEffect, useRef } from "react";
 import { arrow_back, IconSvg } from "./svgicons";
 import { colors } from "./styles/colors";
 
-const Title = styled("div")({
-  display: "inline-block",
-  fontSize: "24px",
-  margin: "20px",
-});
-const StyledButton = styled(Button)<{}>(() => ({
-  display: "inline-block",
-  margin: "10px",
-}));
+import { Title, StyledButton } from "components/styles/components";
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();

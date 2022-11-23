@@ -13,7 +13,7 @@ const Background = styled("div")<{ active: boolean }>((props) => ({
   justifyContent: "center",
 }));
 
-const SpinnerContainer = styled("div")<{}>((props) => ({}));
+const SpinnerContainer = styled("div")<{}>(() => ({}));
 
 const LoadingSpinner = () => {
   const { is_api_loading } = useAppSelector((state) => state.ui_settings);
