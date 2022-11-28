@@ -1,14 +1,12 @@
 import React from "react";
-import { styled } from "@mui/system";
 
 import { CaseInputParametersPayloadTypes } from "types";
-import TableCell from "@mui/material/TableCell";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { caseInputActions } from "store/caseinputslice";
 
 import { uiActions } from "store/uislice";
-import { TD } from "components/styles/components";
+import { TD } from "styles/components";
 
 type OptionalChildPropTypes = {
   option_values?: string[];

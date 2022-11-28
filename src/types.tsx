@@ -182,14 +182,16 @@ export type WindowDimensionTypes = {
   height: number;
   width: number;
 };
+
+export type CurrentViewTypes = "enduse" | "carbon";
 export type UiSliceTypes = {
   linked_attributes: LinkedAttributeTypes;
-  case_display_settings: CaseDisplaySettingTypes[];
   sidebar_open: boolean;
   sidebar_width: number;
   window_dimensions: WindowDimensionTypes;
   sidebar_ref: HTMLDivElement | null;
   is_api_loading: boolean;
+  current_view: CurrentViewTypes;
 };
 
 export type CaseResultsTypes = {
@@ -215,15 +217,15 @@ export type CaseResultsTypes = {
       kbtu_absolute: number;
       subcategory: string;
     }[];
-  };
-  enduses_per_sf: {
-    area: number;
-    enduses_absolute_kbtu: {
-      enduse: string;
-      fuel: string;
-      kbtu_absolute: number;
-      subcategory: string;
-    }[];
+    enduses_per_sf: {
+      area: number;
+      enduses_absolute_kbtu: {
+        enduse: string;
+        fuel: string;
+        kbtu_absolute: number;
+        subcategory: string;
+      }[];
+    };
   };
   projection_factors: {
     case: string;

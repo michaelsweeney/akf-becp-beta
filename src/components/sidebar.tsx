@@ -1,4 +1,3 @@
-import { styled } from "@mui/system";
 import InputForm from "components/inputform";
 import { uiActions } from "store/uislice";
 
@@ -6,9 +5,9 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 import { Drawer, Button } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { arrow_back, IconSvg } from "./svgicons";
-import { colors } from "./styles/colors";
+import { colors } from "../styles/colors";
 
-import { Title, StyledButton } from "components/styles/components";
+import { Title, StyledButton } from "styles/components";
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
@@ -50,7 +49,6 @@ const Sidebar = () => {
           <IconSvg fill={colors.primary} d={arrow_back} />
         </StyledButton>
         <Title>Building Inputs</Title>
-
         <InputForm />
       </div>
     </Drawer>

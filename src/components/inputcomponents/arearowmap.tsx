@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import { CaseAreaInputParametersPayloadTypes } from "types";
-import { TD } from "components/styles/components";
+import { TD } from "styles/components";
 import { AttributeLinkButton } from "./attributelinkbutton";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { caseInputActions } from "store/caseinputslice";

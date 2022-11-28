@@ -1,12 +1,10 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/system";
-import InputListener from "components/inputlistener";
-import ResultsContainer from "components/resultscontainer";
-import Sidebar from "components/sidebar";
-import LoadingSpinner from "components/loadingspinner";
-import Header from "components/header";
+import { colors } from "styles/colors";
 
-import { colors } from "components/styles/colors";
+import InputListener from "components/inputlistener";
+import LoadingSpinner from "components/loadingspinner";
+import MainContainer from "components/maincontainer";
 
 const theme = createTheme({
   palette: {
@@ -19,23 +17,12 @@ const theme = createTheme({
   },
 });
 
-const MainContainer = styled("div")<{}>(() => ({
-  width: "100vw",
-  height: "100vh",
-  overflow: "hidden",
-}));
-
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <InputListener />
       <LoadingSpinner />
-      <MainContainer>
-        <Header />
-
-        <Sidebar />
-        <ResultsContainer />
-      </MainContainer>
+      <MainContainer />
     </ThemeProvider>
   );
 };

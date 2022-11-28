@@ -25,4 +25,19 @@
 		"body": ["styled('div')({\n\n});"],
 		"description": "Setup for Styled MUI Component including Props."
 	},
+	"New Component": {
+		"prefix": ["newcomponent", "templatecomponent"],
+		"body": [
+			"import styled from \"@mui/styled-engine\";",
+			"import { useAppSelector, useAppDispatch } from \"store/hooks\"",
+			"import {caseInputActions} from \"store/caseinputslice\"",
+			"import {uiActions} from \"store/uislice\"",
+			"import {caseOutputSlice} from \"store/caseoutputslice\"",
+			"interface PropTypes {}",
+			"const TemplateStyle = styled('div')<{}>(() => ({\n\n}))",
+			"const TemplateComponent = (props: PropTypes) => {\n const dispatch = useAppDispatch();\nreturn <div></div>}",
+			"export default TemplateComponent"
+		],
+		"description": "2022-11-28 most recent component patterh"
+	}
 }

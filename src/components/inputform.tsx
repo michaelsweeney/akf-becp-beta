@@ -20,7 +20,7 @@ import * as lookups from "../lookups";
 import AreaRowMap from "./inputcomponents/arearowmap";
 import GlobalRowMap from "./inputcomponents/globalrowmap";
 import CaseAttributeRowMap from "./inputcomponents/caseattributerowmap";
-import { TD, TDRotate, StyledButton } from "components/styles/components";
+import { TD, TDRotate, StyledButton } from "styles/components";
 
 const {
   location_states,

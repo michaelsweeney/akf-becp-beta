@@ -4,6 +4,7 @@ import {
   UiSliceTypes,
   LinkedAttributeTypes,
   WindowDimensionTypes,
+  CurrentViewTypes,
 } from "types";
 
 const initialState: UiSliceTypes = {
@@ -21,15 +22,13 @@ const initialState: UiSliceTypes = {
     dhw_fuel: false,
     dhw_cop: false,
   },
-  case_display_settings: [
-    { case_id: 0, is_displayed: true, is_base_case: true },
-    { case_id: 1, is_displayed: true, is_base_case: false },
-  ],
+
   sidebar_open: true,
   sidebar_width: 0,
   window_dimensions: { height: 0, width: 0 },
   sidebar_ref: null,
   is_api_loading: false,
+  current_view: "enduse",
 };
 
 export const UiSlice = createSlice({
@@ -59,6 +58,9 @@ export const UiSlice = createSlice({
     },
     setIsApiLoading: (state, action: PayloadAction<boolean>) => {
       state.is_api_loading = action.payload;
+    },
+    setCurrentView: (state, action: PayloadAction<CurrentViewTypes>) => {
+      state.current_view = action.payload;
     },
   },
 });

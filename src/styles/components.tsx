@@ -3,6 +3,8 @@ import { TableCell } from "@mui/material";
 
 import { Button } from "@mui/material";
 
+import { colors } from "./colors";
+
 export const TD = styled(TableCell)<{}>(() => ({
   padding: "0px",
   paddingLeft: "5px",
