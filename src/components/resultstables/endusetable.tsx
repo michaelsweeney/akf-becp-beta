@@ -12,12 +12,15 @@ import {
   TableRow,
 } from "@mui/material";
 import { TD } from "styles/components";
+import {
+  ProjectionFromReferenceOutputTypes,
+  EnduseTableFlatResultsObject,
+  EnduseKeyTypes,
+  EnduseValTypes,
+} from "types";
+import { group } from "console";
 
-interface PropTypes {}
-
-const TemplateStyle = styled("div")<{}>(() => ({}));
-
-const EnduseTable = (props: PropTypes) => {
+const EnduseTable = () => {
   const dispatch = useAppDispatch();
   const { projection_from_reference_response } = useAppSelector(
     (state) => state.case_outputs
@@ -27,34 +30,115 @@ const EnduseTable = (props: PropTypes) => {
 
   const output_array = projection_from_reference_response;
 
-  // map case_name to output_array...
-  // reorder function for case ids.
+  // constants to be pulled out into state options and/or lookups
+  let enduse_key = "enduses_per_sf";
+  let val_key = "kbtu_per_sf";
+  let groupby_key = "tag";
 
-  /* 
-  this fails, but it seems like there's a typing issue between what typescript
-  assumes and what api returns.
-  <TD>{d.case_results.enduses.enduses_per_sf.area}</TD>
-  */
+  let enduse_results_flat: EnduseTableFlatResultsObject[] = [];
+  let enduse_table_array: EnduseTableFlatResultsObject[][] = [];
 
-  console.log(output_array);
+  let output_count = output_array.length;
+  let input_count = case_inputs.case_attributes.length;
+
+  if (output_count !== 0 && input_count === output_count) {
+    let case_ids = case_inputs.case_attributes.map((d) => d.case_id);
+
+    case_ids.forEach((case_id) => {
+      let case_name = case_inputs.case_attributes.find(
+        (d) => d.case_id === case_id
+      )?.case_name as string;
+
+      let case_outputs = output_array.find(
+        (d) => d.case_id === case_id
+      ) as ProjectionFromReferenceOutputTypes;
+
+      let enduses =
+        case_outputs?.case_results.enduses[enduse_key as EnduseKeyTypes];
+
+      enduses.forEach((enduse) => {
+        enduse_results_flat.push({
+          tag: enduse.enduse + "_" + enduse.subcategory + "_" + enduse.fuel,
+          case_name: case_name,
+          case_id: case_id,
+          enduse: enduse.enduse,
+          subcategory: enduse.subcategory,
+          fuel: enduse.fuel,
+          //@ts-ignore
+          val: enduse[val_key as keyof typeof enduse],
+        });
+      });
+    });
+
+    let enduses_unique = [
+      ...new Set(
+        enduse_results_flat.map(
+          (d) => d[groupby_key as keyof typeof d] as string
+        )
+      ),
+    ];
+
+    enduses_unique.forEach((enduse) => {
+      let row: EnduseTableFlatResultsObject[] = [];
+
+      case_ids.forEach((case_id) => {
+        let case_name = case_inputs.case_attributes.find(
+          (d) => d.case_id === case_id
+        )?.case_name as string;
+
+        let obj = enduse_results_flat.find(
+          (d) =>
+            d[groupby_key as keyof typeof d] === enduse &&
+            d.case_name === case_name
+        ) as EnduseTableFlatResultsObject;
+
+        if (obj !== undefined) {
+          row.push(obj);
+        } else {
+          let blank_template_obj = {
+            ...(enduse_results_flat.find(
+              (d) => d[groupby_key as keyof typeof d] === enduse
+            ) as EnduseTableFlatResultsObject),
+          };
+          blank_template_obj.val = 0;
+          blank_template_obj.case_id = case_id;
+          blank_template_obj.case_name = case_name;
+          row.push(blank_template_obj);
+        }
+      });
+      enduse_table_array.push(row);
+    });
+  }
+
   return (
     <div>
-      Enduses...
       <TableContainer>
         <Table size="small">
           <TableBody>
             <TableRow>
-              <TD>case id</TD>
-              {output_array.map((d, i) => (
-                <TD key={i}>{d.case_id}</TD>
+              <TD variant="head">Enduse</TD>
+              <TD variant="head">Fuel</TD>
+              <TD variant="head">Subcategory</TD>
+
+              {case_inputs.case_attributes.map((d, i) => (
+                <TD key={i} variant="head">
+                  {d.case_name}
+                </TD>
               ))}
             </TableRow>
-            <TableRow>
-              <TD>area</TD>
-              {output_array.map((d, i) => (
-                <TD key={i}>{d.case_results.enduses.area}</TD>
-              ))}
-            </TableRow>
+
+            {enduse_table_array.map((row, i) => {
+              return (
+                <TableRow key={i}>
+                  <TD>{row[0].enduse}</TD>
+                  <TD>{row[0].fuel}</TD>
+                  <TD>{row[0].subcategory}</TD>
+                  {row.map((d, i) => {
+                    return <TD key={i}>{d.val}</TD>;
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

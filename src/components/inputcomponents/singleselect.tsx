@@ -28,6 +28,7 @@ const SingleSelect = (props: PropTypes) => {
     <div>
       <FormControl variant="standard" size="small" fullWidth>
         <Select
+          size="small"
           disabled={is_disabled}
           value={is_blank === true ? "" : value}
           onChange={handleChange}

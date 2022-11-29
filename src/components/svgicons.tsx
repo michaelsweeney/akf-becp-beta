@@ -29,7 +29,7 @@ export const IconSvg = (props: {
   }
   return (
     <div>
-      <svg width="25" height="25">
+      <svg width={width} height={height}>
         <path fill={fill} d={d} />
       </svg>
     </div>

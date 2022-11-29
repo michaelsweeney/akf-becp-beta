@@ -6,24 +6,41 @@ type PropTypes = {
   callback: (d: string | number) => void;
   input_type: string;
   is_disabled?: boolean;
+  fire_on?: "blur" | "change";
+  fire_on_enter?: boolean;
 };
 
 const FocusInput = (props: PropTypes) => {
-  const { callback, value, input_type, is_disabled = false } = props;
+  const {
+    value,
+    callback,
+    input_type,
+    is_disabled = false,
+    fire_on = "blur",
+    fire_on_enter = true,
+  } = props;
 
   const [currentValue, setCurrentValue] = useState(value);
 
   const handleChange = (v: string | number) => {
     if (input_type === "number") {
       setCurrentValue(+v);
+      if (fire_on === "change") {
+        callback(+v);
+      }
     } else {
       setCurrentValue(v);
+      if (fire_on === "change") {
+        callback(v);
+      }
     }
   };
 
   const handleBlur = (v: string | number) => {
-    if (v === currentValue) {
-      return;
+    if (fire_on === "blur") {
+      if (v === currentValue) {
+        return;
+      }
     }
 
     if (input_type === "number") {
@@ -37,9 +54,28 @@ const FocusInput = (props: PropTypes) => {
     setCurrentValue(value);
   }, [value]);
 
+  useEffect(() => {
+    const handleEnter = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        if (input_type === "number") {
+          callback(+currentValue);
+        } else {
+          callback(currentValue);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleEnter, false);
+
+    return () => {
+      document.removeEventListener("keydown", handleEnter, false);
+    };
+  });
+
   return (
     <FormControl size="small" fullWidth>
       <Input
+        size="small"
         disabled={is_disabled}
         sx={{ paddingLeft: 1 }}
         type={input_type}

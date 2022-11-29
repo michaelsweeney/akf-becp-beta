@@ -18,9 +18,8 @@ async function getProjectionFromReferenceBuildings(
   case_inputs: CaseInputSliceTypes
 ) {
   const { api_inputs } = case_inputs;
-  const case_ids = new Set(api_inputs.areas.map((d) => d.case_id));
+  const case_ids = [...new Set(api_inputs.areas.map((d) => d.case_id))].sort();
   let projection_results: any[] = [];
-
   /* --- ITERATE EACH CASE --- */
   for (const id of case_ids) {
     let global = api_inputs.global.find(
@@ -124,6 +123,8 @@ async function getProjectionFromReferenceBuildings(
       });
     }
   }
+
+  // reorder projection_results
 
   return projection_results;
 }

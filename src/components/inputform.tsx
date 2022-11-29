@@ -122,6 +122,7 @@ const InputForm = () => {
                 component={FocusInput as React.FunctionComponent}
                 child_props={{
                   input_type: "string",
+                  fire_on: "change",
                 }}
               />
             </TableRow>

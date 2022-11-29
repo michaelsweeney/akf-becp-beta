@@ -194,6 +194,9 @@ export type UiSliceTypes = {
   current_view: CurrentViewTypes;
 };
 
+export type EnduseKeyTypes = "enduses_per_sf" | "enduses_absolute_kbtu";
+export type EnduseValTypes = "kbtu_per_sf" | "kbtu_absolute";
+
 export type CaseResultsTypes = {
   emissions_projection: {
     elec_kg_per_kbtu: number;
@@ -218,14 +221,11 @@ export type CaseResultsTypes = {
       subcategory: string;
     }[];
     enduses_per_sf: {
-      area: number;
-      enduses_absolute_kbtu: {
-        enduse: string;
-        fuel: string;
-        kbtu_absolute: number;
-        subcategory: string;
-      }[];
-    };
+      enduse: string;
+      fuel: string;
+      kbtu_per_sf: number;
+      subcategory: string;
+    }[];
   };
   projection_factors: {
     case: string;
@@ -256,4 +256,14 @@ export type ProjectionFromReferenceOutputTypes = {
   ll97_results: LL97ResultsTypes;
   case_id: number;
   case_results: CaseResultsTypes;
+};
+
+export type EnduseTableFlatResultsObject = {
+  tag: string;
+  case_name: string;
+  case_id: number;
+  enduse: string;
+  subcategory: string;
+  fuel: string;
+  val: number;
 };

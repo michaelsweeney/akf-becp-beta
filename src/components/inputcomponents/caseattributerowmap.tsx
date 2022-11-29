@@ -13,6 +13,7 @@ type OptionalChildPropTypes = {
   option_titles?: string[];
   input_type?: string;
   is_disabled?: boolean;
+  fire_on?: "change" | "blur";
 };
 
 type PropTypes = {
@@ -129,12 +130,14 @@ const CaseAttributeRowMap = (props: PropTypes) => {
           value: attribute_obj
             ? attribute_obj[global_key as keyof typeof attribute_obj]
             : undefined,
-          callback: (c: string | number) =>
+          callback: (c: string | number) => {
+            console.log("here", c);
             handleSetCaseAttributeParameter({
               case_id: case_id,
               value: c,
               key: global_key,
-            }),
+            });
+          },
           is_disabled: is_disabled,
           is_blank: attribute_obj?.template_overridden,
         };

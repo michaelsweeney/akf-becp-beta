@@ -8,13 +8,19 @@ import { arrow_back, IconSvg } from "./svgicons";
 import { colors } from "../styles/colors";
 
 import { Title, StyledButton } from "styles/components";
+import styled from "@mui/styled-engine";
+
+const DrawerContainer = styled("div")({
+  height: "100%",
+  backgroundColor: "rgba(200,200,200,0.5)",
+  borderRight: "1px solid black",
+});
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
   const ref = useRef(null);
 
   const { sidebar_open } = useAppSelector((state) => state.ui_settings);
-
   const { case_inputs } = useAppSelector((state) => state);
 
   const getSidebarWidth = () => {
@@ -44,13 +50,13 @@ const Sidebar = () => {
       variant="persistent"
       ref={ref}
     >
-      <div>
+      <DrawerContainer>
         <StyledButton onClick={handleClose}>
           <IconSvg fill={colors.primary} d={arrow_back} />
         </StyledButton>
         <Title>Building Inputs</Title>
         <InputForm />
-      </div>
+      </DrawerContainer>
     </Drawer>
   );
 };
