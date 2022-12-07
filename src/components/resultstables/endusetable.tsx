@@ -1,30 +1,17 @@
-import styled from "@mui/styled-engine";
-import { useAppSelector, useAppDispatch } from "store/hooks";
-import { caseInputActions } from "store/caseinputslice";
-import { uiActions } from "store/uislice";
-import { caseOutputSlice } from "store/caseoutputslice";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { useAppSelector } from "store/hooks";
+
+import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
 import { TD } from "styles/components";
 import {
   ProjectionFromReferenceOutputTypes,
   EnduseTableFlatResultsObject,
   EnduseKeyTypes,
-  EnduseValTypes,
 } from "types";
-import { group } from "console";
 
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
 
 const EnduseTable = () => {
-  const dispatch = useAppDispatch();
   const { projection_from_reference_response } = useAppSelector(
     (state) => state.case_outputs
   );
@@ -78,7 +65,7 @@ const EnduseTable = () => {
 
     let enduses_unique = getUniqueKeys(
       enduse_results_flat,
-      "groupby_key"
+      groupby_key
     ) as string[];
 
     enduses_unique.forEach((enduse) => {

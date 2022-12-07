@@ -1,17 +1,6 @@
 import styled from "@mui/styled-engine";
 
-import { Button } from "@mui/material";
-import { IconSvg, arrow_forward } from "./svgicons";
-import { colors } from "../styles/colors";
 import { Title } from "styles/components";
-import { useAppDispatch, useAppSelector } from "store/hooks";
-
-import { uiActions } from "store/uislice";
-
-const ButtonContainer = styled("div")({
-  display: "inline-block",
-  padding: "10px",
-});
 
 const LogoContainer = styled("div")({
   display: "inline-block",
@@ -19,36 +8,24 @@ const LogoContainer = styled("div")({
   padding: 10,
 });
 
-const TitleContainer = styled("div")<{ sidebar_width: number }>((props) => ({
+const TitleContainer = styled("div")((props) => ({
   display: "inline-block",
-  marginLeft: props.sidebar_width,
+  verticalAlign: "center",
   transition: "margin 250ms",
 }));
 
-const HeaderContainer = styled("div")({
+const HeaderContainer = styled("div")<{ height: number }>((props) => ({
   width: "100%",
-  height: "50px",
-});
+  padding: "10px",
+  height: `${props.height}px`,
+  borderBottom: "2px solid black",
+  boxSizing: "border-box",
+}));
 
-const Header = () => {
-  const dispatch = useAppDispatch();
-  const { sidebar_open, sidebar_width } = useAppSelector(
-    (state) => state.ui_settings
-  );
-
-  const toggleSidebar = () => {
-    dispatch(uiActions.setSidebarOpen(!sidebar_open));
-  };
-
+const Header = (props: { height: number }) => {
   return (
-    <HeaderContainer>
-      <ButtonContainer>
-        <Button onClick={toggleSidebar}>
-          <IconSvg fill={colors.primary} d={arrow_forward} />
-        </Button>
-      </ButtonContainer>
-
-      <TitleContainer sidebar_width={sidebar_width}>
+    <HeaderContainer height={props.height}>
+      <TitleContainer>
         <Title>Operational Carbon Tool</Title>
       </TitleContainer>
 

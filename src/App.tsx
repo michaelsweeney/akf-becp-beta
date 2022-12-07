@@ -3,7 +3,7 @@ import { colors } from "styles/colors";
 
 import InputListener from "components/inputlistener";
 import LoadingSpinner from "components/loadingspinner";
-import MainContainer from "components/maincontainer";
+import Body from "components/body";
 
 const theme = createTheme({
   palette: {
@@ -21,7 +21,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <InputListener />
       <LoadingSpinner />
-      <MainContainer />
+      <Body />
     </ThemeProvider>
   );
 };

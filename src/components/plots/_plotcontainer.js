@@ -3,7 +3,7 @@ import { color } from "d3";
 
 import { useRef, useEffect } from "react";
 
-import { conn } from "../../store/connect";
+import { conn } from "store/connect";
 
 import { getIdealSpacing } from "./_spacing";
 import { makeStyles } from "@material-ui/styles";

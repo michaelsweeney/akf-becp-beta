@@ -1,10 +1,7 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { caseInputActions } from "store/caseinputslice";
 import { uiActions } from "store/uislice";
-import { caseOutputActions } from "store/caseoutputslice";
 import { CurrentViewTypes } from "types";
-import { StyledButton } from "../styles/components";
 import { Button } from "@mui/material";
 
 interface PropTypes {}
@@ -14,7 +11,6 @@ const ButtonWrapper = styled(Button)({
   marginTop: "5px !important",
 });
 
-const Style = styled("div")<{}>(() => ({}));
 const ViewSelector = (props: PropTypes) => {
   const dispatch = useAppDispatch();
 

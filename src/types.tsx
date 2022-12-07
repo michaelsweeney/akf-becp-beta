@@ -188,6 +188,7 @@ export type UiSliceTypes = {
   linked_attributes: LinkedAttributeTypes;
   sidebar_open: boolean;
   sidebar_width: number;
+  sidebar_collapse_width: number;
   window_dimensions: WindowDimensionTypes;
   sidebar_ref: HTMLDivElement | null;
   is_api_loading: boolean;

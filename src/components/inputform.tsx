@@ -1,13 +1,13 @@
 import React from "react";
 
 import { styled } from "@mui/system";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-
-import { Button } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableContainer,
+  TableRow,
+  Button,
+} from "@mui/material";
 
 import { SingleSelect } from "./inputcomponents/singleselect";
 import { FocusInput } from "./inputcomponents/focusinput";
@@ -16,7 +16,7 @@ import { caseInputActions } from "store/caseinputslice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { InputCaseTypes, HvacTemplateTypes } from "types";
 
-import * as lookups from "../lookups";
+import * as lookups from "lookups";
 import AreaRowMap from "./inputcomponents/arearowmap";
 import GlobalRowMap from "./inputcomponents/globalrowmap";
 import CaseAttributeRowMap from "./inputcomponents/caseattributerowmap";

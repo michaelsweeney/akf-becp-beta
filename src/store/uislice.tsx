@@ -25,10 +25,11 @@ const initialState: UiSliceTypes = {
 
   sidebar_open: true,
   sidebar_width: 0,
+  sidebar_collapse_width: 50,
   window_dimensions: { height: 0, width: 0 },
   sidebar_ref: null,
   is_api_loading: false,
-  current_view: "carbon",
+  current_view: "enduse",
 };
 
 export const UiSlice = createSlice({
@@ -49,6 +50,9 @@ export const UiSlice = createSlice({
     },
     setSidebarWidth: (state, action: PayloadAction<number>) => {
       state.sidebar_width = action.payload;
+    },
+    setSidebarCollapseWidth: (state, action: PayloadAction<number>) => {
+      state.sidebar_collapse_width = action.payload;
     },
     setWindowDimensions: (
       state,

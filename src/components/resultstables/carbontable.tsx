@@ -1,16 +1,6 @@
-import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { caseInputActions } from "store/caseinputslice";
-import { uiActions } from "store/uislice";
-import { caseOutputSlice } from "store/caseoutputslice";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-} from "@mui/material";
+import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
 import { TD } from "styles/components";
 import { CarbonTableResultsYearType } from "types";
 import { formatNumber } from "dataformat/numberformat";
@@ -22,8 +12,6 @@ const CarbonTable = () => {
   );
 
   const { case_inputs } = useAppSelector((state) => state);
-
-  console.log(projection_from_reference_response);
 
   const emissions_key = "emissions_projection";
 
@@ -54,7 +42,6 @@ const CarbonTable = () => {
   let case_ids = getUniqueKeys(table_data, "case_id") as number[];
   let years = getUniqueKeys(table_data, "year") as number[];
 
-  const dispatch = useAppDispatch();
   return (
     <div>
       <TableContainer>
