@@ -267,3 +267,11 @@ export type EnduseTableFlatResultsObject = {
   fuel: string;
   val: number;
 };
+
+export type CarbonTableResultsYearType = {
+  key: string;
+  year: number;
+  case_name: string;
+  case_id: number;
+  val: number;
+};

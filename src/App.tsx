@@ -1,5 +1,4 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { styled } from "@mui/system";
 import { colors } from "styles/colors";
 
 import InputListener from "components/inputlistener";

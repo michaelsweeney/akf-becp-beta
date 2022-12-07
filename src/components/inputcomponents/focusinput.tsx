@@ -7,7 +7,6 @@ type PropTypes = {
   input_type: string;
   is_disabled?: boolean;
   fire_on?: "blur" | "change";
-  fire_on_enter?: boolean;
 };
 
 const FocusInput = (props: PropTypes) => {
@@ -17,7 +16,6 @@ const FocusInput = (props: PropTypes) => {
     input_type,
     is_disabled = false,
     fire_on = "blur",
-    fire_on_enter = true,
   } = props;
 
   const [currentValue, setCurrentValue] = useState(value);

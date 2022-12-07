@@ -20,6 +20,9 @@ import {
 } from "types";
 import { group } from "console";
 
+import { formatNumber } from "dataformat/numberformat";
+import { getUniqueKeys } from "dataformat/tableformat";
+
 const EnduseTable = () => {
   const dispatch = useAppDispatch();
   const { projection_from_reference_response } = useAppSelector(
@@ -42,9 +45,12 @@ const EnduseTable = () => {
   let input_count = case_inputs.case_attributes.length;
 
   if (output_count !== 0 && input_count === output_count) {
-    let case_ids = case_inputs.case_attributes.map((d) => d.case_id);
+    let unique_case_ids = getUniqueKeys(
+      case_inputs.case_attributes,
+      "case_id"
+    ) as number[];
 
-    case_ids.forEach((case_id) => {
+    unique_case_ids.forEach((case_id) => {
       let case_name = case_inputs.case_attributes.find(
         (d) => d.case_id === case_id
       )?.case_name as string;
@@ -70,18 +76,15 @@ const EnduseTable = () => {
       });
     });
 
-    let enduses_unique = [
-      ...new Set(
-        enduse_results_flat.map(
-          (d) => d[groupby_key as keyof typeof d] as string
-        )
-      ),
-    ];
+    let enduses_unique = getUniqueKeys(
+      enduse_results_flat,
+      "groupby_key"
+    ) as string[];
 
     enduses_unique.forEach((enduse) => {
       let row: EnduseTableFlatResultsObject[] = [];
 
-      case_ids.forEach((case_id) => {
+      unique_case_ids.forEach((case_id) => {
         let case_name = case_inputs.case_attributes.find(
           (d) => d.case_id === case_id
         )?.case_name as string;
@@ -134,7 +137,7 @@ const EnduseTable = () => {
                   <TD>{row[0].fuel}</TD>
                   <TD>{row[0].subcategory}</TD>
                   {row.map((d, i) => {
-                    return <TD key={i}>{d.val}</TD>;
+                    return <TD key={i}>{formatNumber(d.val)}</TD>;
                   })}
                 </TableRow>
               );
