@@ -1,26 +1,21 @@
 import React from "react";
 
 import { styled } from "@mui/system";
-import {
-  Table,
-  TableBody,
-  TableContainer,
-  TableRow,
-  Button,
-} from "@mui/material";
+import { Table, TableBody, TableContainer, Button } from "@mui/material";
 
-import { SingleSelect } from "./inputcomponents/singleselect";
-import { FocusInput } from "./inputcomponents/focusinput";
+import { SingleSelect } from "../singleselect";
+import { FocusInput } from "../focusinput";
 
 import { caseInputActions } from "store/caseinputslice";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { InputCaseTypes, HvacTemplateTypes } from "types";
 
 import * as lookups from "lookups";
-import AreaRowMap from "./inputcomponents/arearowmap";
-import GlobalRowMap from "./inputcomponents/globalrowmap";
-import CaseAttributeRowMap from "./inputcomponents/caseattributerowmap";
-import { TD, TDRotate, StyledButton } from "styles/components";
+import AreaRowMap from "./arearowmap";
+import GlobalRowMap from "./globalrowmap";
+import CaseAttributeRowMap from "./caseattributerowmap";
+import { TD, TDRotate, StyledButton, H2, TR } from "styles/components";
+import { relative } from "node:path/win32";
 
 const {
   location_states,
@@ -36,6 +31,24 @@ const InputContainer = styled("div")<{}>(() => ({
   marginLeft: "15px",
   marginRight: "10px",
 }));
+
+const ButtonContainer = styled("div")({
+  float: "right",
+  marginRight: "200px",
+  marginLeft: "55px",
+  marginTop: "10px",
+  marginBottom: "10px",
+});
+
+const TopContainer = styled("div")({
+  marginLeft: "100px",
+  boxSizing: "border-box",
+});
+
+const TitleWrapper = styled(H2)({
+  position: "relative",
+  top: "10px",
+});
 
 const InputForm = () => {
   let { case_inputs } = useAppSelector((state) => state);
@@ -64,54 +77,59 @@ const InputForm = () => {
 
   return (
     <InputContainer>
-      <StyledButton
-        onClick={() => handleAddCase()}
-        variant="outlined"
-        size="small"
-      >
-        Add Case
-      </StyledButton>
+      <TopContainer>
+        <TitleWrapper>Case Inputs</TitleWrapper>
 
-      <StyledButton
-        onClick={() => handleAddAreaType()}
-        variant="outlined"
-        size="small"
-      >
-        Add Area Type
-      </StyledButton>
+        <ButtonContainer>
+          <StyledButton
+            onClick={() => handleAddCase()}
+            variant="outlined"
+            size="small"
+          >
+            Add Case
+          </StyledButton>
+          <StyledButton
+            onClick={() => handleAddAreaType()}
+            variant="outlined"
+            size="small"
+          >
+            Add Area Type
+          </StyledButton>
+        </ButtonContainer>
+      </TopContainer>
 
       <TableContainer>
         <Table size="small">
           <TableBody>
             {/*---------- ADD / REMOVE CASES ----------*/}
-            <TableRow>
+            <TR>
               <TD variant="head"></TD>
-              <TD></TD>
-              <TD></TD>
+              <TD bottomBorder></TD>
+              <TD bottomBorder></TD>
               {case_ids.map((case_id) => {
                 let global_obj = api_inputs.global.find(
                   (d) => d.case_id === case_id
                 ) as InputCaseTypes;
                 return (
-                  <TD key={case_id}>
+                  <TD bottomBorder key={case_id}>
                     {api_inputs.global.length === 1 ? (
                       <span></span>
                     ) : (
-                      <Button
-                        variant="text"
+                      <StyledButton
                         size="small"
                         color="secondary"
+                        variant="outlined"
                         onClick={() => handleRemoveCase(global_obj.case_id)}
                       >
-                        remove case
-                      </Button>
+                        Remove Case
+                      </StyledButton>
                     )}
                   </TD>
                 );
               })}
-            </TableRow>
+            </TR>
 
-            <TableRow>
+            <TR>
               <TDRotate variant="head" rowSpan={5}>
                 GLOBAL
               </TDRotate>
@@ -125,8 +143,8 @@ const InputForm = () => {
                   fire_on: "change",
                 }}
               />
-            </TableRow>
-            <TableRow>
+            </TR>
+            <TR>
               <CaseAttributeRowMap
                 title="HVAC Template"
                 global_key="hvac_template"
@@ -140,10 +158,10 @@ const InputForm = () => {
                   ),
                 }}
               />
-            </TableRow>
+            </TR>
             {/*---------- GLOBAL INPUT  MAPPING ----------*/}
 
-            <TableRow>
+            <TR>
               <GlobalRowMap
                 title="State"
                 global_key="location_state"
@@ -152,9 +170,9 @@ const InputForm = () => {
                   option_values: location_states,
                 }}
               />
-            </TableRow>
+            </TR>
 
-            <TableRow>
+            <TR>
               <GlobalRowMap
                 title="Climate Zone"
                 global_key="climate_zone"
@@ -163,9 +181,9 @@ const InputForm = () => {
                   option_values: climate_zones,
                 }}
               />
-            </TableRow>
+            </TR>
 
-            <TableRow>
+            <TR bottomBorder>
               <GlobalRowMap
                 title="Projection Case"
                 global_key="projection_case"
@@ -174,14 +192,14 @@ const InputForm = () => {
                   option_values: coefficient_cases,
                 }}
               />
-            </TableRow>
+            </TR>
 
             {/*---------- AREA INPUT MAPPING ----------*/}
 
             {area_ids.map((area_id, i) => {
               return (
                 <React.Fragment key={i}>
-                  <TableRow>
+                  <TR>
                     <TDRotate variant="head" rowSpan={7}>
                       <div>{`AREA TYPE ${i + 1}`}</div>
                       <div>
@@ -210,9 +228,9 @@ const InputForm = () => {
                         option_values: building_types,
                       }}
                     />
-                  </TableRow>
+                  </TR>
 
-                  <TableRow>
+                  <TR>
                     <AreaRowMap
                       area_id={area_id}
                       title="ASHRAE Standard"
@@ -222,9 +240,9 @@ const InputForm = () => {
                         option_values: ashrae_standards,
                       }}
                     />
-                  </TableRow>
+                  </TR>
 
-                  <TableRow>
+                  <TR>
                     <AreaRowMap
                       area_id={area_id}
                       title="Area"
@@ -234,8 +252,8 @@ const InputForm = () => {
                         input_type: "number",
                       }}
                     />
-                  </TableRow>
-                  <TableRow>
+                  </TR>
+                  <TR>
                     <AreaRowMap
                       area_id={area_id}
                       title="Heating Fuel"
@@ -245,8 +263,8 @@ const InputForm = () => {
                         option_values: heating_fuels,
                       }}
                     />
-                  </TableRow>
-                  <TableRow>
+                  </TR>
+                  <TR>
                     <AreaRowMap
                       area_id={area_id}
                       title="Heating COP"
@@ -256,9 +274,9 @@ const InputForm = () => {
                         input_type: "number",
                       }}
                     />
-                  </TableRow>
+                  </TR>
 
-                  <TableRow>
+                  <TR>
                     <AreaRowMap
                       area_id={area_id}
                       title="DHW Fuel"
@@ -268,9 +286,9 @@ const InputForm = () => {
                         option_values: heating_fuels,
                       }}
                     />
-                  </TableRow>
+                  </TR>
 
-                  <TableRow>
+                  <TR bottomBorder>
                     <AreaRowMap
                       area_id={area_id}
                       title="DHW COP"
@@ -280,7 +298,7 @@ const InputForm = () => {
                         input_type: "number",
                       }}
                     />
-                  </TableRow>
+                  </TR>
                 </React.Fragment>
               );
             })}

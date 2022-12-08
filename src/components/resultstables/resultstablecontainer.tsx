@@ -1,8 +1,8 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector } from "store/hooks";
-import ResultsSelector from "./resultsselector";
-import EnduseTable from "./resultstables/endusetable";
-import CarbonTable from "./resultstables/carbontable";
+import ResultsSelector from "./resultstableselector";
+import EnduseContent from "./enduse/endusecontent";
+import CarbonContent from "./carbon/carboncontent";
 
 interface MainPropTypes {}
 const MainWrapper = styled("div")<MainPropTypes>(
@@ -11,6 +11,7 @@ const MainWrapper = styled("div")<MainPropTypes>(
 
 const ResultsWrapper = styled("div")<{}>(() => ({
   height: "100%",
+  padding: "15px",
 }));
 
 const ResultsContainer = () => {
@@ -20,7 +21,7 @@ const ResultsContainer = () => {
     <MainWrapper>
       <ResultsSelector />
       <ResultsWrapper>
-        {current_view === "carbon" ? <CarbonTable /> : <EnduseTable />}
+        {current_view === "carbon" ? <CarbonContent /> : <EnduseContent />}
       </ResultsWrapper>
     </MainWrapper>
   );

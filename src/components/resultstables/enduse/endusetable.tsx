@@ -1,4 +1,5 @@
-import { useAppSelector } from "store/hooks";
+import styled from "@mui/styled-engine";
+import { useAppDispatch, useAppSelector } from "store/hooks";
 
 import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
 import { TD } from "styles/components";
@@ -8,8 +9,15 @@ import {
   EnduseKeyTypes,
 } from "types";
 
+import { SubHeader } from "styles/components";
+
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
+
+const TitleWrapper = styled("div")({
+  marginTop: "10px",
+  marginBottom: "5px",
+});
 
 const EnduseTable = () => {
   const { projection_from_reference_response } = useAppSelector(
@@ -17,13 +25,16 @@ const EnduseTable = () => {
   );
 
   const { case_inputs } = useAppSelector((state) => state);
-
+  const { enduse_table_options } = useAppSelector((state) => state.ui_settings);
   const output_array = projection_from_reference_response;
 
   // constants to be pulled out into state options and/or lookups
-  let enduse_key = "enduses_per_sf";
-  let val_key = "kbtu_per_sf";
-  let groupby_key = "tag";
+
+  let val_key = enduse_table_options.units;
+  let groupby_key = enduse_table_options.groupby;
+
+  let enduse_key: EnduseKeyTypes =
+    val_key === "kbtu_absolute" ? "enduses_absolute_kbtu" : "enduses_per_sf";
 
   let enduse_results_flat: EnduseTableFlatResultsObject[] = [];
   let enduse_table_array: EnduseTableFlatResultsObject[][] = [];
@@ -46,12 +57,12 @@ const EnduseTable = () => {
         (d) => d.case_id === case_id
       ) as ProjectionFromReferenceOutputTypes;
 
-      let enduses =
-        case_outputs?.case_results.enduses[enduse_key as EnduseKeyTypes];
+      let enduses = case_outputs?.case_results.enduses[enduse_key];
 
       enduses.forEach((enduse) => {
         enduse_results_flat.push({
-          tag: enduse.enduse + "_" + enduse.subcategory + "_" + enduse.fuel,
+          subcategory_combined:
+            enduse.enduse + "_" + enduse.subcategory + "_" + enduse.fuel,
           case_name: case_name,
           case_id: case_id,
           enduse: enduse.enduse,
@@ -102,6 +113,13 @@ const EnduseTable = () => {
 
   return (
     <div>
+      <TitleWrapper>
+        <SubHeader>{`Carbon Projection Table, ${
+          val_key === "kbtu_absolute" ? "kbtu/yr" : "kbtu/sf/yr"
+        } (grouped by ${
+          groupby_key === "enduse" ? "end use" : "subcategory"
+        })`}</SubHeader>
+      </TitleWrapper>
       <TableContainer>
         <Table size="small">
           <TableBody>

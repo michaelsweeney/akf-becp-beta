@@ -5,6 +5,10 @@ import {
   LinkedAttributeTypes,
   WindowDimensionTypes,
   CurrentViewTypes,
+  EnduseTableOptionTypes,
+  EnduseUnitTypes,
+  CarbonProjectionTableOptionTypes,
+  EnduseGroupbyTypes,
 } from "types";
 
 const initialState: UiSliceTypes = {
@@ -30,6 +34,11 @@ const initialState: UiSliceTypes = {
   sidebar_ref: null,
   is_api_loading: false,
   current_view: "enduse",
+  enduse_table_options: {
+    units: "kbtu_absolute",
+    groupby: "subcategory_combined",
+  },
+  carbon_projection_table_options: { units: "kg_co2_per_sf" },
 };
 
 export const UiSlice = createSlice({
@@ -65,6 +74,29 @@ export const UiSlice = createSlice({
     },
     setCurrentView: (state, action: PayloadAction<CurrentViewTypes>) => {
       state.current_view = action.payload;
+    },
+    setEnduseTableOptions: (
+      state,
+      action: PayloadAction<{
+        key: string;
+        val: string;
+      }>
+    ) => {
+      let { key, val } = action.payload;
+      //@ts-ignore
+      state.enduse_table_options[key] = val;
+    },
+    setCarbonTableOptions: (
+      state,
+      action: PayloadAction<{
+        key: string;
+        val: string;
+      }>
+    ) => {
+      let { key, val } = action.payload;
+
+      //@ts-ignore
+      state.carbon_projection_table_options[key] = val;
     },
   },
 });

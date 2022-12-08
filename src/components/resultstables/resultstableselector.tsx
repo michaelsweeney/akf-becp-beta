@@ -6,6 +6,11 @@ import { Button } from "@mui/material";
 
 interface PropTypes {}
 
+const Root = styled("div")({
+  borderBottom: "1px solid black",
+  paddingBottom: "5px",
+  padding: "15px",
+});
 const ButtonWrapper = styled(Button)({
   marginLeft: "10px !important",
   marginTop: "5px !important",
@@ -20,7 +25,7 @@ const ViewSelector = (props: PropTypes) => {
   };
 
   return (
-    <div>
+    <Root>
       <ButtonWrapper
         variant={current_view === "enduse" ? "contained" : "outlined"}
         onClick={() => {
@@ -37,7 +42,7 @@ const ViewSelector = (props: PropTypes) => {
       >
         carbon
       </ButtonWrapper>
-    </div>
+    </Root>
   );
 };
 export default ViewSelector;

@@ -184,6 +184,20 @@ export type WindowDimensionTypes = {
 };
 
 export type CurrentViewTypes = "enduse" | "carbon";
+
+export type EnduseKeyTypes = "enduses_per_sf" | "enduses_absolute_kbtu";
+export type EnduseUnitTypes = "kbtu_per_sf" | "kbtu_absolute";
+export type EnduseGroupbyTypes = "enduse" | "subcategory_combined";
+
+export type EnduseTableOptionTypes = {
+  units: EnduseUnitTypes;
+  groupby: EnduseGroupbyTypes;
+};
+
+export type CarbonProjectionTableOptionTypes = {
+  units: CarbonProjectionTableUnitTypes;
+};
+
 export type UiSliceTypes = {
   linked_attributes: LinkedAttributeTypes;
   sidebar_open: boolean;
@@ -193,10 +207,13 @@ export type UiSliceTypes = {
   sidebar_ref: HTMLDivElement | null;
   is_api_loading: boolean;
   current_view: CurrentViewTypes;
+  enduse_table_options: EnduseTableOptionTypes;
+  carbon_projection_table_options: CarbonProjectionTableOptionTypes;
 };
 
-export type EnduseKeyTypes = "enduses_per_sf" | "enduses_absolute_kbtu";
-export type EnduseValTypes = "kbtu_per_sf" | "kbtu_absolute";
+export type CarbonProjectionTableUnitTypes =
+  | "kg_co2_per_sf"
+  | "kg_co2_absolute";
 
 export type CaseResultsTypes = {
   emissions_projection: {

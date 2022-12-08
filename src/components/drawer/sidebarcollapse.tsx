@@ -16,6 +16,12 @@ type WrapperProps = {
   height: number;
 };
 
+const ButtonWrapper = styled(StyledButton)({
+  position: "relative",
+  left: "2.5px !important",
+  top: "2.5px !important",
+});
+
 const SidebarCollapseWrapper = styled("div")<WrapperProps>(
   (props: WrapperProps) => ({
     display: "inline-block",
@@ -59,13 +65,13 @@ const SidebarCollapse = (props: SidebarCollapseTypes) => {
       sidebar_open={sidebar_open}
       height={props.height}
     >
-      <StyledButton
+      <ButtonWrapper
         sx={{ minWidth: "5px !important" }}
         size="small"
         onClick={toggleSidebarOpen}
       >
         <IconSvg fill={colors.primary} d={arrow_forward} />
-      </StyledButton>
+      </ButtonWrapper>
     </SidebarCollapseWrapper>
   );
 };

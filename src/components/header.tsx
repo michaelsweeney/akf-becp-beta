@@ -1,16 +1,18 @@
 import styled from "@mui/styled-engine";
 
-import { Title } from "styles/components";
+import { H1 } from "styles/components";
 
 const LogoContainer = styled("div")({
   display: "inline-block",
   float: "right",
+  verticalAlign: "center",
+  marginRight: "10px",
   padding: 10,
 });
 
 const TitleContainer = styled("div")((props) => ({
   display: "inline-block",
-  verticalAlign: "center",
+  padding: "12px",
   transition: "margin 250ms",
 }));
 
@@ -20,13 +22,15 @@ const HeaderContainer = styled("div")<{ height: number }>((props) => ({
   height: `${props.height}px`,
   borderBottom: "2px solid black",
   boxSizing: "border-box",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
 }));
 
 const Header = (props: { height: number }) => {
   return (
     <HeaderContainer height={props.height}>
       <TitleContainer>
-        <Title>Operational Carbon Tool</Title>
+        <H1>Building Operational Carbon Projection Tool [beta]</H1>
       </TitleContainer>
 
       <LogoContainer>

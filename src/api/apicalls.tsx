@@ -11,6 +11,7 @@ async function getQueryResults(params, subdirectory) {
   let response = await fetch(endpoint, {});
 
   let resjson = await response.json();
+
   return resjson;
 }
 

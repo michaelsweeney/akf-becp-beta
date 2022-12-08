@@ -6,9 +6,9 @@ import { useEffect, useRef } from "react";
 import { arrow_back, IconSvg } from "components/svgicons";
 import { colors } from "styles/colors";
 
-import { StyledButton } from "styles/components";
 import styled from "@mui/styled-engine";
-
+import { Button } from "@mui/material";
+import { H2 } from "styles/components";
 type SidebarPropTypes = {
   height: number;
   component: JSX.Element | JSX.Element[];
@@ -29,6 +29,18 @@ const DrawerContainer = styled("div")<DrawerContainerPropTypes>((props) => ({
   left: props.open ? "0px" : `-${props.sidebarWidth + 50}px`,
   transition: "left 250ms",
 }));
+
+const CloseButtonWrapper = styled("div")({
+  display: "inline-block",
+  position: "absolute",
+  left: "5px",
+  top: "5px",
+});
+
+const ComponentWrapper = styled("div")({
+  // overflowY: "auto",
+  position: "relative",
+});
 
 const Sidebar = (props: SidebarPropTypes) => {
   const { height, component } = props;
@@ -65,10 +77,12 @@ const Sidebar = (props: SidebarPropTypes) => {
       ref={ref}
       sidebarHeight={height}
     >
-      <StyledButton onClick={handleClose}>
-        <IconSvg fill={colors.primary} d={arrow_back} />
-      </StyledButton>
-      {component}
+      <ComponentWrapper>{component}</ComponentWrapper>
+      <CloseButtonWrapper>
+        <Button onClick={handleClose}>
+          <IconSvg fill={colors.primary} d={arrow_back} />
+        </Button>
+      </CloseButtonWrapper>
     </DrawerContainer>
   );
 };

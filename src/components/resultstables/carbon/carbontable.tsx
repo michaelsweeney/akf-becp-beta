@@ -1,10 +1,16 @@
+import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 
 import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
-import { TD } from "styles/components";
+import { SubHeader, TD } from "styles/components";
 import { CarbonTableResultsYearType } from "types";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
+
+const TitleWrapper = styled("div")({
+  marginTop: "10px",
+  marginBottom: "5px",
+});
 
 const CarbonTable = () => {
   const { projection_from_reference_response } = useAppSelector(
@@ -12,10 +18,12 @@ const CarbonTable = () => {
   );
 
   const { case_inputs } = useAppSelector((state) => state);
+  const { carbon_projection_table_options } = useAppSelector(
+    (state) => state.ui_settings
+  );
 
   const emissions_key = "emissions_projection";
-
-  const val_key = "kg_co2_per_sf";
+  const val_key = carbon_projection_table_options.units;
 
   let table_data: CarbonTableResultsYearType[] = [];
 
@@ -44,6 +52,11 @@ const CarbonTable = () => {
 
   return (
     <div>
+      <TitleWrapper>
+        <SubHeader>{`Carbon Projection Table, ${
+          val_key === "kg_co2_absolute" ? "kg CO2e/sf/yr" : "kg CO2e/yr"
+        }`}</SubHeader>
+      </TitleWrapper>
       <TableContainer>
         <Table size="small">
           <TableBody>

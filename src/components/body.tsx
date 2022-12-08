@@ -4,9 +4,9 @@ import Header from "components/header";
 import { useAppSelector } from "store/hooks";
 
 import Drawer from "./drawer/drawer";
-import InputForm from "./inputform";
+import InputForm from "./caseinput/inputform";
 
-import ResultsContainer from "./resultscontainer";
+import ResultsContainer from "./resultstables/resultstablecontainer";
 
 const BodyWrapper = styled("div")<{}>(() => ({
   width: "100vw",
