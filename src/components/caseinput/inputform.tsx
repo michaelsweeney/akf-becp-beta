@@ -34,7 +34,7 @@ const InputContainer = styled("div")<{}>(() => ({
 
 const ButtonContainer = styled("div")({
   float: "right",
-  marginRight: "200px",
+  // marginRight: "200px",
   marginLeft: "55px",
   marginTop: "10px",
   marginBottom: "10px",
@@ -81,18 +81,10 @@ const InputForm = () => {
         <TitleWrapper>Case Inputs</TitleWrapper>
 
         <ButtonContainer>
-          <StyledButton
-            onClick={() => handleAddCase()}
-            variant="outlined"
-            size="small"
-          >
+          <StyledButton onClick={() => handleAddCase()} variant="contained">
             Add Case
           </StyledButton>
-          <StyledButton
-            onClick={() => handleAddAreaType()}
-            variant="outlined"
-            size="small"
-          >
+          <StyledButton onClick={() => handleAddAreaType()} variant="contained">
             Add Area Type
           </StyledButton>
         </ButtonContainer>
