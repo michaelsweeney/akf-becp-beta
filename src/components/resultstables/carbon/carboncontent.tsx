@@ -1,11 +1,13 @@
 import CarbonTableControls from "./carbontablecontrols";
-import CarbonTable from "./carbontable";
+import CarbonProjectionTable from "./carbonprojectiontable";
+import CarbonSummaryTable from "./carbonsummarytable";
 
 const CarbonContent = () => {
   return (
     <div>
       <CarbonTableControls />
-      <CarbonTable />
+      <CarbonSummaryTable />
+      <CarbonProjectionTable />
     </div>
   );
 };

@@ -286,7 +286,7 @@ export type EnduseTableFlatResultsObject = {
   val: number;
 };
 
-export type CarbonTableResultsYearType = {
+export type CarbonTableProjectionResultsYearType = {
   key: string;
   year: number;
   case_name: string;

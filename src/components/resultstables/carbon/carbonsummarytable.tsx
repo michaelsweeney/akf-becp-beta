@@ -3,9 +3,10 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 
 import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
 import { SubHeader, TD } from "styles/components";
-import { CarbonTableResultsYearType } from "types";
+import { CarbonTableProjectionResultsYearType } from "types";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
+import { easeExpIn } from "d3";
 
 const TitleWrapper = styled("div")({
   marginTop: "10px",
@@ -25,7 +26,7 @@ const CarbonTable = () => {
   const emissions_key = "emissions_projection";
   const val_key = carbon_projection_table_options.units;
 
-  let table_data: CarbonTableResultsYearType[] = [];
+  let table_data: CarbonTableProjectionResultsYearType[] = [];
 
   projection_from_reference_response.forEach((d) => {
     let { case_id, case_results } = d;
@@ -34,7 +35,9 @@ const CarbonTable = () => {
       (d) => d.case_id === case_id
     )?.case_name as string;
 
-    let data = case_results[emissions_key];
+    let data = case_results[emissions_key].filter((d) =>
+      [2022, 2050].includes(d.year)
+    );
 
     data.forEach((d) => {
       table_data.push({
@@ -53,7 +56,7 @@ const CarbonTable = () => {
   return (
     <div>
       <TitleWrapper>
-        <SubHeader>{`Carbon Projection Table, ${
+        <SubHeader>{`Carbon Summary, ${
           val_key === "kg_co2_absolute" ? "kg CO2e/sf/yr" : "kg CO2e/yr"
         }`}</SubHeader>
       </TitleWrapper>

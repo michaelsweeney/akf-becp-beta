@@ -27,20 +27,20 @@ const ViewSelector = (props: PropTypes) => {
   return (
     <Root>
       <ButtonWrapper
-        variant={current_view === "enduse" ? "contained" : "outlined"}
-        onClick={() => {
-          handleSetCurrentView("enduse");
-        }}
-      >
-        enduses
-      </ButtonWrapper>
-      <ButtonWrapper
         variant={current_view === "carbon" ? "contained" : "outlined"}
         onClick={() => {
           handleSetCurrentView("carbon");
         }}
       >
         carbon
+      </ButtonWrapper>
+      <ButtonWrapper
+        variant={current_view === "enduse" ? "contained" : "outlined"}
+        onClick={() => {
+          handleSetCurrentView("enduse");
+        }}
+      >
+        enduses
       </ButtonWrapper>
     </Root>
   );
