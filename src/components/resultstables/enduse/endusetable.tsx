@@ -114,7 +114,7 @@ const EnduseTable = () => {
   return (
     <div>
       <TitleWrapper>
-        <SubHeader>{`Carbon Projection Table, ${
+        <SubHeader>{`End Use Table, ${
           val_key === "kbtu_absolute" ? "kbtu/yr" : "kbtu/sf/yr"
         } (grouped by ${
           groupby_key === "enduse" ? "end use" : "subcategory"
