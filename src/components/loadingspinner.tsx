@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import { useAppSelector } from "store/hooks";
-import styled from "styled-components";
+import styled from "@mui/styled-engine";
 
 const Background = styled("div")<{ active: boolean }>((props) => ({
   zIndex: 999999,

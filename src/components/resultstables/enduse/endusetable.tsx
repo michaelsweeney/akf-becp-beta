@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styled from "@mui/styled-engine";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 
@@ -14,12 +15,14 @@ import { SubHeader } from "styles/components";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
 
+import DownloadButton from "components/downloadbutton";
 const TitleWrapper = styled("div")({
   marginTop: "10px",
   marginBottom: "5px",
 });
 
 const EnduseTable = () => {
+  const ref = useRef(null);
   const { projection_from_reference_response } = useAppSelector(
     (state) => state.case_outputs
   );
@@ -120,8 +123,10 @@ const EnduseTable = () => {
           groupby_key === "enduse" ? "end use" : "subcategory"
         })`}</SubHeader>
       </TitleWrapper>
+      <DownloadButton tableref={ref} />
+
       <TableContainer>
-        <Table size="small">
+        <Table size="small" ref={ref}>
           <TableBody>
             <TableRow>
               <TD variant="head">Enduse</TD>

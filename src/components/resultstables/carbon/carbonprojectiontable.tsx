@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 
@@ -6,13 +7,14 @@ import { SubHeader, TD } from "styles/components";
 import { CarbonTableProjectionResultsYearType } from "types";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
-
+import DownloadButton from "components/downloadbutton";
 const TitleWrapper = styled("div")({
   marginTop: "10px",
   marginBottom: "5px",
 });
 
 const CarbonTable = () => {
+  const ref = useRef(null);
   const { projection_from_reference_response } = useAppSelector(
     (state) => state.case_outputs
   );
@@ -57,8 +59,10 @@ const CarbonTable = () => {
           val_key === "kg_co2_absolute" ? "kg CO2e/sf/yr" : "kg CO2e/yr"
         }`}</SubHeader>
       </TitleWrapper>
+      <DownloadButton tableref={ref} />
+
       <TableContainer>
-        <Table size="small">
+        <Table size="small" ref={ref}>
           <TableBody>
             <TableRow>
               <TD variant="head">Year</TD>

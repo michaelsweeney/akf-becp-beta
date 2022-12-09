@@ -1,11 +1,13 @@
-import styled from "styled-components";
+import styled from "@mui/styled-engine";
 import { TableCell, TableRow } from "@mui/material";
 
 import { Button } from "@mui/material";
 
 import { colors } from "./colors";
 
-export const TD = styled(TableCell)<{
+export const TD = styled(TableCell, {
+  shouldForwardProp: (prop) => prop !== "topBorder" && prop !== "bottomBorder",
+})<{
   topBorder?: boolean;
   bottomBorder?: boolean;
 }>(({ topBorder, bottomBorder }) => ({
@@ -22,7 +24,9 @@ export const TDRotate = styled(TD)<{}>(() => ({
   width: "50px !important",
 }));
 
-export const TR = styled(TableRow)<{
+export const TR = styled(TableRow, {
+  shouldForwardProp: (prop) => prop !== "topBorder" && prop !== "bottomBorder",
+})<{
   topBorder?: boolean;
   bottomBorder?: boolean;
 }>(({ topBorder, bottomBorder }) => ({
