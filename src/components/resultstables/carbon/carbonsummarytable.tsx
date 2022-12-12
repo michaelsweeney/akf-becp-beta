@@ -59,7 +59,7 @@ const CarbonTable = () => {
     <div>
       <TitleWrapper>
         <SubHeader>{`Carbon Summary, ${
-          val_key === "kg_co2_absolute" ? "kg CO2e/sf/yr" : "kg CO2e/yr"
+          val_key === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr"
         }`}</SubHeader>
       </TitleWrapper>
       <DownloadButton tableref={ref} />
