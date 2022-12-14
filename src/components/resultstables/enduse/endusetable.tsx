@@ -27,6 +27,11 @@ const EnduseTable = () => {
     (state) => state.case_outputs
   );
 
+  console.table(
+    projection_from_reference_response[0].case_results
+      .emissions_projection_by_fuel
+  );
+
   const { case_inputs } = useAppSelector((state) => state);
   const { enduse_table_options } = useAppSelector((state) => state.ui_settings);
   const output_array = projection_from_reference_response;
