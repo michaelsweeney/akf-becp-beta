@@ -3,8 +3,8 @@ import { useRef, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { uiActions } from "store/uislice";
 import styled from "@mui/styled-engine";
-import { StyledButton } from "styles/components";
-import { colors } from "styles/colors";
+import { StyledButton } from "styling/components";
+import { colors } from "styling/colors";
 import { arrow_forward, IconSvg } from "components/svgicons";
 
 type SidebarCollapseTypes = {
@@ -29,7 +29,7 @@ const SidebarCollapseWrapper = styled("div")<WrapperProps>(
     left: props.sidebar_open ? "-999px" : "0px",
     height: props.height,
     transition: "left 250ms",
-    borderRight: "1px solid black",
+    borderRight: "2px solid black",
     backgroundColor: colors.sidebar_background,
   })
 );

@@ -5,13 +5,12 @@ import EnduseContent from "./enduse/endusecontent";
 import CarbonContent from "./carbon/carboncontent";
 
 interface MainPropTypes {}
-const MainWrapper = styled("div")<MainPropTypes>(
-  (props: MainPropTypes) => ({})
-);
+const MainWrapper = styled("div")<MainPropTypes>((props: MainPropTypes) => ({
+  padding: "15px",
+}));
 
 const ResultsWrapper = styled("div")<{}>(() => ({
   height: "100%",
-  padding: "15px",
 }));
 
 const ResultsContainer = () => {

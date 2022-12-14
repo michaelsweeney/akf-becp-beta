@@ -14,8 +14,7 @@ import * as lookups from "lookups";
 import AreaRowMap from "./arearowmap";
 import GlobalRowMap from "./globalrowmap";
 import CaseAttributeRowMap from "./caseattributerowmap";
-import { TD, TDRotate, StyledButton, H2, TR } from "styles/components";
-import { relative } from "node:path/win32";
+import { TD, TDRotate, StyledButton, H2, TR } from "styling/components";
 
 const {
   location_states,
@@ -48,6 +47,32 @@ const TopContainer = styled("div")({
 const TitleWrapper = styled(H2)({
   position: "relative",
   top: "10px",
+});
+
+const RotateText = styled("div")({
+  width: "25px !important",
+  position: "relative",
+  overflow: "visible",
+  whiteSpace: "nowrap",
+});
+
+const RotateCenterGlobal = styled(RotateText)({
+  top: "0px",
+  right: "15px",
+});
+
+const RotateCenter = styled(RotateText)({
+  top: "15px",
+  left: "15px",
+});
+
+const RotateTop = styled(RotateText)({
+  top: "5px",
+  right: "30px",
+});
+const RotateBottom = styled(RotateText)({
+  top: "2.5px",
+  right: "30px",
 });
 
 const InputForm = () => {
@@ -94,23 +119,23 @@ const InputForm = () => {
         <Table size="small">
           <TableBody>
             {/*---------- ADD / REMOVE CASES ----------*/}
-            <TR>
+            <TR bottomBorder>
               <TD variant="head"></TD>
-              <TD bottomBorder></TD>
-              <TD bottomBorder></TD>
+              <TD></TD>
+              <TD></TD>
               {case_ids.map((case_id) => {
                 let global_obj = api_inputs.global.find(
                   (d) => d.case_id === case_id
                 ) as InputCaseTypes;
                 return (
-                  <TD bottomBorder key={case_id}>
+                  <TD key={case_id}>
                     {api_inputs.global.length === 1 ? (
                       <span></span>
                     ) : (
                       <StyledButton
                         size="small"
                         color="secondary"
-                        variant="outlined"
+                        variant="text"
                         onClick={() => handleRemoveCase(global_obj.case_id)}
                       >
                         Remove Case
@@ -121,9 +146,9 @@ const InputForm = () => {
               })}
             </TR>
 
-            <TR>
+            <TR topPadding>
               <TDRotate variant="head" rowSpan={5}>
-                GLOBAL
+                <RotateCenterGlobal>GLOBAL</RotateCenterGlobal>
               </TDRotate>
               {/*---------- CASE ATTRIBUTE  MAPPING ----------*/}
               <CaseAttributeRowMap
@@ -175,7 +200,7 @@ const InputForm = () => {
               />
             </TR>
 
-            <TR bottomBorder>
+            <TR bottomBorder bottomPadding>
               <GlobalRowMap
                 title="Projection Case"
                 global_key="projection_case"
@@ -191,24 +216,28 @@ const InputForm = () => {
             {area_ids.map((area_id, i) => {
               return (
                 <React.Fragment key={i}>
-                  <TR>
+                  <TR topBorder topPadding>
                     <TDRotate variant="head" rowSpan={7}>
-                      <div>{`AREA TYPE ${i + 1}`}</div>
-                      <div>
-                        {area_ids.length === 1 ? (
-                          <span></span>
-                        ) : (
-                          <Button
-                            sx={{ width: "100px !important" }}
-                            onClick={() => handleRemoveAreaType(area_id)}
-                            variant="text"
-                            size="small"
-                            color="secondary"
-                          >
-                            remove
-                          </Button>
-                        )}
-                      </div>
+                      {area_ids.length === 1 ? (
+                        <>
+                          <RotateCenter>{`AREA TYPE ${i + 1}`}</RotateCenter>
+                        </>
+                      ) : (
+                        <>
+                          <RotateTop>{`AREA TYPE ${i + 1}`}</RotateTop>
+                          <RotateBottom>
+                            <Button
+                              sx={{ width: "100px !important" }}
+                              onClick={() => handleRemoveAreaType(area_id)}
+                              variant="text"
+                              size="small"
+                              color="secondary"
+                            >
+                              remove
+                            </Button>
+                          </RotateBottom>
+                        </>
+                      )}
                     </TDRotate>
 
                     <AreaRowMap
@@ -280,7 +309,7 @@ const InputForm = () => {
                     />
                   </TR>
 
-                  <TR bottomBorder>
+                  <TR bottomBorder bottomPadding>
                     <AreaRowMap
                       area_id={area_id}
                       title="DHW COP"

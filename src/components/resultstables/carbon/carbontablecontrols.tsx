@@ -5,7 +5,7 @@ import { uiActions } from "store/uislice";
 import OptionToggle from "components/optiontoggle";
 const Root = styled("div")({
   borderBottom: "1px solid black",
-  marginBottom: "5px",
+  marginBottom: "10px",
 });
 const CarbonTableControls = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ const CarbonTableControls = () => {
   return (
     <Root>
       <OptionToggle
-        title="UNITS"
+        title="units"
         buttons={[
           { key: "kg_co2_per_sf", label: "kg CO2e/sf/yr" },
           { key: "kg_co2_absolute", label: "kg CO2e/yr" },

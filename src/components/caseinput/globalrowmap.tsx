@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 import { caseInputActions } from "store/caseinputslice";
 
 import { uiActions } from "store/uislice";
-import { TD } from "styles/components";
+import { TD } from "styling/components";
 
 type OptionalChildPropTypes = {
   option_values?: string[];

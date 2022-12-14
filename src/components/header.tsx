@@ -1,6 +1,6 @@
 import styled from "@mui/styled-engine";
 
-import { H1 } from "styles/components";
+import { H1 } from "styling/components";
 
 const LogoContainer = styled("div")({
   display: "inline-block",

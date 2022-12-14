@@ -21,7 +21,7 @@ const EnduseTableControls = () => {
   return (
     <Root>
       <OptionToggle
-        title="UNITS"
+        title="units"
         buttons={[
           { key: "kbtu_per_sf", label: "kbtu/sf/yr" },
           { key: "kbtu_absolute", label: "kbtu/yr" },
@@ -31,7 +31,7 @@ const EnduseTableControls = () => {
       />
 
       <OptionToggle
-        title="GROUPING"
+        title="grouping"
         buttons={[
           { key: "enduse", label: "enduse" },
           { key: "subcategory_combined", label: "subcategories" },
@@ -43,7 +43,3 @@ const EnduseTableControls = () => {
   );
 };
 export default EnduseTableControls;
-
-// export type EnduseKeyTypes = "enduses_per_sf" | "enduses_absolute_kbtu";
-// export type EnduseUnitTypes = "kbtu_per_sf" | "kbtu_absolute";
-// export type EnduseGroupbyTypes = "enduse" | "subcategory_combined";

@@ -1,7 +1,7 @@
 import { htmlTableToCsv } from "dataformat/htmltable";
 import { MutableRefObject } from "react";
 
-import { StyledButton } from "styles/components";
+import { StyledButton } from "styling/components";
 
 const DownloadButton = (props: { tableref: MutableRefObject<null> }) => {
   const handleClick = () => {

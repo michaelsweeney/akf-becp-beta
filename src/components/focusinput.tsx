@@ -1,5 +1,10 @@
 import React, { useEffect, useState, FocusEvent, ChangeEvent } from "react";
 import { Input, FormControl } from "@mui/material";
+import styled from "@mui/styled-engine";
+
+const InputWrapper = styled(Input)({
+  paddingLeft: "0px !important",
+});
 
 type PropTypes = {
   value: string | number;
@@ -72,7 +77,7 @@ const FocusInput = (props: PropTypes) => {
 
   return (
     <FormControl size="small" fullWidth>
-      <Input
+      <InputWrapper
         size="small"
         disabled={is_disabled}
         sx={{ paddingLeft: 1 }}

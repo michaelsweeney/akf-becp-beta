@@ -4,11 +4,12 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 
 import { useEffect, useRef } from "react";
 import { arrow_back, IconSvg } from "components/svgicons";
-import { colors } from "styles/colors";
+import { colors } from "styling/colors";
 
 import styled from "@mui/styled-engine";
 import { Button } from "@mui/material";
-import { H2 } from "styles/components";
+import { H2 } from "styling/components";
+
 type SidebarPropTypes = {
   height: number;
   component: JSX.Element | JSX.Element[];
@@ -22,7 +23,8 @@ type DrawerContainerPropTypes = {
 
 const DrawerContainer = styled("div")<DrawerContainerPropTypes>((props) => ({
   backgroundColor: colors.sidebar_background,
-  borderRight: "1px solid black",
+  padding: "20px",
+  borderRight: "2px solid black",
   position: "absolute",
   height: props.sidebarHeight,
   overflowY: "auto",

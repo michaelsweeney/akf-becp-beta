@@ -3,7 +3,7 @@ import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 
 import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
-import { SubHeader, TD } from "styles/components";
+import { SubHeader, TD } from "styling/components";
 import { CarbonTableProjectionResultsYearType } from "types";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";

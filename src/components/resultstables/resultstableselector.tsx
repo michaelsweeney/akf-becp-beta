@@ -2,18 +2,15 @@ import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { uiActions } from "store/uislice";
 import { CurrentViewTypes } from "types";
-import { Button } from "@mui/material";
+
+import * as S from "styling/components";
+import OptionToggle from "components/optiontoggle";
 
 interface PropTypes {}
 
 const Root = styled("div")({
   borderBottom: "1px solid black",
-  paddingBottom: "5px",
-  padding: "15px",
-});
-const ButtonWrapper = styled(Button)({
-  marginLeft: "10px !important",
-  marginTop: "5px !important",
+  marginBottom: "10px",
 });
 
 const ViewSelector = (props: PropTypes) => {
@@ -26,22 +23,15 @@ const ViewSelector = (props: PropTypes) => {
 
   return (
     <Root>
-      <ButtonWrapper
-        variant={current_view === "carbon" ? "contained" : "outlined"}
-        onClick={() => {
-          handleSetCurrentView("carbon");
-        }}
-      >
-        carbon
-      </ButtonWrapper>
-      <ButtonWrapper
-        variant={current_view === "enduse" ? "contained" : "outlined"}
-        onClick={() => {
-          handleSetCurrentView("enduse");
-        }}
-      >
-        enduses
-      </ButtonWrapper>
+      <OptionToggle
+        title="table view"
+        buttons={[
+          { key: "carbon", label: "carbon" },
+          { key: "enduse", label: "enduse" },
+        ]}
+        callback={(d) => handleSetCurrentView(d as CurrentViewTypes)}
+        current_key={current_view}
+      />
     </Root>
   );
 };

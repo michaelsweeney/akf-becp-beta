@@ -7,10 +7,11 @@ type Props = {
   callback: () => void;
 };
 
-const StyledButton = styled(Button)`
-  padding: "0px !important";
-  margin: "0px !important";
-`;
+const StyledButton = styled(Button)({
+  padding: "1px !important",
+  marginLeft: "15px !important",
+  minWidth: "30px !important",
+});
 
 const AttributeLinkButton = (props: Props) => {
   let { is_linked, callback } = props;

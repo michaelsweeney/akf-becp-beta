@@ -7,40 +7,46 @@ import { colors } from "./colors";
 
 export const TD = styled(TableCell, {
   shouldForwardProp: (prop) => prop !== "topBorder" && prop !== "bottomBorder",
-})<{
-  topBorder?: boolean;
-  bottomBorder?: boolean;
-}>(({ topBorder, bottomBorder }) => ({
+})<{}>(() => ({
   padding: "0px",
   paddingLeft: "5px",
   paddingRight: "5px",
-  borderTop: topBorder ? "1px solid black !important" : "",
-  borderBottom: bottomBorder ? "1px solid black !important" : "",
 }));
 
 export const TDRotate = styled(TD)<{}>(() => ({
   transform: "rotate(-90deg)",
   textAlign: "center",
-  width: "50px !important",
 }));
 
 export const TR = styled(TableRow, {
-  shouldForwardProp: (prop) => prop !== "topBorder" && prop !== "bottomBorder",
+  shouldForwardProp: (prop) =>
+    !["topBorder", "bottomBorder", "topPadding", "bottomPadding"].includes(
+      prop
+    ),
 })<{
   topBorder?: boolean;
   bottomBorder?: boolean;
-}>(({ topBorder, bottomBorder }) => ({
+  topPadding?: boolean;
+  bottomPadding?: boolean;
+}>(({ topBorder, topPadding, bottomBorder, bottomPadding }) => ({
   "& td": {
     borderTop: topBorder ? "1px solid black" : "",
     borderBottom: bottomBorder ? "1px solid black" : "",
+    paddingTop: topPadding ? "10px" : "",
+    paddingBottom: bottomPadding ? "10px" : "",
   },
 }));
 
 //@ts-ignore
 export const StyledButton = styled(Button)({
+  borderRadius: "0px",
+  boxShadow: "none",
   marginRight: "5px !important",
   marginBottom: "5px !important",
   textTransform: "none !important",
+  "&:hover": {
+    boxShadow: "none",
+  },
 });
 
 export const H1 = styled("span")({

@@ -1,5 +1,5 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { colors } from "styles/colors";
+import { colors } from "styling/colors";
 
 import InputListener from "components/inputlistener";
 import LoadingSpinner from "components/loadingspinner";

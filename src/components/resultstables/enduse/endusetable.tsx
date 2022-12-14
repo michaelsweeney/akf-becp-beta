@@ -3,14 +3,14 @@ import styled from "@mui/styled-engine";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 
 import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
-import { TD } from "styles/components";
+import { TD } from "styling/components";
 import {
   ProjectionFromReferenceOutputTypes,
   EnduseTableFlatResultsObject,
   EnduseKeyTypes,
 } from "types";
 
-import { SubHeader } from "styles/components";
+import { SubHeader } from "styling/components";
 
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
