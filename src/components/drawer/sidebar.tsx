@@ -8,7 +8,6 @@ import { colors } from "styling/colors";
 
 import styled from "@mui/styled-engine";
 import { Button } from "@mui/material";
-import { H2 } from "styling/components";
 
 type SidebarPropTypes = {
   height: number;
@@ -23,12 +22,13 @@ type DrawerContainerPropTypes = {
 
 const DrawerContainer = styled("div")<DrawerContainerPropTypes>((props) => ({
   backgroundColor: colors.sidebar_background,
-  padding: "20px",
+  padding: "15px",
   borderRight: "2px solid black",
+  boxSizing: "border-box",
   position: "absolute",
   height: props.sidebarHeight,
   overflowY: "auto",
-  left: props.open ? "0px" : `-${props.sidebarWidth + 50}px`,
+  left: props.open ? "0px" : `-${props.sidebarWidth}px`,
   transition: "left 250ms",
 }));
 
@@ -40,7 +40,6 @@ const CloseButtonWrapper = styled("div")({
 });
 
 const ComponentWrapper = styled("div")({
-  // overflowY: "auto",
   position: "relative",
 });
 
@@ -60,6 +59,7 @@ const Sidebar = (props: SidebarPropTypes) => {
       //@ts-ignore
       let dims = ref.current.getBoundingClientRect();
       let { width } = dims;
+
       dispatch(uiActions.setSidebarWidth(width as number));
     }
   };
@@ -69,8 +69,10 @@ const Sidebar = (props: SidebarPropTypes) => {
   };
 
   useEffect(() => {
-    getSidebarWidth();
-  }, [sidebar_open, case_inputs]);
+    setTimeout(() => {
+      getSidebarWidth();
+    }, 0);
+  }, [case_inputs, sidebar_open]);
 
   return (
     <DrawerContainer

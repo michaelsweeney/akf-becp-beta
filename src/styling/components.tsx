@@ -2,7 +2,6 @@ import styled from "@mui/styled-engine";
 import { TableCell, TableRow } from "@mui/material";
 
 import { Button } from "@mui/material";
-
 import { colors } from "./colors";
 
 export const TD = styled(TableCell, {
@@ -49,20 +48,25 @@ export const StyledButton = styled(Button)({
   },
 });
 
-export const H1 = styled("span")({
+export const Head1 = styled("span")({
   fontSize: 28,
   fontWeight: 600,
   color: colors.primary,
 });
 
-export const H2 = styled("span")({
-  fontSize: 24,
+export const Head2 = styled("span")({
+  fontSize: 22,
   fontWeight: 500,
   color: colors.primary,
 });
 
-export const SubHeader = styled("span")({
+export const Head3 = styled("span")({
   fontSize: 18,
   fontWeight: 500,
   color: colors.primary,
+});
+
+export const TableTitle = styled(Head3)({
+  marginTop: "10px",
+  marginBottom: "5px",
 });

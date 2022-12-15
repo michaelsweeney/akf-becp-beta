@@ -1,6 +1,6 @@
 import styled from "@mui/styled-engine";
 import { StyledButton } from "styling/components";
-import { SubHeader } from "styling/components";
+import { Head3 } from "styling/components";
 
 interface PropTypes {
   title: string;
@@ -9,7 +9,7 @@ interface PropTypes {
   current_key: string;
 }
 
-const GroupWrapper = styled("div")({
+const Wrapper = styled("div")({
   display: "inline-block",
   // padding: 10,
   marginRight: 10,
@@ -26,13 +26,13 @@ const TitleWrapper = styled("div")({
   marginBottom: 5,
 });
 
-const TitleText = styled(SubHeader)({
+const TitleText = styled(Head3)({
   fontSize: "14px",
 });
 
 const OptionToggle = (props: PropTypes) => {
   return (
-    <GroupWrapper>
+    <Wrapper>
       <TitleWrapper>
         <TitleText>{props.title}</TitleText>
       </TitleWrapper>
@@ -50,7 +50,7 @@ const OptionToggle = (props: PropTypes) => {
           </ButtonWrapper>
         );
       })}
-    </GroupWrapper>
+    </Wrapper>
   );
 };
 

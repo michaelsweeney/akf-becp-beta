@@ -31,6 +31,8 @@ const SidebarCollapseWrapper = styled("div")<WrapperProps>(
     transition: "left 250ms",
     borderRight: "2px solid black",
     backgroundColor: colors.sidebar_background,
+    overflow: "hidden",
+    boxSizing: "border-box",
   })
 );
 

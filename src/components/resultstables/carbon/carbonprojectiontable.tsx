@@ -1,20 +1,13 @@
-import { useRef } from "react";
-import styled from "@mui/styled-engine";
-import { useAppSelector, useAppDispatch } from "store/hooks";
+import { useAppSelector } from "store/hooks";
 
-import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
-import { SubHeader, TD } from "styling/components";
+import { TableTitle } from "styling/components";
 import { CarbonTableProjectionResultsYearType } from "types";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
-import DownloadButton from "components/downloadbutton";
-const TitleWrapper = styled("div")({
-  marginTop: "10px",
-  marginBottom: "5px",
-});
+
+import DataTable from "../datatable";
 
 const CarbonTable = () => {
-  const ref = useRef(null);
   const { projection_from_reference_response } = useAppSelector(
     (state) => state.case_outputs
   );
@@ -52,46 +45,33 @@ const CarbonTable = () => {
   let case_ids = getUniqueKeys(table_data, "case_id") as number[];
   let years = getUniqueKeys(table_data, "year") as number[];
 
+  const header_text = [
+    "Year",
+    ...case_ids.map((id, i) => {
+      let case_name = table_data.find((e) => e.case_id === id)
+        ?.case_name as string;
+      return case_name;
+    }),
+  ];
+
+  let row_data: (string | number)[][] = [];
+  years.forEach((yr) => {
+    let row: (string | number)[] = [];
+    row.push(yr);
+    case_ids.forEach((id) => {
+      let obj = table_data.find((d) => d.case_id === id && d.year === yr);
+      row.push(obj ? formatNumber(obj.val) : "");
+    });
+    row_data.push(row);
+  });
+
   return (
     <div>
-      <TitleWrapper>
-        <SubHeader>{`Carbon Projection (all years), ${
-          val_key === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr"
-        }`}</SubHeader>
-      </TitleWrapper>
-      <DownloadButton tableref={ref} />
+      <TableTitle>{`Carbon Projection (all years), ${
+        val_key === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr"
+      }`}</TableTitle>
 
-      <TableContainer>
-        <Table size="small" ref={ref}>
-          <TableBody>
-            <TableRow>
-              <TD variant="head">Year</TD>
-              {case_ids.map((id, i) => {
-                let case_name = table_data.find((e) => e.case_id === id)
-                  ?.case_name as string;
-                return (
-                  <TD key={i} variant="head">
-                    {case_name}
-                  </TD>
-                );
-              })}
-            </TableRow>
-            {years.map((yr, i) => {
-              return (
-                <TableRow key={i}>
-                  <TD>{yr}</TD>
-                  {case_ids.map((id, i) => {
-                    let obj = table_data.find(
-                      (d) => d.case_id === id && d.year === yr
-                    );
-                    return <TD key={i}>{obj ? formatNumber(obj.val) : ""}</TD>;
-                  })}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <DataTable headers={header_text} row_data={row_data} />
     </div>
   );
 };

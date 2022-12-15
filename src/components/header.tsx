@@ -1,6 +1,6 @@
 import styled from "@mui/styled-engine";
 
-import { H1 } from "styling/components";
+import { Head1 } from "styling/components";
 
 const LogoContainer = styled("div")({
   display: "inline-block",
@@ -30,7 +30,7 @@ const Header = (props: { height: number }) => {
   return (
     <HeaderContainer height={props.height}>
       <TitleContainer>
-        <H1>Building Operational Carbon Projection Tool [beta]</H1>
+        <Head1>Building Operational Carbon Projection Tool [beta]</Head1>
       </TitleContainer>
 
       <LogoContainer>

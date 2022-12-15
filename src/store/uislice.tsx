@@ -5,10 +5,6 @@ import {
   LinkedAttributeTypes,
   WindowDimensionTypes,
   CurrentViewTypes,
-  EnduseTableOptionTypes,
-  EnduseUnitTypes,
-  CarbonProjectionTableOptionTypes,
-  EnduseGroupbyTypes,
 } from "types";
 
 const initialState: UiSliceTypes = {

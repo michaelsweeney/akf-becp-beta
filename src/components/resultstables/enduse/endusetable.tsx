@@ -1,35 +1,21 @@
-import { useRef } from "react";
-import styled from "@mui/styled-engine";
-import { useAppDispatch, useAppSelector } from "store/hooks";
+import { useAppSelector } from "store/hooks";
 
-import { Table, TableBody, TableContainer, TableRow } from "@mui/material";
-import { TD } from "styling/components";
 import {
   ProjectionFromReferenceOutputTypes,
   EnduseTableFlatResultsObject,
   EnduseKeyTypes,
 } from "types";
 
-import { SubHeader } from "styling/components";
+import { TableTitle } from "styling/components";
 
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
 
-import DownloadButton from "components/downloadbutton";
-const TitleWrapper = styled("div")({
-  marginTop: "10px",
-  marginBottom: "5px",
-});
+import DataTable from "../datatable";
 
 const EnduseTable = () => {
-  const ref = useRef(null);
   const { projection_from_reference_response } = useAppSelector(
     (state) => state.case_outputs
-  );
-
-  console.table(
-    projection_from_reference_response[0].case_results
-      .emissions_projection_by_fuel
   );
 
   const { case_inputs } = useAppSelector((state) => state);
@@ -119,47 +105,31 @@ const EnduseTable = () => {
     });
   }
 
+  const header_text = [
+    "Enduse",
+    "Fuel",
+    "Subcategory",
+    ...case_inputs.case_attributes.map((d) => d.case_name), // should be unique_case_ids
+  ];
+
+  let row_data = enduse_table_array.map((row) => {
+    return [
+      row[0].enduse,
+      row[0].fuel,
+      row[0].subcategory,
+      ...row.map((d) => formatNumber(d.val)),
+    ];
+  });
+
   return (
     <div>
-      <TitleWrapper>
-        <SubHeader>{`End Use Table, ${
-          val_key === "kbtu_absolute" ? "kbtu/yr" : "kbtu/sf/yr"
-        } (grouped by ${
-          groupby_key === "enduse" ? "end use" : "subcategory"
-        })`}</SubHeader>
-      </TitleWrapper>
-      <DownloadButton tableref={ref} />
+      <TableTitle>{`End Use Table, ${
+        val_key === "kbtu_absolute" ? "kbtu/yr" : "kbtu/sf/yr"
+      } (grouped by ${
+        groupby_key === "enduse" ? "end use" : "subcategory"
+      })`}</TableTitle>
 
-      <TableContainer>
-        <Table size="small" ref={ref}>
-          <TableBody>
-            <TableRow>
-              <TD variant="head">Enduse</TD>
-              <TD variant="head">Fuel</TD>
-              <TD variant="head">Subcategory</TD>
-
-              {case_inputs.case_attributes.map((d, i) => (
-                <TD key={i} variant="head">
-                  {d.case_name}
-                </TD>
-              ))}
-            </TableRow>
-
-            {enduse_table_array.map((row, i) => {
-              return (
-                <TableRow key={i}>
-                  <TD>{row[0].enduse}</TD>
-                  <TD>{row[0].fuel}</TD>
-                  <TD>{row[0].subcategory}</TD>
-                  {row.map((d, i) => {
-                    return <TD key={i}>{formatNumber(d.val)}</TD>;
-                  })}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <DataTable headers={header_text} row_data={row_data} />
     </div>
   );
 };

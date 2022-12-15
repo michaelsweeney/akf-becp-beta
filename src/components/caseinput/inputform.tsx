@@ -14,7 +14,7 @@ import * as lookups from "lookups";
 import AreaRowMap from "./arearowmap";
 import GlobalRowMap from "./globalrowmap";
 import CaseAttributeRowMap from "./caseattributerowmap";
-import { TD, TDRotate, StyledButton, H2, TR } from "styling/components";
+import { TD, TDRotate, StyledButton, Head2, TR } from "styling/components";
 
 const {
   location_states,
@@ -33,10 +33,12 @@ const InputContainer = styled("div")<{}>(() => ({
 
 const ButtonContainer = styled("div")({
   float: "right",
+  position: "relative",
+  top: "-5px",
   // marginRight: "200px",
-  marginLeft: "55px",
-  marginTop: "10px",
-  marginBottom: "10px",
+  // marginLeft: "55px",
+  // marginTop: "10px",
+  // marginBottom: "10px",
 });
 
 const TopContainer = styled("div")({
@@ -44,9 +46,10 @@ const TopContainer = styled("div")({
   boxSizing: "border-box",
 });
 
-const TitleWrapper = styled(H2)({
+const TitleWrapper = styled(Head2)({
   position: "relative",
-  top: "10px",
+  top: "-6px",
+  left: "-60px",
 });
 
 const RotateText = styled("div")({
@@ -62,8 +65,8 @@ const RotateCenterGlobal = styled(RotateText)({
 });
 
 const RotateCenter = styled(RotateText)({
-  top: "15px",
-  left: "15px",
+  top: "0px",
+  right: "20px",
 });
 
 const RotateTop = styled(RotateText)({
@@ -72,7 +75,7 @@ const RotateTop = styled(RotateText)({
 });
 const RotateBottom = styled(RotateText)({
   top: "2.5px",
-  right: "30px",
+  right: "37px",
 });
 
 const InputForm = () => {
@@ -104,12 +107,19 @@ const InputForm = () => {
     <InputContainer>
       <TopContainer>
         <TitleWrapper>Case Inputs</TitleWrapper>
-
         <ButtonContainer>
-          <StyledButton onClick={() => handleAddCase()} variant="contained">
+          <StyledButton
+            size="small"
+            onClick={() => handleAddCase()}
+            variant="outlined"
+          >
             Add Case
           </StyledButton>
-          <StyledButton onClick={() => handleAddAreaType()} variant="contained">
+          <StyledButton
+            size="small"
+            onClick={() => handleAddAreaType()}
+            variant="outlined"
+          >
             Add Area Type
           </StyledButton>
         </ButtonContainer>
@@ -226,15 +236,15 @@ const InputForm = () => {
                         <>
                           <RotateTop>{`AREA TYPE ${i + 1}`}</RotateTop>
                           <RotateBottom>
-                            <Button
+                            <StyledButton
                               sx={{ width: "100px !important" }}
                               onClick={() => handleRemoveAreaType(area_id)}
                               variant="text"
                               size="small"
                               color="secondary"
                             >
-                              remove
-                            </Button>
+                              Remove Type
+                            </StyledButton>
                           </RotateBottom>
                         </>
                       )}

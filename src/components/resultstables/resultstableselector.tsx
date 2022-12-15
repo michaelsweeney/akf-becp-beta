@@ -3,7 +3,6 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 import { uiActions } from "store/uislice";
 import { CurrentViewTypes } from "types";
 
-import * as S from "styling/components";
 import OptionToggle from "components/optiontoggle";
 
 interface PropTypes {}

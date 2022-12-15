@@ -2,6 +2,12 @@ import { htmlTableToCsv } from "dataformat/htmltable";
 import { MutableRefObject } from "react";
 
 import { StyledButton } from "styling/components";
+import styled from "@mui/styled-engine";
+
+const Wrapper = styled("div")({
+  marginTop: "5px",
+  marginBottom: "5px",
+});
 
 const DownloadButton = (props: { tableref: MutableRefObject<null> }) => {
   const handleClick = () => {
@@ -14,7 +20,13 @@ const DownloadButton = (props: { tableref: MutableRefObject<null> }) => {
     }
   };
 
-  return <StyledButton onClick={handleClick}>Download CSV</StyledButton>;
+  return (
+    <Wrapper>
+      <StyledButton size="small" variant="outlined" onClick={handleClick}>
+        Download CSV
+      </StyledButton>
+    </Wrapper>
+  );
 };
 
 export default DownloadButton;

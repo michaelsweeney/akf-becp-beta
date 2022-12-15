@@ -1,5 +1,4 @@
 import styled from "@mui/styled-engine";
-import { autoType } from "d3";
 import { useAppSelector } from "store/hooks";
 
 interface MainPropTypes {
@@ -14,7 +13,8 @@ const MainWrapper = styled("div")<MainPropTypes>((props: MainPropTypes) => ({
     ? `${props.sidebarCollapseWidth}px`
     : `${props.sidebarWidth}px`,
   transition: "margin 250ms",
-  overflow: "auto",
+  overflowY: "auto",
+  boxSizing: "border-box",
 }));
 
 type ContentPaneTypes = {
