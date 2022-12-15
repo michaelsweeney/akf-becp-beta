@@ -307,3 +307,20 @@ export type CarbonTableProjectionResultsYearType = {
 export type DataTableHeadTypes = string[];
 export type DataTableRowTypes = (string | number)[];
 export type DataTableTypes = DataTableRowTypes[];
+
+export type ContainerDimensionTypes = {
+  width: number;
+  height: number;
+};
+
+export type D3WrapperCallbackPropTypes = {
+  container_ref: HTMLDivElement;
+  container_dimensions: ContainerDimensionTypes;
+};
+
+export type CreatePlotPropTypes = {
+  container_dimensions: ContainerDimensionTypes;
+  container_ref: HTMLDivElement;
+};
+
+export type D3SelectionType = d3.Selection<any, any, any, any>;

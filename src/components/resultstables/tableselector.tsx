@@ -7,7 +7,7 @@ import OptionToggle from "components/optiontoggle";
 
 interface PropTypes {}
 
-const Root = styled("div")({
+const Root = styled("div", { label: "table-selector" })({
   borderBottom: "1px solid black",
   marginBottom: "10px",
 });

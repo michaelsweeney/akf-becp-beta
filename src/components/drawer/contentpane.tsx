@@ -7,7 +7,9 @@ interface MainPropTypes {
   sidebarCollapseWidth: number;
 }
 
-const MainWrapper = styled("div")<MainPropTypes>((props: MainPropTypes) => ({
+const MainWrapper = styled("div", {
+  label: "content-pane",
+})<MainPropTypes>((props: MainPropTypes) => ({
   height: "100%",
   marginLeft: !props.open
     ? `${props.sidebarCollapseWidth}px`
@@ -28,6 +30,7 @@ const ContentPane = (props: ContentPaneTypes) => {
 
   return (
     <MainWrapper
+      className="drawer-content-pane"
       open={sidebar_open}
       sidebarWidth={sidebar_width}
       sidebarCollapseWidth={sidebar_collapse_width}

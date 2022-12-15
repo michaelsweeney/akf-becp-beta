@@ -3,7 +3,7 @@ import { useAppSelector } from "store/hooks";
 
 import Header from "components/header";
 import Footer from "./footer";
-import DrawerWrapper from "./drawer/drawer";
+import Drawer from "./drawer/drawer";
 import InputForm from "./caseinput/inputform";
 
 import ViewContainer from "./viewcontainer";
@@ -31,7 +31,7 @@ const Body = () => {
     <BodyWrapper>
       <Header height={header_height} />
       <BodyMain>
-        <DrawerWrapper
+        <Drawer
           height={window_dimensions.height - header_height - footer_height}
           sidebar_component={<InputForm />}
           main_component={<ViewContainer />}
