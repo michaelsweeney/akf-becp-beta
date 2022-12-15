@@ -4,9 +4,13 @@ import { TR, TD } from "styling/components";
 import DownloadButton from "components/downloadbutton";
 import styled from "@mui/styled-engine";
 
+import { DataTableHeadTypes, DataTableTypes } from "types";
+
 type PropTypes = {
-  headers: string[];
-  row_data: (string | number)[][];
+  headers: DataTableHeadTypes;
+  table_data: DataTableTypes;
+
+  last_row_bold?: boolean;
 };
 
 const Wrapper = styled("div")({
@@ -14,7 +18,7 @@ const Wrapper = styled("div")({
 });
 
 const DataTable = (props: PropTypes) => {
-  const { headers, row_data } = props;
+  const { headers, table_data, last_row_bold } = props;
 
   const ref = useRef(null);
   return (
@@ -30,11 +34,22 @@ const DataTable = (props: PropTypes) => {
               ))}
             </TR>
 
-            {row_data.map((row, i) => {
+            {table_data.map((row, iy) => {
               return (
-                <TR key={i}>
-                  {row.map((cell, i) => {
-                    return <TD key={i}>{cell}</TD>;
+                <TR key={iy}>
+                  {row.map((cell, ix) => {
+                    return (
+                      <TD
+                        variant={
+                          last_row_bold && iy + 1 === table_data.length
+                            ? "head"
+                            : "body"
+                        }
+                        key={ix}
+                      >
+                        {cell}
+                      </TD>
+                    );
                   })}
                 </TR>
               );

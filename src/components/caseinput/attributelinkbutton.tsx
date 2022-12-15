@@ -1,6 +1,5 @@
 import { IconSvg, link_off_path, link_on_path } from "../svgicons";
 import styled from "@mui/styled-engine";
-import { StyledButton } from "styling/components";
 import { Button } from "@mui/material";
 
 type Props = {

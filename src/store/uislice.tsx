@@ -23,13 +23,13 @@ const initialState: UiSliceTypes = {
     dhw_cop: false,
   },
 
-  sidebar_open: true,
+  sidebar_open: false,
   sidebar_width: 0,
   sidebar_collapse_width: 50,
   window_dimensions: { height: 0, width: 0 },
   sidebar_ref: null,
   is_api_loading: false,
-  current_view: "carbon",
+  current_view: "enduse",
   enduse_table_options: {
     units: "kbtu_absolute",
     groupby: "subcategory_combined",

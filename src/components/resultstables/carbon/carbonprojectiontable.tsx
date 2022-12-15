@@ -1,7 +1,7 @@
 import { useAppSelector } from "store/hooks";
 
 import { TableTitle } from "styling/components";
-import { CarbonTableProjectionResultsYearType } from "types";
+import { CarbonTableProjectionResultsYearType, DataTableTypes } from "types";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
 
@@ -45,7 +45,7 @@ const CarbonTable = () => {
   let case_ids = getUniqueKeys(table_data, "case_id") as number[];
   let years = getUniqueKeys(table_data, "year") as number[];
 
-  const header_text = [
+  const header_items = [
     "Year",
     ...case_ids.map((id, i) => {
       let case_name = table_data.find((e) => e.case_id === id)
@@ -71,7 +71,7 @@ const CarbonTable = () => {
         val_key === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr"
       }`}</TableTitle>
 
-      <DataTable headers={header_text} row_data={row_data} />
+      <DataTable headers={header_items} table_data={row_data} />
     </div>
   );
 };

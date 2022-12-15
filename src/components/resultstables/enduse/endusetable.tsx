@@ -129,7 +129,7 @@ const EnduseTable = () => {
         groupby_key === "enduse" ? "end use" : "subcategory"
       })`}</TableTitle>
 
-      <DataTable headers={header_text} row_data={row_data} />
+      <DataTable headers={header_text} table_data={row_data} />
     </div>
   );
 };

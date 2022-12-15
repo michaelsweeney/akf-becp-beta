@@ -293,3 +293,7 @@ export type CarbonTableProjectionResultsYearType = {
   case_id: number;
   val: number;
 };
+
+export type DataTableHeadTypes = string[];
+export type DataTableRowTypes = (string | number)[];
+export type DataTableTypes = DataTableRowTypes[];

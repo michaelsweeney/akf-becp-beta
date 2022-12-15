@@ -74,7 +74,7 @@ const CarbonTable = () => {
           val_key === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr"
         }`}
       </TableTitle>
-      <DataTable headers={headers} row_data={row_data} />
+      <DataTable headers={headers} table_data={row_data} />
     </div>
   );
 };

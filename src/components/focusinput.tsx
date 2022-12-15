@@ -1,9 +1,10 @@
-import React, { useEffect, useState, FocusEvent, ChangeEvent } from "react";
+import { useEffect, useState, FocusEvent, ChangeEvent } from "react";
 import { Input, FormControl } from "@mui/material";
 import styled from "@mui/styled-engine";
 
 const InputWrapper = styled(Input)({
   paddingLeft: "0px !important",
+  fontSize: "14px",
 });
 
 type PropTypes = {
