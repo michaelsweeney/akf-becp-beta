@@ -183,7 +183,10 @@ export type WindowDimensionTypes = {
   width: number;
 };
 
-export type CurrentViewTypes = "enduse" | "carbon";
+export type ViewTypes = "plot" | "table";
+
+export type TableViewTypes = "enduse" | "carbon";
+export type PlotViewTypes = "multiline" | "stacked";
 
 export type EnduseKeyTypes = "enduses_per_sf" | "enduses_absolute_kbtu";
 export type EnduseUnitTypes = "kbtu_per_sf" | "kbtu_absolute";
@@ -206,9 +209,16 @@ export type UiSliceTypes = {
   window_dimensions: WindowDimensionTypes;
   sidebar_ref: HTMLDivElement | null;
   is_api_loading: boolean;
-  current_view: CurrentViewTypes;
-  enduse_table_options: EnduseTableOptionTypes;
-  carbon_projection_table_options: CarbonProjectionTableOptionTypes;
+  current_view: ViewTypes;
+
+  table_options: {
+    current_table_view: TableViewTypes;
+    enduse_table_options: EnduseTableOptionTypes;
+    carbon_projection_table_options: CarbonProjectionTableOptionTypes;
+  };
+  plot_options: {
+    current_plot_view: PlotViewTypes;
+  };
 };
 
 export type CarbonProjectionTableUnitTypes =

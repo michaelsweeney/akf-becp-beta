@@ -11,7 +11,7 @@ const EnduseTableControls = () => {
   const dispatch = useAppDispatch();
   const {
     enduse_table_options: { groupby, units },
-  } = useAppSelector((state) => state.ui_settings);
+  } = useAppSelector((state) => state.ui_settings.table_options);
 
   const handleOptionChange = (key: string, val: string) => {
     console.log(key, val);

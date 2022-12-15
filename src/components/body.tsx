@@ -3,10 +3,10 @@ import { useAppSelector } from "store/hooks";
 
 import Header from "components/header";
 import Footer from "./footer";
-import Drawer from "./drawer/drawer";
+import DrawerWrapper from "./drawer/drawer";
 import InputForm from "./caseinput/inputform";
 
-import ResultsContainer from "./resultstables/resultstablecontainer";
+import ViewContainer from "./viewcontainer";
 
 const BodyWrapper = styled("div")<{}>(() => ({
   width: "100vw",
@@ -31,10 +31,10 @@ const Body = () => {
     <BodyWrapper>
       <Header height={header_height} />
       <BodyMain>
-        <Drawer
+        <DrawerWrapper
           height={window_dimensions.height - header_height - footer_height}
           sidebar_component={<InputForm />}
-          main_component={<ResultsContainer />}
+          main_component={<ViewContainer />}
         />
       </BodyMain>
       <Footer height={footer_height} />

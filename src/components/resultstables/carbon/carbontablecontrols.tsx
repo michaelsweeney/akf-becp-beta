@@ -11,7 +11,7 @@ const CarbonTableControls = () => {
   const dispatch = useAppDispatch();
   const {
     carbon_projection_table_options: { units },
-  } = useAppSelector((state) => state.ui_settings);
+  } = useAppSelector((state) => state.ui_settings.table_options);
 
   const handleOptionChange = (key: string, val: string) => {
     dispatch(uiActions.setCarbonTableOptions({ key, val }));

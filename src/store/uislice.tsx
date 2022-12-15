@@ -4,7 +4,9 @@ import {
   UiSliceTypes,
   LinkedAttributeTypes,
   WindowDimensionTypes,
-  CurrentViewTypes,
+  TableViewTypes,
+  ViewTypes,
+  PlotViewTypes,
 } from "types";
 
 const initialState: UiSliceTypes = {
@@ -22,19 +24,24 @@ const initialState: UiSliceTypes = {
     dhw_fuel: false,
     dhw_cop: false,
   },
-
   sidebar_open: false,
   sidebar_width: 0,
   sidebar_collapse_width: 50,
   window_dimensions: { height: 0, width: 0 },
   sidebar_ref: null,
   is_api_loading: false,
-  current_view: "enduse",
-  enduse_table_options: {
-    units: "kbtu_absolute",
-    groupby: "subcategory_combined",
+  current_view: "plot",
+  table_options: {
+    current_table_view: "enduse",
+    enduse_table_options: {
+      units: "kbtu_absolute",
+      groupby: "subcategory_combined",
+    },
+    carbon_projection_table_options: { units: "kg_co2_per_sf" },
   },
-  carbon_projection_table_options: { units: "kg_co2_per_sf" },
+  plot_options: {
+    current_plot_view: "multiline",
+  },
 };
 
 export const UiSlice = createSlice({
@@ -68,9 +75,13 @@ export const UiSlice = createSlice({
     setIsApiLoading: (state, action: PayloadAction<boolean>) => {
       state.is_api_loading = action.payload;
     },
-    setCurrentView: (state, action: PayloadAction<CurrentViewTypes>) => {
+    setCurrentView: (state, action: PayloadAction<ViewTypes>) => {
       state.current_view = action.payload;
     },
+    setCurrentTableView: (state, action: PayloadAction<TableViewTypes>) => {
+      state.table_options.current_table_view = action.payload;
+    },
+
     setEnduseTableOptions: (
       state,
       action: PayloadAction<{
@@ -80,7 +91,7 @@ export const UiSlice = createSlice({
     ) => {
       let { key, val } = action.payload;
       //@ts-ignore
-      state.enduse_table_options[key] = val;
+      state.table_options.enduse_table_options[key] = val;
     },
     setCarbonTableOptions: (
       state,
@@ -92,7 +103,10 @@ export const UiSlice = createSlice({
       let { key, val } = action.payload;
 
       //@ts-ignore
-      state.carbon_projection_table_options[key] = val;
+      state.table_options.carbon_projection_table_options[key] = val;
+    },
+    setCurrentPlotView: (state, action: PayloadAction<PlotViewTypes>) => {
+      state.plot_options.current_plot_view = action.payload;
     },
   },
 });

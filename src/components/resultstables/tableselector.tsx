@@ -1,7 +1,7 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { uiActions } from "store/uislice";
-import { CurrentViewTypes } from "types";
+import { TableViewTypes } from "types";
 
 import OptionToggle from "components/optiontoggle";
 
@@ -12,12 +12,14 @@ const Root = styled("div")({
   marginBottom: "10px",
 });
 
-const ViewSelector = (props: PropTypes) => {
+const TableSelector = (props: PropTypes) => {
   const dispatch = useAppDispatch();
 
-  const { current_view } = useAppSelector((state) => state.ui_settings);
-  const handleSetCurrentView = (vtype: CurrentViewTypes) => {
-    dispatch(uiActions.setCurrentView(vtype));
+  const { current_table_view } = useAppSelector(
+    (state) => state.ui_settings.table_options
+  );
+  const handleSetCurrentView = (vtype: TableViewTypes) => {
+    dispatch(uiActions.setCurrentTableView(vtype));
   };
 
   return (
@@ -28,10 +30,10 @@ const ViewSelector = (props: PropTypes) => {
           { key: "carbon", label: "carbon" },
           { key: "enduse", label: "enduse" },
         ]}
-        callback={(d) => handleSetCurrentView(d as CurrentViewTypes)}
-        current_key={current_view}
+        callback={(d) => handleSetCurrentView(d as TableViewTypes)}
+        current_key={current_table_view}
       />
     </Root>
   );
 };
-export default ViewSelector;
+export default TableSelector;

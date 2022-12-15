@@ -19,7 +19,9 @@ const EnduseTable = () => {
   );
 
   const { case_inputs } = useAppSelector((state) => state);
-  const { enduse_table_options } = useAppSelector((state) => state.ui_settings);
+  const { enduse_table_options } = useAppSelector(
+    (state) => state.ui_settings.table_options
+  );
   const output_array = projection_from_reference_response;
 
   // constants to be pulled out into state options and/or lookups

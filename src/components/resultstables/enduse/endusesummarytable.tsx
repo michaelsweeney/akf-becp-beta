@@ -13,7 +13,9 @@ const EnduseSummaryTable = () => {
 
   const { case_attributes } = useAppSelector((state) => state.case_inputs);
   const { case_inputs } = useAppSelector((state) => state);
-  const { enduse_table_options } = useAppSelector((state) => state.ui_settings);
+  const { enduse_table_options } = useAppSelector(
+    (state) => state.ui_settings.table_options
+  );
   const output_array = projection_from_reference_response;
 
   let val_key = enduse_table_options.units;
