@@ -12,7 +12,7 @@ const Root = styled("div", { label: "plot-selector" })({
   marginBottom: "10px",
 });
 
-const ResultsPlotSelector = (props: PropTypes) => {
+const PlotTypeSelector = (props: PropTypes) => {
   const dispatch = useAppDispatch();
 
   const { current_plot_view } = useAppSelector(
@@ -23,7 +23,7 @@ const ResultsPlotSelector = (props: PropTypes) => {
   };
 
   return (
-    <Root className="plot-options-container">
+    <Root className="plot-type-selector-container">
       <OptionToggle
         title="plot type"
         buttons={[
@@ -36,4 +36,4 @@ const ResultsPlotSelector = (props: PropTypes) => {
     </Root>
   );
 };
-export default ResultsPlotSelector;
+export default PlotTypeSelector;

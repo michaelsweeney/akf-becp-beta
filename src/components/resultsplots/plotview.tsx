@@ -1,12 +1,14 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector } from "store/hooks";
-import { D3WrapperCallbackPropTypes } from "types";
-import PlotSelector from "./plotselector";
+import PlotTypeSelector from "./plottypeselector";
 
+import MultilineControls from "./multiline/multilinecontrols";
+import StackedControls from "./stacked/stackedcontrols";
 import SVGWrapper from "./svgwrapper";
 
-import { createStackedPlot } from "./stacked/createstackedplot";
+import { D3WrapperCallbackPropTypes } from "types";
 import { createMultilinePlot } from "./multiline/createmultilineplot";
+import { createStackedPlot } from "./stacked/createstackedplot";
 
 const PlotViewWrapper = styled("div", { label: "plot-view" })({});
 
@@ -15,22 +17,39 @@ const PlotView = () => {
     plot_options: { current_plot_view },
   } = useAppSelector((state) => state.ui_settings);
 
-  const createLayout = (config: D3WrapperCallbackPropTypes) => {
-    const { container_dimensions, container_ref } = config;
-
+  const createSVGLayout = (wprops: D3WrapperCallbackPropTypes) => {
     if (current_plot_view === "multiline") {
-      createMultilinePlot({ container_dimensions, container_ref });
+      createMultilinePlot({
+        container_dimensions: wprops.container_dimensions,
+        container_ref: wprops.container_ref,
+      });
+    } else if (current_plot_view === "stacked") {
+      createStackedPlot({
+        container_dimensions: wprops.container_dimensions,
+        container_ref: wprops.container_ref,
+      });
     }
-    if (current_plot_view === "stacked") {
-      createStackedPlot({ container_dimensions, container_ref });
-    }
-    // console.log(container_dimensions, container_ref);
   };
+
+  const getCurrentControlsComponent = () => {
+    switch (current_plot_view) {
+      case "multiline":
+        return <MultilineControls />;
+      case "stacked":
+        return <StackedControls />;
+      default:
+        return <MultilineControls />;
+    }
+  };
+
+  const ControlsComponent = getCurrentControlsComponent();
 
   return (
     <PlotViewWrapper>
-      <PlotSelector />
-      <SVGWrapper createChartCallback={createLayout} />
+      <PlotTypeSelector />
+
+      <SVGWrapper createChartCallback={createSVGLayout} />
+      {ControlsComponent}
     </PlotViewWrapper>
   );
 };

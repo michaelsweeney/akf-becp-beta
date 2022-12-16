@@ -6,7 +6,7 @@ import {
 } from "types";
 
 const initialState: CaseOutputSliceTypes = {
-  projection_from_reference_response: [],
+  output_response: [],
 };
 
 export const caseOutputSlice = createSlice({
@@ -17,7 +17,7 @@ export const caseOutputSlice = createSlice({
       state,
       action: PayloadAction<ProjectionFromReferenceOutputTypes[]>
     ) => {
-      state.projection_from_reference_response = action.payload;
+      state.output_response = action.payload;
     },
   },
 });

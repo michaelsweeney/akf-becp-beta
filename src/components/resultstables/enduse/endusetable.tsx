@@ -14,15 +14,13 @@ import { getUniqueKeys } from "dataformat/tableformat";
 import DataTable from "../datatable";
 
 const EnduseTable = () => {
-  const { projection_from_reference_response } = useAppSelector(
-    (state) => state.case_outputs
-  );
+  const { output_response } = useAppSelector((state) => state.case_outputs);
 
   const { case_inputs } = useAppSelector((state) => state);
   const { enduse_table_options } = useAppSelector(
     (state) => state.ui_settings.table_options
   );
-  const output_array = projection_from_reference_response;
+  const output_array = output_response;
 
   // constants to be pulled out into state options and/or lookups
 

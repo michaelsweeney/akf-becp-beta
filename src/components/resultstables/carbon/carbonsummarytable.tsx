@@ -8,9 +8,7 @@ import { getUniqueKeys } from "dataformat/tableformat";
 import DataTable from "../datatable";
 
 const CarbonTable = () => {
-  const { projection_from_reference_response } = useAppSelector(
-    (state) => state.case_outputs
-  );
+  const { output_response } = useAppSelector((state) => state.case_outputs);
 
   const { case_inputs } = useAppSelector((state) => state);
   const { carbon_projection_table_options } = useAppSelector(
@@ -22,7 +20,7 @@ const CarbonTable = () => {
 
   let table_data: CarbonTableProjectionResultsYearType[] = [];
 
-  projection_from_reference_response.forEach((d) => {
+  output_response.forEach((d) => {
     let { case_id, case_results } = d;
 
     let case_name = case_inputs.case_attributes.find(

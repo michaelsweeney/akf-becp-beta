@@ -38,7 +38,9 @@ const SVGWrapper = (props: PropTypes) => {
       let height = d3.sum([
         getElBox(".drawer-content-pane")?.height,
         -getElBox(".view-options-container")?.height,
-        -getElBox(".plot-options-container")?.height,
+        -getElBox(".plot-type-selector-container")?.height,
+        -getElBox(".plot-controls-container")?.height,
+
         -bottom_padding,
       ]);
 

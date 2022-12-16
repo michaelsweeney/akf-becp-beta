@@ -134,7 +134,7 @@ export type InputCaseTypes = {
 };
 
 export type CaseOutputSliceTypes = {
-  projection_from_reference_response: ProjectionFromReferenceOutputTypes[];
+  output_response: ProjectionFromReferenceOutputTypes[];
 };
 
 export type HvacTemplateTypes = {
