@@ -35,10 +35,6 @@ const ButtonContainer = styled("div")({
   float: "right",
   position: "relative",
   top: "-5px",
-  // marginRight: "200px",
-  // marginLeft: "55px",
-  // marginTop: "10px",
-  // marginBottom: "10px",
 });
 
 const TopContainer = styled("div")({
@@ -48,8 +44,8 @@ const TopContainer = styled("div")({
 
 const TitleWrapper = styled(Head2)({
   position: "relative",
-  top: "-6px",
-  left: "-60px",
+  top: "-2px",
+  left: "-80px",
 });
 
 const RotateText = styled("div")({

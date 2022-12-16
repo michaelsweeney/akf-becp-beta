@@ -8,6 +8,7 @@ import { colors } from "styling/colors";
 
 import styled from "@mui/styled-engine";
 import { Button } from "@mui/material";
+import { StyledButton } from "styling/components";
 
 type SidebarPropTypes = {
   height: number;
@@ -32,11 +33,22 @@ const DrawerContainer = styled("div")<DrawerContainerPropTypes>((props) => ({
   transition: "left 250ms",
 }));
 
-const CloseButtonWrapper = styled("div")({
+const CloseButtonWrapper = styled(StyledButton)({
   display: "inline-block",
   position: "absolute",
   left: "5px",
   top: "5px",
+  minWidth: "25px !important",
+  // backgroundColor: "red !important",
+  "& div": {
+    position: "relative",
+    left: "5px",
+    top: "4px",
+    minWidth: "25px !important",
+    // backgroundColor: "yellow !important",
+  },
+
+  // backgroundColor: "red !important",
 });
 
 const ComponentWrapper = styled("div")({
@@ -82,10 +94,8 @@ const Sidebar = (props: SidebarPropTypes) => {
       sidebarHeight={height}
     >
       <ComponentWrapper>{component}</ComponentWrapper>
-      <CloseButtonWrapper>
-        <Button onClick={handleClose}>
-          <IconSvg fill={colors.primary} d={arrow_back} />
-        </Button>
+      <CloseButtonWrapper onClick={handleClose}>
+        <IconSvg fill={colors.primary} d={arrow_back} />
       </CloseButtonWrapper>
     </DrawerContainer>
   );
