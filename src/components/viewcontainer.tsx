@@ -5,8 +5,8 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 
 import OptionToggle from "components/optiontoggle";
 import { ViewTypes } from "types";
-import { uiActions } from "store/uislice";
 import styled from "@mui/styled-engine";
+import { viewActions } from "store/viewoptionslice";
 
 const OptionWrapper = styled("div", { label: "option-wrapper" })({
   display: "inline-block",
@@ -30,7 +30,7 @@ const ComponentWrapper = styled("div", { label: "component-wrapper" })({
 });
 
 const ViewContainer = () => {
-  const { current_view } = useAppSelector((state) => state.ui_settings);
+  const { current_view } = useAppSelector((state) => state.view_options);
   const dispatch = useAppDispatch();
 
   const getCurrentComponent = () => {
@@ -44,7 +44,7 @@ const ViewContainer = () => {
   };
 
   const handleSetCurrentView = (d: ViewTypes) => {
-    dispatch(uiActions.setCurrentView(d));
+    dispatch(viewActions.setCurrentView(d));
   };
 
   const CurrentComponent = getCurrentComponent();

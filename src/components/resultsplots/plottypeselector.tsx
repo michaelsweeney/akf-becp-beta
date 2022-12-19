@@ -4,6 +4,7 @@ import { uiActions } from "store/uislice";
 import { PlotViewTypes } from "types";
 
 import OptionToggle from "components/optiontoggle";
+import { viewActions } from "store/viewoptionslice";
 
 interface PropTypes {}
 
@@ -16,10 +17,10 @@ const PlotTypeSelector = (props: PropTypes) => {
   const dispatch = useAppDispatch();
 
   const { current_plot_view } = useAppSelector(
-    (state) => state.ui_settings.plot_options
+    (state) => state.view_options.plot_options
   );
   const handleSetCurrentTableView = (vtype: PlotViewTypes) => {
-    dispatch(uiActions.setCurrentPlotView(vtype));
+    dispatch(viewActions.setCurrentPlotView(vtype));
   };
 
   return (

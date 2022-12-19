@@ -1,9 +1,10 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { uiActions } from "store/uislice";
+
 import { TableViewTypes } from "types";
 
 import OptionToggle from "components/optiontoggle";
+import { viewActions } from "store/viewoptionslice";
 
 interface PropTypes {}
 
@@ -16,10 +17,10 @@ const TableSelector = (props: PropTypes) => {
   const dispatch = useAppDispatch();
 
   const { current_table_view } = useAppSelector(
-    (state) => state.ui_settings.table_options
+    (state) => state.view_options.table_options
   );
   const handleSetCurrentView = (vtype: TableViewTypes) => {
-    dispatch(uiActions.setCurrentTableView(vtype));
+    dispatch(viewActions.setCurrentTableView(vtype));
   };
 
   return (

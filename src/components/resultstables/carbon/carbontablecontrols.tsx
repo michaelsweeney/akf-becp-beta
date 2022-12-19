@@ -1,8 +1,8 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { uiActions } from "store/uislice";
 
 import OptionToggle from "components/optiontoggle";
+import { viewActions } from "store/viewoptionslice";
 const Root = styled("div")({
   borderBottom: "1px solid black",
   marginBottom: "10px",
@@ -11,10 +11,10 @@ const CarbonTableControls = () => {
   const dispatch = useAppDispatch();
   const {
     carbon_projection_table_options: { units },
-  } = useAppSelector((state) => state.ui_settings.table_options);
+  } = useAppSelector((state) => state.view_options.table_options);
 
   const handleOptionChange = (key: string, val: string) => {
-    dispatch(uiActions.setCarbonTableOptions({ key, val }));
+    dispatch(viewActions.setCarbonTableOptions({ key, val }));
   };
 
   return (

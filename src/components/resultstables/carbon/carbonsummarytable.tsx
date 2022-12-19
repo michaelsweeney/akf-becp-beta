@@ -12,7 +12,7 @@ const CarbonTable = () => {
 
   const { case_inputs } = useAppSelector((state) => state);
   const { carbon_projection_table_options } = useAppSelector(
-    (state) => state.ui_settings.table_options
+    (state) => state.view_options.table_options
   );
 
   const emissions_key = "emissions_projection";

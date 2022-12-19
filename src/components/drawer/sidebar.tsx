@@ -7,7 +7,6 @@ import { arrow_back, IconSvg } from "components/svgicons";
 import { colors } from "styling/colors";
 
 import styled from "@mui/styled-engine";
-import { Button } from "@mui/material";
 import { StyledButton } from "styling/components";
 
 type SidebarPropTypes = {

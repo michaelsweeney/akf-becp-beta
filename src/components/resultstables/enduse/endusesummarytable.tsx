@@ -12,7 +12,7 @@ const EnduseSummaryTable = () => {
   const { case_attributes } = useAppSelector((state) => state.case_inputs);
   const { case_inputs } = useAppSelector((state) => state);
   const { enduse_table_options } = useAppSelector(
-    (state) => state.ui_settings.table_options
+    (state) => state.view_options.table_options
   );
   const output_array = output_response;
 

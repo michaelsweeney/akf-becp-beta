@@ -3,6 +3,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import caseOutputSlice from "./caseoutputslice";
 import caseInputSlice from "./caseinputslice";
 import uiSlice from "./uislice";
+import viewOptionSlice from "./viewoptionslice";
 // ...
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     case_outputs: caseOutputSlice,
     case_inputs: caseInputSlice,
     ui_settings: uiSlice,
+    view_options: viewOptionSlice,
   },
 });
 

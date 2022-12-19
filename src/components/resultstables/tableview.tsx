@@ -11,7 +11,7 @@ const ResultsWrapper = styled("div")<{}>(() => ({
 const TableView = () => {
   const {
     table_options: { current_table_view },
-  } = useAppSelector((state) => state.ui_settings);
+  } = useAppSelector((state) => state.view_options);
 
   const getCurrentComponent = () => {
     switch (current_table_view) {

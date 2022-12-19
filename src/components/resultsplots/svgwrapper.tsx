@@ -46,10 +46,6 @@ const SVGWrapper = (props: PropTypes) => {
 
       let width = getElBox(".view-options-container")?.width;
 
-      console.log(width, height);
-
-      // debugger;
-
       setContainerDimensions({ width, height });
       setDimensionsInitialized(true);
     }

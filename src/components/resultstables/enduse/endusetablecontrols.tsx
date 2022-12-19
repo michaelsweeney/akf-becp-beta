@@ -1,8 +1,8 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { uiActions } from "store/uislice";
 
 import OptionToggle from "components/optiontoggle";
+import { viewActions } from "store/viewoptionslice";
 const Root = styled("div")({
   borderBottom: "1px solid black",
   marginBottom: "5px",
@@ -11,11 +11,11 @@ const EnduseTableControls = () => {
   const dispatch = useAppDispatch();
   const {
     enduse_table_options: { groupby, units },
-  } = useAppSelector((state) => state.ui_settings.table_options);
+  } = useAppSelector((state) => state.view_options.table_options);
 
   const handleOptionChange = (key: string, val: string) => {
     console.log(key, val);
-    dispatch(uiActions.setEnduseTableOptions({ key, val }));
+    dispatch(viewActions.setEnduseTableOptions({ key, val }));
   };
 
   return (

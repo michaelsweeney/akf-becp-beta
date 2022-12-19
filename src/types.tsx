@@ -198,7 +198,28 @@ export type EnduseTableOptionTypes = {
 };
 
 export type CarbonProjectionTableOptionTypes = {
-  units: CarbonProjectionTableUnitTypes;
+  units: CarbonUnitTypes;
+};
+
+export type CarbonGroupingTypes = "total" | "mep" | "non_mep";
+
+export type ViewOptionSliceTypes = {
+  current_view: ViewTypes;
+  table_options: {
+    current_table_view: TableViewTypes;
+    enduse_table_options: EnduseTableOptionTypes;
+    carbon_projection_table_options: CarbonProjectionTableOptionTypes;
+  };
+  plot_options: {
+    current_plot_view: PlotViewTypes;
+    multiline_plot_options: {
+      units: CarbonUnitTypes;
+      grouping: CarbonGroupingTypes;
+    };
+    stacked_plot_options: {
+      units: CarbonUnitTypes;
+    };
+  };
 };
 
 export type UiSliceTypes = {
@@ -209,58 +230,59 @@ export type UiSliceTypes = {
   window_dimensions: WindowDimensionTypes;
   sidebar_ref: HTMLDivElement | null;
   is_api_loading: boolean;
-  current_view: ViewTypes;
-
-  table_options: {
-    current_table_view: TableViewTypes;
-    enduse_table_options: EnduseTableOptionTypes;
-    carbon_projection_table_options: CarbonProjectionTableOptionTypes;
-  };
-  plot_options: {
-    current_plot_view: PlotViewTypes;
-  };
 };
 
-export type CarbonProjectionTableUnitTypes =
-  | "kg_co2_per_sf"
-  | "kg_co2_absolute";
+export type CarbonUnitTypes = "kg_co2_per_sf" | "kg_co2_absolute";
+
+export type CaseResultsEmissionsProjectionType = {
+  elec_kg_per_kbtu: number;
+  kg_co2_absolute: number;
+  kg_co2_per_sf: number;
+  year: number;
+};
+
+export type CaseResultsEmissionsProjectionByFuelType = {
+  elec_kg_per_kbtu: number;
+  fuel: string;
+  kg_co2_per_sf: number;
+  year: number;
+};
+
+export type CaseResultsEmissionsProjectionByMEPCategory = {
+  category: CarbonGroupingTypes;
+  kg_co2_absolute: number;
+  kg_co2_per_sf: number;
+  year: number;
+};
+export type CaseResultsProjectionFactorTypes = {
+  case: string;
+  lrmer_co2e_kg_mwh: number;
+  state: string;
+  year: number;
+};
+
+export type CaseResultsEnduseTypes = {
+  area: number;
+  enduses_absolute_kbtu: {
+    enduse: string;
+    fuel: string;
+    kbtu_absolute: number;
+    subcategory: string;
+  }[];
+  enduses_per_sf: {
+    enduse: string;
+    fuel: string;
+    kbtu_per_sf: number;
+    subcategory: string;
+  }[];
+};
 
 export type CaseResultsTypes = {
-  emissions_projection: {
-    elec_kg_per_kbtu: number;
-    kg_co2_absolute: number;
-    kg_co2_per_sf: number;
-    year: number;
-  }[];
-
-  emissions_projection_by_fuel: {
-    elec_kg_per_kbtu: number;
-    fuel: string;
-    kg_co2_per_sf: number;
-    year: number;
-  }[];
-
-  enduses: {
-    area: number;
-    enduses_absolute_kbtu: {
-      enduse: string;
-      fuel: string;
-      kbtu_absolute: number;
-      subcategory: string;
-    }[];
-    enduses_per_sf: {
-      enduse: string;
-      fuel: string;
-      kbtu_per_sf: number;
-      subcategory: string;
-    }[];
-  };
-  projection_factors: {
-    case: string;
-    lrmer_co2e_kg_mwh: number;
-    state: string;
-    year: number;
-  }[];
+  emissions_projection: CaseResultsEmissionsProjectionType[];
+  emissions_projection_by_fuel: CaseResultsEmissionsProjectionByFuelType[];
+  emissions_projection_by_mep_category: CaseResultsEmissionsProjectionByMEPCategory[];
+  enduses: CaseResultsEnduseTypes;
+  projection_factors: CaseResultsProjectionFactorTypes[];
 };
 
 export type LL97ResultsTypes = {
@@ -321,6 +343,9 @@ export type D3WrapperCallbackPropTypes = {
 export type CreatePlotPropTypes = {
   container_dimensions: ContainerDimensionTypes;
   container_ref: HTMLDivElement;
+  case_inputs: CaseInputSliceTypes;
+  case_outputs: CaseOutputSliceTypes;
+  view_options: ViewOptionSliceTypes;
 };
 
 export type D3SelectionType = d3.Selection<any, any, any, any>;
