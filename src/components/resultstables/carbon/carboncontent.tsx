@@ -5,9 +5,9 @@ import CarbonSummaryTable from "./carbonsummarytable";
 const CarbonContent = () => {
   return (
     <div>
-      <CarbonTableControls />
       <CarbonSummaryTable />
       <CarbonProjectionTable />
+      <CarbonTableControls />
     </div>
   );
 };

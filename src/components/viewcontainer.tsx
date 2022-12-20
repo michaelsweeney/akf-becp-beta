@@ -1,37 +1,53 @@
 import TableView from "./resultstables/tableview";
 import PlotView from "./resultsplots/plotview";
 
-import { useAppSelector, useAppDispatch } from "store/hooks";
+import { useAppSelector } from "store/hooks";
 
-import OptionToggle from "components/optiontoggle";
-import { ViewTypes } from "types";
+import ViewSelector from "./viewselector";
+
 import styled from "@mui/styled-engine";
-import { viewActions } from "store/viewoptionslice";
+import PlotTypeSelector from "./resultsplots/plottypeselector";
+import TableSelector from "./resultstables/tableselector";
+import MultilineControls from "./resultsplots/multiline/multilinecontrols";
+import StackedControls from "./resultsplots/stacked/stackedcontrols";
+import CarbonTableControls from "./resultstables/carbon/carbontablecontrols";
+import EnduseTableControls from "./resultstables/enduse/endusetablecontrols";
 
-const OptionWrapper = styled("div", { label: "option-wrapper" })({
-  display: "inline-block",
-  width: "100%",
-  borderBottom: "1px solid black",
-  marginBottom: "10px",
-});
-
-const ViewWrapper = styled("div", { label: "view-wrapper" })({
+const ViewWrapper = styled("div")({
   display: "inline-block",
   height: "100%",
   width: "100%",
-  padding: "15px",
   boxSizing: "border-box",
 });
 
-const ComponentWrapper = styled("div", { label: "component-wrapper" })({
+const TopOptionPane = styled("div")({
   display: "inline-block",
-  // height: "100%",
   width: "100%",
+  padding: "15px",
+  borderBottom: "1px solid black",
+  boxSizing: "border-box",
+});
+
+const ComponentWrapper = styled("div")({
+  display: "inline-block",
+  width: "100%",
+  boxSizing: "border-box",
+});
+
+const BottomOptionPane = styled("div")({
+  display: "inline-block",
+  width: "100%",
+  padding: "15px",
+  // borderTop: "1px solid black",
+  boxSizing: "border-box",
 });
 
 const ViewContainer = () => {
-  const { current_view } = useAppSelector((state) => state.view_options);
-  const dispatch = useAppDispatch();
+  const {
+    current_view,
+    plot_options: { current_plot_view },
+    table_options: { current_table_view },
+  } = useAppSelector((state) => state.view_options);
 
   const getCurrentComponent = () => {
     switch (current_view) {
@@ -43,26 +59,53 @@ const ViewContainer = () => {
     }
   };
 
-  const handleSetCurrentView = (d: ViewTypes) => {
-    dispatch(viewActions.setCurrentView(d));
+  const getTopOptionPaneComponent = () => {
+    switch (current_view) {
+      case "plot":
+        return <PlotTypeSelector />;
+
+      case "table":
+        return <TableSelector />;
+    }
   };
 
+  const getBottomOptionPaneComponent = () => {
+    switch (current_view) {
+      case "plot":
+        switch (current_plot_view) {
+          case "multiline":
+            return <MultilineControls />;
+          case "stacked":
+            return <StackedControls />;
+          default:
+            return <div />;
+        }
+
+      case "table":
+        switch (current_table_view) {
+          case "carbon":
+            return <CarbonTableControls />;
+          case "enduse":
+            return <EnduseTableControls />;
+          default:
+            return <div />;
+        }
+    }
+  };
+  const TopOptionPaneComponent = getTopOptionPaneComponent();
   const CurrentComponent = getCurrentComponent();
+  const BottomOptionComponent = getBottomOptionPaneComponent();
+
   return (
     <ViewWrapper className="view-container">
-      <OptionWrapper className="view-options-container">
-        <OptionToggle
-          title="view type"
-          buttons={[
-            { key: "plot", label: "plot" },
-            { key: "table", label: "table" },
-          ]}
-          callback={(d) => handleSetCurrentView(d as ViewTypes)}
-          current_key={current_view}
-        />
-        <div></div>
-      </OptionWrapper>
+      <TopOptionPane className="top-options-container">
+        <ViewSelector />
+        {TopOptionPaneComponent}
+      </TopOptionPane>
       <ComponentWrapper>{CurrentComponent}</ComponentWrapper>
+      <BottomOptionPane className="bottom-options-container">
+        {BottomOptionComponent}
+      </BottomOptionPane>
     </ViewWrapper>
   );
 };

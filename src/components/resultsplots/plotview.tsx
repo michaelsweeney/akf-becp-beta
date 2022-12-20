@@ -1,6 +1,5 @@
 import styled from "@mui/styled-engine";
 import { useAppSelector } from "store/hooks";
-import PlotTypeSelector from "./plottypeselector";
 
 import MultilineControls from "./multiline/multilinecontrols";
 import StackedControls from "./stacked/stackedcontrols";
@@ -10,7 +9,6 @@ import { D3WrapperCallbackPropTypes } from "types";
 import { createMultilinePlot } from "./multiline/createmultilineplot";
 import { createStackedPlot } from "./stacked/createstackedplot";
 import * as d3 from "d3";
-const PlotViewWrapper = styled("div", { label: "plot-view" })({});
 
 const PlotView = () => {
   const {
@@ -44,27 +42,7 @@ const PlotView = () => {
     }
   };
 
-  const getCurrentControlsComponent = () => {
-    switch (current_plot_view) {
-      case "multiline":
-        return <MultilineControls />;
-      case "stacked":
-        return <StackedControls />;
-      default:
-        return <MultilineControls />;
-    }
-  };
-
-  const ControlsComponent = getCurrentControlsComponent();
-
-  return (
-    <PlotViewWrapper>
-      <PlotTypeSelector />
-
-      <SVGWrapper createChartCallback={createSVGLayout} />
-      {ControlsComponent}
-    </PlotViewWrapper>
-  );
+  return <SVGWrapper createChartCallback={createSVGLayout} />;
 };
 
 export default PlotView;

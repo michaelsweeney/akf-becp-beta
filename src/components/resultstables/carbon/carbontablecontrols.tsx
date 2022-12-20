@@ -18,17 +18,15 @@ const CarbonTableControls = () => {
   };
 
   return (
-    <Root>
-      <OptionToggle
-        title="units"
-        buttons={[
-          { key: "kg_co2_per_sf", label: "kg CO2e/sf/yr" },
-          { key: "kg_co2_absolute", label: "kg CO2e/yr" },
-        ]}
-        callback={(d) => handleOptionChange("units", d)}
-        current_key={units}
-      />
-    </Root>
+    <OptionToggle
+      title="units"
+      buttons={[
+        { key: "kg_co2_per_sf", label: "kg CO2e/sf/yr" },
+        { key: "kg_co2_absolute", label: "kg CO2e/yr" },
+      ]}
+      callback={(d) => handleOptionChange("units", d)}
+      current_key={units}
+    />
   );
 };
 export default CarbonTableControls;

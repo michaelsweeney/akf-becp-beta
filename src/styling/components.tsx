@@ -48,6 +48,13 @@ export const StyledButton = styled(Button)({
   },
 });
 
+export const OptionToggleButton = styled(StyledButton)({
+  marginTop: "0px !important",
+  marginBottom: "0px !important",
+  marginLeft: "2.5px !important",
+  marginRight: "2.5px !important",
+});
+
 export const Head1 = styled("span")({
   fontSize: 28,
   fontWeight: 600,

@@ -8,11 +8,6 @@ import { viewActions } from "store/viewoptionslice";
 
 interface PropTypes {}
 
-const Root = styled("div", { label: "table-selector" })({
-  borderBottom: "1px solid black",
-  marginBottom: "10px",
-});
-
 const TableSelector = (props: PropTypes) => {
   const dispatch = useAppDispatch();
 
@@ -24,17 +19,15 @@ const TableSelector = (props: PropTypes) => {
   };
 
   return (
-    <Root>
-      <OptionToggle
-        title="table view"
-        buttons={[
-          { key: "carbon", label: "carbon" },
-          { key: "enduse", label: "enduse" },
-        ]}
-        callback={(d) => handleSetCurrentView(d as TableViewTypes)}
-        current_key={current_table_view}
-      />
-    </Root>
+    <OptionToggle
+      title="table view"
+      buttons={[
+        { key: "carbon", label: "carbon" },
+        { key: "enduse", label: "enduse" },
+      ]}
+      callback={(d) => handleSetCurrentView(d as TableViewTypes)}
+      current_key={current_table_view}
+    />
   );
 };
 export default TableSelector;

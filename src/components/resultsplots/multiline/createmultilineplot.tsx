@@ -28,10 +28,10 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
   const orientation: "horizontal" | "vertical" = "horizontal";
 
   const plot_padding = {
-    t: 30,
-    b: 20,
+    t: 40,
+    b: 50,
     l: 75,
-    r: 5,
+    r: 10,
   };
 
   const ypadding = 1.15;
@@ -127,7 +127,7 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
 
   const title_text = bindD3Element(text_g, "text", "title-text")
     .attr("x", plot_dimensions.l)
-    .attr("y", 15)
+    .attr("y", 25)
     .style("text-anchor", "left")
     .text(
       grouping === "mep"
@@ -266,9 +266,7 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
 
   /* legend */
 
-  let row_padding = 35;
-
-  console.log(case_display_attributes);
+  let row_padding = 30;
 
   let legend_items = legend_g
     .selectAll(".legend-item-g")
@@ -278,16 +276,15 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
 
   legend_items.each(function (d, i) {
     let row = d3.select(this);
-    let rect_size = 30;
+    let legend_text_pad = 30;
 
     bindD3Element(row, "text", "row-text")
-      .attr("x", rect_size + 10)
+      .attr("x", legend_text_pad)
       .attr("y", () => i * row_padding + row_padding)
-      .text(d.case_name);
+      .text(d.case_name)
+      .style("font-size", "14px");
 
     bindD3Element(row, "path", "row-rect")
-      .attr("height", rect_size)
-      .attr("width", rect_size)
       .attr("d", d.icon)
       .attr(
         "transform",

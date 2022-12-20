@@ -5,11 +5,6 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 import { viewActions } from "store/viewoptionslice";
 import { group } from "console";
 
-const Root = styled("div", { label: "plot-selector" })({
-  borderBottom: "1px solid black",
-  marginBottom: "10px",
-});
-
 const MultilineControls = () => {
   const dispatch = useAppDispatch();
 
@@ -22,7 +17,7 @@ const MultilineControls = () => {
   );
 
   return (
-    <Root className="plot-controls-container">
+    <>
       <OptionToggle
         title="grouping"
         buttons={[
@@ -46,7 +41,7 @@ const MultilineControls = () => {
         }}
         current_key={units}
       />
-    </Root>
+    </>
   );
 };
 

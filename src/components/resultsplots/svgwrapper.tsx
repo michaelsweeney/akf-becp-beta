@@ -33,18 +33,16 @@ const SVGWrapper = (props: PropTypes) => {
       const getElBox = (sel: string) => {
         return document.querySelector(sel)?.getBoundingClientRect() as DOMRect;
       };
-      const bottom_padding = 50;
+      const bottom_padding = 5;
 
       let height = d3.sum([
         getElBox(".drawer-content-pane")?.height,
-        -getElBox(".view-options-container")?.height,
-        -getElBox(".plot-type-selector-container")?.height,
-        -getElBox(".plot-controls-container")?.height,
-
+        -getElBox(".top-options-container")?.height,
+        -getElBox(".bottom-options-container")?.height,
         -bottom_padding,
       ]);
 
-      let width = getElBox(".view-options-container")?.width;
+      let width = getElBox(".view-container")?.width;
 
       setContainerDimensions({ width, height });
       setDimensionsInitialized(true);

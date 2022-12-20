@@ -1,12 +1,7 @@
-import styled from "@mui/styled-engine";
 import { useAppSelector } from "store/hooks";
-import ResultsSelector from "./tableselector";
+
 import EnduseTableContent from "./enduse/endusecontent";
 import CarbonTableContent from "./carbon/carboncontent";
-
-const ResultsWrapper = styled("div")<{}>(() => ({
-  height: "100%",
-}));
 
 const TableView = () => {
   const {
@@ -26,12 +21,7 @@ const TableView = () => {
 
   const CurrentComponent = getCurrentComponent();
 
-  return (
-    <>
-      <ResultsSelector />
-      <ResultsWrapper>{CurrentComponent}</ResultsWrapper>
-    </>
-  );
+  return <>{CurrentComponent}</>;
 };
 
 export default TableView;

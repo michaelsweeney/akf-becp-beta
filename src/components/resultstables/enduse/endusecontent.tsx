@@ -6,9 +6,9 @@ interface PropTypes {}
 const EnduseContent = (props: PropTypes) => {
   return (
     <div>
-      <EnduseTableControls />
       <EnduseSummaryTable />
       <EnduseTable />
+      <EnduseTableControls />
     </div>
   );
 };

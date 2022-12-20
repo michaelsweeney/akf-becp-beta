@@ -30,25 +30,25 @@ const getCaseDisplayAttributes = (inputs: CaseInputSliceTypes) => {
     let fuel_color: string;
     let fuel_icon: string;
 
-    let mixColorFunc = d3.interpolate("#f425ff", "#810979");
-    let elecColorFunc = d3.interpolate("#20b5ff", "#0006bb");
-    let gasColorFunc = d3.interpolate("#34af00", "#634700");
+    let mixColorFunc = d3.interpolate("#c9ab01", "#504400");
+    let elecColorFunc = d3.interpolate("#008ed5", "#004467");
+    let gasColorFunc = d3.interpolate("#3dcc00", "#00550b");
 
     if (case_fuels.length !== 1) {
       fuel_type = "mixed";
-      fuel_color = mixColorFunc(i / case_fuels.length);
+      fuel_color = mixColorFunc(i / case_ids.length);
       fuel_icon = mixed_icon_path;
     } else if (case_fuels.includes("Natural Gas")) {
       fuel_type = "gas";
-      fuel_color = gasColorFunc(i / case_fuels.length);
+      fuel_color = gasColorFunc(i / case_ids.length);
       fuel_icon = gas_icon_path;
     } else if (case_fuels.includes("Electricity")) {
       fuel_type = "elec";
-      fuel_color = d3.interpolateBlues(i / case_fuels.length);
+      fuel_color = elecColorFunc(i / case_ids.length);
       fuel_icon = electricity_icon_path;
     } else {
       console.error("error parsing fuel type", case_fuels);
-      fuel_color = elecColorFunc(i / case_fuels.length);
+      fuel_color = elecColorFunc(i / case_areas.length);
       fuel_type = "elec";
       fuel_icon = electricity_icon_path;
     }

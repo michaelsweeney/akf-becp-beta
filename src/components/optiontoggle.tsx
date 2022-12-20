@@ -1,5 +1,5 @@
 import styled from "@mui/styled-engine";
-import { StyledButton } from "styling/components";
+import { OptionToggleButton } from "styling/components";
 import { Head3 } from "styling/components";
 
 interface PropTypes {
@@ -10,43 +10,42 @@ interface PropTypes {
 }
 
 const Wrapper = styled("div")({
+  padding: 5,
   display: "inline-block",
-  // padding: 10,
   marginRight: 10,
+  marginBottom: 10,
+  backgroundColor: "rgba(0,0,0,0.05)",
+  border: "1px solid black",
 });
 
 const ButtonWrapper = styled("div")({
-  textAlign: "center",
   display: "inline-block",
-});
-
-const TitleWrapper = styled("div")({
-  display: "block",
-  // textAlign: "center",
-  marginBottom: 5,
+  verticalAlign: "middle",
 });
 
 const TitleText = styled(Head3)({
-  fontSize: "14px",
+  fontSize: "12px",
+
+  fontWeight: 700,
+  marginRight: 10,
+  marginLeft: 5,
 });
 
 const OptionToggle = (props: PropTypes) => {
   return (
     <Wrapper>
-      <TitleWrapper>
-        <TitleText>{props.title}</TitleText>
-      </TitleWrapper>
+      <TitleText>{props.title}</TitleText>
       {props.buttons.map((d, i) => {
         return (
           <ButtonWrapper key={i}>
-            <StyledButton
+            <OptionToggleButton
               color="primary"
               variant={props.current_key === d.key ? "contained" : "outlined"}
               size="small"
               onClick={() => props.callback(d.key)}
             >
               {d.label}
-            </StyledButton>
+            </OptionToggleButton>
           </ButtonWrapper>
         );
       })}
