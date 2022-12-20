@@ -4,7 +4,7 @@ import { bindD3Element } from "dataformat/d3helpers";
 
 const createStackedPlot = (props: CreatePlotPropTypes) => {
   const { container_dimensions, container_ref } = props;
-  const svg = bindD3Element(container_ref, "svg", "plot-svg")
+  const svg = bindD3Element(container_ref, "svg", "plot-stacked-svg")
     .attr("height", container_dimensions.height)
     .attr("width", container_dimensions.width);
 

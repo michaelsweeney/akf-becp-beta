@@ -349,3 +349,10 @@ export type CreatePlotPropTypes = {
 };
 
 export type D3SelectionType = d3.Selection<any, any, any, any>;
+
+export type PlotDimensionType = {
+  height: number;
+  width: number;
+  t: number;
+  l: number;
+};

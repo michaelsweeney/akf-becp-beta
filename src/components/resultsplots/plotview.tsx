@@ -9,7 +9,7 @@ import SVGWrapper from "./svgwrapper";
 import { D3WrapperCallbackPropTypes } from "types";
 import { createMultilinePlot } from "./multiline/createmultilineplot";
 import { createStackedPlot } from "./stacked/createstackedplot";
-
+import * as d3 from "d3";
 const PlotViewWrapper = styled("div", { label: "plot-view" })({});
 
 const PlotView = () => {
@@ -24,6 +24,7 @@ const PlotView = () => {
 
   const createSVGLayout = (wprops: D3WrapperCallbackPropTypes) => {
     if (current_plot_view === "multiline") {
+      d3.select(wprops.container_ref).selectAll(".plot-stacked-svg").remove();
       createMultilinePlot({
         container_dimensions: wprops.container_dimensions,
         container_ref: wprops.container_ref,
@@ -32,6 +33,7 @@ const PlotView = () => {
         view_options: view_options,
       });
     } else if (current_plot_view === "stacked") {
+      d3.select(wprops.container_ref).selectAll(".plot-multiline-svg").remove();
       createStackedPlot({
         container_dimensions: wprops.container_dimensions,
         container_ref: wprops.container_ref,

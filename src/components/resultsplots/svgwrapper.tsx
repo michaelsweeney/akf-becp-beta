@@ -61,7 +61,7 @@ const SVGWrapper = (props: PropTypes) => {
     }
   }, [createChartCallback, containerDimensions]);
 
-  // handle resize
+  // handle resize & sidebar
   useEffect(() => {
     const handleResize = () => {
       dispatchDimensions();
@@ -79,8 +79,13 @@ const SVGWrapper = (props: PropTypes) => {
 
   // dispatch when sidebar changes
   useEffect(() => {
+    setTimeout(dispatchDimensions, 300);
+  }, [sidebar_open]);
+
+  // dispatch when inputs change
+  useEffect(() => {
     dispatchDimensions();
-  }, [sidebar_open, case_inputs]);
+  }, [case_inputs]);
 
   return (
     <Root
