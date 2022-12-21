@@ -13,6 +13,8 @@ import StackedControls from "./resultsplots/stacked/stackedcontrols";
 import CarbonTableControls from "./resultstables/carbon/carbontablecontrols";
 import EnduseTableControls from "./resultstables/enduse/endusetablecontrols";
 
+const option_pane_height = "82px";
+
 const ViewWrapper = styled("div")({
   display: "inline-block",
   height: "100%",
@@ -26,20 +28,25 @@ const TopOptionPane = styled("div")({
   padding: "15px",
   borderBottom: "1px solid black",
   boxSizing: "border-box",
+  height: option_pane_height,
 });
 
 const ComponentWrapper = styled("div")({
   display: "inline-block",
   width: "100%",
   boxSizing: "border-box",
+  height: `calc(100% - ${option_pane_height} - ${option_pane_height})`,
+  overflow: "hidden",
+  overflowY: "auto",
 });
 
 const BottomOptionPane = styled("div")({
   display: "inline-block",
   width: "100%",
   padding: "15px",
-  // borderTop: "1px solid black",
+  borderTop: "1px solid black",
   boxSizing: "border-box",
+  height: option_pane_height,
 });
 
 const ViewContainer = () => {
@@ -102,7 +109,9 @@ const ViewContainer = () => {
         <ViewSelector />
         {TopOptionPaneComponent}
       </TopOptionPane>
-      <ComponentWrapper>{CurrentComponent}</ComponentWrapper>
+      <ComponentWrapper className="center-view-container">
+        {CurrentComponent}
+      </ComponentWrapper>
       <BottomOptionPane className="bottom-options-container">
         {BottomOptionComponent}
       </BottomOptionPane>

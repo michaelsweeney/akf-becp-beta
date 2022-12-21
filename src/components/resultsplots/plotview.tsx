@@ -1,3 +1,5 @@
+import "./plotstyles.css";
+
 import styled from "@mui/styled-engine";
 import { useAppSelector } from "store/hooks";
 

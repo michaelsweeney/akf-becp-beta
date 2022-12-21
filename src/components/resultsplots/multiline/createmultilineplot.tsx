@@ -133,15 +133,17 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
       grouping === "mep"
         ? "Operational Carbon Over Time, HVAC & DHW Only"
         : "Operational Carbon Over Time, Whole Building"
-    );
+    )
+    .classed("plot-title", true);
 
   const y_text = bindD3Element(text_g, "text", "y-axis-text")
-    .attr("x", -plot_dimensions.height / 2)
+    .attr("x", -plot_dimensions.height / 2 - plot_padding.t)
     .attr("y", plot_dimensions.l / 2)
     .attr("transform", "rotate(270)")
     .style("text-anchor", "middle")
 
-    .text(units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr");
+    .text(units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr")
+    .classed("axis-title", true);
 
   // create dataset.
   let data: any[] = [];

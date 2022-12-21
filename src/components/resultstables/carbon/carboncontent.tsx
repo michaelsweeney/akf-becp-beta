@@ -7,7 +7,6 @@ const CarbonContent = () => {
     <div>
       <CarbonSummaryTable />
       <CarbonProjectionTable />
-      <CarbonTableControls />
     </div>
   );
 };

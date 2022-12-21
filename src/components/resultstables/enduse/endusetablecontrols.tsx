@@ -3,10 +3,7 @@ import { useAppSelector, useAppDispatch } from "store/hooks";
 
 import OptionToggle from "components/optiontoggle";
 import { viewActions } from "store/viewoptionslice";
-const Root = styled("div")({
-  borderBottom: "1px solid black",
-  marginBottom: "5px",
-});
+const Root = styled("div")({});
 const EnduseTableControls = () => {
   const dispatch = useAppDispatch();
   const {

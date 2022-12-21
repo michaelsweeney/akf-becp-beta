@@ -33,13 +33,12 @@ const SVGWrapper = (props: PropTypes) => {
       const getElBox = (sel: string) => {
         return document.querySelector(sel)?.getBoundingClientRect() as DOMRect;
       };
-      const bottom_padding = 5;
+      // const bottom_padding = 5;
 
       let height = d3.sum([
-        getElBox(".drawer-content-pane")?.height,
-        -getElBox(".top-options-container")?.height,
-        -getElBox(".bottom-options-container")?.height,
-        -bottom_padding,
+        getElBox(".center-view-container")?.height,
+
+        // -bottom_padding,
       ]);
 
       let width = getElBox(".view-container")?.width;
@@ -85,14 +84,7 @@ const SVGWrapper = (props: PropTypes) => {
     dispatchDimensions();
   }, [case_inputs]);
 
-  return (
-    <Root
-      style={{
-        height: containerDimensions.height,
-      }}
-      ref={ref}
-    ></Root>
-  );
+  return <Root ref={ref}></Root>;
 };
 
 export default SVGWrapper;

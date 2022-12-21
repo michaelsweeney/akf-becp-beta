@@ -3,6 +3,11 @@ import { useAppSelector } from "store/hooks";
 import EnduseTableContent from "./enduse/endusecontent";
 import CarbonTableContent from "./carbon/carboncontent";
 
+import styled from "@mui/styled-engine";
+const TableViewWrapper = styled("div")({
+  padding: "15px",
+});
+
 const TableView = () => {
   const {
     table_options: { current_table_view },
@@ -21,7 +26,7 @@ const TableView = () => {
 
   const CurrentComponent = getCurrentComponent();
 
-  return <>{CurrentComponent}</>;
+  return <TableViewWrapper>{CurrentComponent}</TableViewWrapper>;
 };
 
 export default TableView;

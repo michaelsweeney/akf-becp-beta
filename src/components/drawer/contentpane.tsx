@@ -15,7 +15,7 @@ const MainWrapper = styled("div", {
     ? `${props.sidebarCollapseWidth}px`
     : `${props.sidebarWidth}px`,
   transition: "margin 250ms",
-  overflowY: "auto",
+  // overflowY: "auto",
   boxSizing: "border-box",
 }));
 

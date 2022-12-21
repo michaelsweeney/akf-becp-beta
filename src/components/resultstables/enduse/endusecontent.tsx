@@ -8,7 +8,6 @@ const EnduseContent = (props: PropTypes) => {
     <div>
       <EnduseSummaryTable />
       <EnduseTable />
-      <EnduseTableControls />
     </div>
   );
 };
