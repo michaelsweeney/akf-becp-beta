@@ -203,6 +203,8 @@ export type CarbonProjectionTableOptionTypes = {
 
 export type CarbonGroupingTypes = "total" | "mep" | "non_mep";
 
+export type StackedGroupingTypes = "category" | "fuel";
+
 export type ViewOptionSliceTypes = {
   current_view: ViewTypes;
   table_options: {
@@ -218,6 +220,8 @@ export type ViewOptionSliceTypes = {
     };
     stacked_plot_options: {
       units: CarbonUnitTypes;
+      current_case_id: number;
+      grouping: StackedGroupingTypes;
     };
   };
 };
@@ -346,6 +350,7 @@ export type CreatePlotPropTypes = {
   case_inputs: CaseInputSliceTypes;
   case_outputs: CaseOutputSliceTypes;
   view_options: ViewOptionSliceTypes;
+  svg_components: any;
 };
 
 export type D3SelectionType = d3.Selection<any, any, any, any>;

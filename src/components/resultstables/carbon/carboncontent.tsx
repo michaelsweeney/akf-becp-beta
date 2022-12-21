@@ -1,4 +1,3 @@
-import CarbonTableControls from "./carbontablecontrols";
 import CarbonProjectionTable from "./carbonprojectiontable";
 import CarbonSummaryTable from "./carbonsummarytable";
 

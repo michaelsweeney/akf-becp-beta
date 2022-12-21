@@ -54,6 +54,7 @@ const getCaseDisplayAttributes = (inputs: CaseInputSliceTypes) => {
     }
 
     attributes.push({
+      fuel_type: fuel_type,
       case_name: case_name,
       case_id: case_id,
       color: fuel_color,

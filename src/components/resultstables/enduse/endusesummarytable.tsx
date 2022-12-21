@@ -9,7 +9,6 @@ import { TableTitle } from "styling/components";
 const EnduseSummaryTable = () => {
   const { output_response } = useAppSelector((state) => state.case_outputs);
 
-  const { case_attributes } = useAppSelector((state) => state.case_inputs);
   const { case_inputs } = useAppSelector((state) => state);
   const { enduse_table_options } = useAppSelector(
     (state) => state.view_options.table_options

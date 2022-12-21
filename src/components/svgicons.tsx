@@ -14,6 +14,11 @@ export const arrow_back = "M11.67 3.87 9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z";
 
 export const arrow_forward = "M6.23 20.23 8 22l10-10L8 2 6.23 3.77 14.46 12z";
 
+export const mep_icon_path =
+  "M22 11h-4.17l3.24-3.24-1.41-1.42L15 11h-2V9l4.66-4.66-1.42-1.41L13 6.17V2h-2v4.17L7.76 2.93 6.34 4.34 11 9v2H9L4.34 6.34 2.93 7.76 6.17 11H2v2h4.17l-3.24 3.24 1.41 1.42L9 13h2v2l-4.66 4.66 1.42 1.41L11 17.83V22h2v-4.17l3.24 3.24 1.42-1.41L13 15v-2h2l4.66 4.66 1.41-1.42L17.83 13H22z";
+export const non_mep_icon_path =
+  "M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z";
+
 export const IconSvg = (props: {
   d: string;
   fill?: string;

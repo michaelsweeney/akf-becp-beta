@@ -2,13 +2,10 @@ import * as d3 from "d3";
 
 import {
   CaseResultsEmissionsProjectionByMEPCategory,
-  CaseResultsTypes,
   CreatePlotPropTypes,
   PlotDimensionType,
 } from "types";
 import { bindD3Element } from "dataformat/d3helpers";
-
-import { useAppSelector } from "store/hooks";
 
 import { getCaseDisplayAttributes } from "../getcasedisplay";
 
@@ -19,131 +16,37 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     case_inputs,
     case_outputs,
     view_options,
+    svg_components,
   } = props;
-
-  const svg = bindD3Element(container_ref, "svg", "plot-multiline-svg")
-    .attr("height", container_dimensions.height)
-    .attr("width", container_dimensions.width);
-
-  const orientation: "horizontal" | "vertical" = "horizontal";
-
-  const plot_padding = {
-    t: 40,
-    b: 50,
-    l: 75,
-    r: 10,
-  };
-
-  const ypadding = 1.15;
-  const horizontal_legend_height = 50;
-  const vertical_legend_width = 300;
-
-  const legend_padding = {
-    t: 20,
-    b: 20,
-    l: 5,
-    r: 5,
-  };
 
   const { units, grouping } = view_options.plot_options.multiline_plot_options;
 
-  let legend_dimensions = {} as PlotDimensionType;
-  let plot_dimensions = {} as PlotDimensionType;
-  if (orientation === "horizontal") {
-    plot_dimensions = {
-      width:
-        container_dimensions.width -
-        plot_padding.l -
-        plot_padding.r -
-        vertical_legend_width,
-      height: container_dimensions.height - plot_padding.b - plot_padding.t,
-      t: plot_padding.t,
-      l: plot_padding.l,
-    };
+  const {
+    svg,
+    plot_padding,
+    y_padding,
+    vertical_legend_width,
+    legend_padding,
+    plot_dimensions,
+    legend_dimensions,
+    plot_g,
+    gridlines_g,
+    axis_g,
+    text_g,
+    legend_g,
+    plot_border,
+    legend_row_padding,
+    title_text,
+    y_text,
+  } = svg_components;
 
-    legend_dimensions = {
-      width: vertical_legend_width - legend_padding.l - legend_padding.r,
-      height: container_dimensions.height - legend_padding.t - legend_padding.b,
-      t: legend_padding.t,
-      l:
-        plot_dimensions.width +
-        plot_padding.l +
-        plot_padding.r +
-        legend_padding.l,
-    };
-  } else if (orientation === "vertical") {
-    plot_dimensions = {
-      width: container_dimensions.width - plot_padding.l - plot_padding.r,
-      height:
-        container_dimensions.height -
-        plot_padding.b -
-        plot_padding.t -
-        horizontal_legend_height,
-      t: plot_padding.t,
-      l: plot_padding.l,
-    };
-
-    legend_dimensions = {
-      width: container_dimensions.width - legend_padding.l - legend_padding.r,
-      height: horizontal_legend_height,
-      t:
-        plot_dimensions.height +
-        plot_padding.t +
-        plot_padding.b +
-        legend_padding.t,
-      l: legend_padding.l,
-    };
-  }
-
-  const plot_g = bindD3Element(svg, "g", "plot-g").attr(
-    "transform",
-    `translate(${plot_dimensions.l},${plot_dimensions.t})`
-  );
-  const gridlines_g = bindD3Element(svg, "g", "gridlines-g").attr(
-    "transform",
-    `translate(${plot_dimensions.l},${plot_dimensions.t})`
-  );
-  const axis_g = bindD3Element(svg, "g", "axis-g").attr(
-    "transform",
-    `translate(${plot_dimensions.l},${plot_dimensions.t})`
-  );
-  const text_g = bindD3Element(svg, "g", "text-g");
-  const legend_g = bindD3Element(svg, "g", "legend-g").attr(
-    "transform",
-    `translate(${legend_dimensions.l},${legend_dimensions.t})`
+  title_text.text(
+    grouping === "mep"
+      ? "Operational Carbon Over Time, HVAC & DHW Only"
+      : "Operational Carbon Over Time, Whole Building"
   );
 
-  //  legend border rect
-  // const legend_border = bindD3Element(legend_g, "rect", "legend-rect")
-  // .attr("width", legend_dimensions.width)
-  // .attr("height", legend_dimensions.height);
-  // .attr("fill", "rgba(200,200,200,0.15");
-  // plot border rect
-  const plot_border = bindD3Element(plot_g, "rect", "legend-rect")
-    .attr("width", plot_dimensions.width)
-    .attr("height", plot_dimensions.height)
-    .attr("fill", "none")
-    .attr("stroke", "gray");
-
-  const title_text = bindD3Element(text_g, "text", "title-text")
-    .attr("x", plot_dimensions.l)
-    .attr("y", 25)
-    .style("text-anchor", "left")
-    .text(
-      grouping === "mep"
-        ? "Operational Carbon Over Time, HVAC & DHW Only"
-        : "Operational Carbon Over Time, Whole Building"
-    )
-    .classed("plot-title", true);
-
-  const y_text = bindD3Element(text_g, "text", "y-axis-text")
-    .attr("x", -plot_dimensions.height / 2 - plot_padding.t)
-    .attr("y", plot_dimensions.l / 2)
-    .attr("transform", "rotate(270)")
-    .style("text-anchor", "middle")
-
-    .text(units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr")
-    .classed("axis-title", true);
+  y_text.text(units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr");
 
   // create dataset.
   let data: any[] = [];
@@ -194,7 +97,7 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
 
   let ymax =
     //@ts-ignore
-    d3.max(data.map((d) => d3.max(d.map((e) => e.val)))) * ypadding;
+    d3.max(data.map((d) => d3.max(d.map((e) => e.val)))) * y_padding;
   let ymin = 0;
 
   let xScale = d3
@@ -238,11 +141,10 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     .attr("class", "line-path")
     .attr("d", lineFunc)
     .attr("stroke-width", "3")
-    .attr("stroke", (d, i) => {
+    .attr("stroke", (d: any, i: number) => {
       let case_id = d[0]?.case_id as number;
       let color = case_display_attributes.find((d) => d.case_id === case_id)
         ?.color as string;
-
       return color;
     })
     .attr("fill", "none");
@@ -263,12 +165,9 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
   yaxis_g.selectAll("line").remove();
   yaxis_g.selectAll(".domain").remove();
 
-  // xaxis_g.selectAll("line").remove();
   xaxis_g.selectAll(".domain").remove();
 
   /* legend */
-
-  let row_padding = 30;
 
   let legend_items = legend_g
     .selectAll(".legend-item-g")
@@ -276,13 +175,14 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     .join("g")
     .attr("class", "legend-item-g");
 
-  legend_items.each(function (d, i) {
+  legend_items.each(function (d: any, i: number) {
+    //@ts-ignore
     let row = d3.select(this);
     let legend_text_pad = 30;
 
     bindD3Element(row, "text", "row-text")
       .attr("x", legend_text_pad)
-      .attr("y", () => i * row_padding + row_padding)
+      .attr("y", () => i * legend_row_padding + legend_row_padding)
       .text(d.case_name)
       .style("font-size", "14px");
 
@@ -290,7 +190,10 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
       .attr("d", d.icon)
       .attr(
         "transform",
-        () => `translate(0,${i * row_padding + row_padding / 2}) scale(1)`
+        () =>
+          `translate(0,${
+            i * legend_row_padding + legend_row_padding / 2
+          }) scale(1)`
       )
       .attr("fill", d.color)
       .attr("stroke", d.color);

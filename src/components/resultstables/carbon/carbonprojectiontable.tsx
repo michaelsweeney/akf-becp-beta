@@ -1,7 +1,7 @@
 import { useAppSelector } from "store/hooks";
 
 import { TableTitle } from "styling/components";
-import { CarbonTableProjectionResultsYearType, DataTableTypes } from "types";
+import { CarbonTableProjectionResultsYearType } from "types";
 import { formatNumber } from "dataformat/numberformat";
 import { getUniqueKeys } from "dataformat/tableformat";
 

@@ -29,14 +29,16 @@ const TopOptionPane = styled("div")({
   borderBottom: "1px solid black",
   boxSizing: "border-box",
   height: option_pane_height,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
 });
 
-const ComponentWrapper = styled("div")({
+const CenterPane = styled("div")({
   display: "inline-block",
   width: "100%",
   boxSizing: "border-box",
   height: `calc(100% - ${option_pane_height} - ${option_pane_height})`,
-  overflow: "hidden",
+  overflowX: "hidden",
   overflowY: "auto",
 });
 
@@ -47,6 +49,7 @@ const BottomOptionPane = styled("div")({
   borderTop: "1px solid black",
   boxSizing: "border-box",
   height: option_pane_height,
+  overflow: "hidden",
 });
 
 const ViewContainer = () => {
@@ -109,9 +112,9 @@ const ViewContainer = () => {
         <ViewSelector />
         {TopOptionPaneComponent}
       </TopOptionPane>
-      <ComponentWrapper className="center-view-container">
+      <CenterPane className="center-view-container">
         {CurrentComponent}
-      </ComponentWrapper>
+      </CenterPane>
       <BottomOptionPane className="bottom-options-container">
         {BottomOptionComponent}
       </BottomOptionPane>

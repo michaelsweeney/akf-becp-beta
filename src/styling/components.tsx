@@ -72,7 +72,11 @@ export const Head3 = styled("span")({
   fontWeight: 500,
   color: colors.primary,
 });
-
+export const Head3Bold = styled("span")({
+  fontSize: 18,
+  fontWeight: 700,
+  color: colors.primary,
+});
 export const TableTitle = styled(Head3)({
   marginTop: "10px",
   marginBottom: "5px",

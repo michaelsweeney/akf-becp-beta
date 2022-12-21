@@ -1,6 +1,6 @@
 import styled from "@mui/styled-engine";
 import { OptionToggleButton } from "styling/components";
-import { Head3 } from "styling/components";
+import OptionContainer from "./optioncontainer";
 
 interface PropTypes {
   title: string;
@@ -9,33 +9,16 @@ interface PropTypes {
   current_key: string;
 }
 
-const Wrapper = styled("div")({
-  padding: 5,
-  display: "inline-block",
-  marginRight: 10,
-  marginBottom: 10,
-  backgroundColor: "rgba(0,0,0,0.05)",
-  border: "1px solid black",
-});
-
 const ButtonWrapper = styled("div")({
   display: "inline-block",
   verticalAlign: "middle",
 });
 
-const TitleText = styled(Head3)({
-  fontSize: "12px",
-
-  fontWeight: 700,
-  marginRight: 10,
-  marginLeft: 5,
-});
-
 const OptionToggle = (props: PropTypes) => {
   return (
-    <Wrapper>
-      <TitleText>{props.title}</TitleText>
-      {props.buttons.map((d, i) => {
+    <OptionContainer
+      title={props.title}
+      children={props.buttons.map((d, i) => {
         return (
           <ButtonWrapper key={i}>
             <OptionToggleButton
@@ -49,7 +32,7 @@ const OptionToggle = (props: PropTypes) => {
           </ButtonWrapper>
         );
       })}
-    </Wrapper>
+    />
   );
 };
 

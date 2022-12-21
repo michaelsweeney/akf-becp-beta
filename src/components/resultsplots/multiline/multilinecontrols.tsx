@@ -1,9 +1,7 @@
 import OptionToggle from "components/optiontoggle";
 
-import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
 import { viewActions } from "store/viewoptionslice";
-import { group } from "console";
 
 const MultilineControls = () => {
   const dispatch = useAppDispatch();

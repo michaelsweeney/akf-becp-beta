@@ -1,14 +1,11 @@
-import styled from "@mui/styled-engine";
 import { useAppSelector, useAppDispatch } from "store/hooks";
-import { uiActions } from "store/uislice";
+
 import { PlotViewTypes } from "types";
 
 import OptionToggle from "components/optiontoggle";
 import { viewActions } from "store/viewoptionslice";
 
-interface PropTypes {}
-
-const PlotTypeSelector = (props: PropTypes) => {
+const PlotTypeSelector = () => {
   const dispatch = useAppDispatch();
 
   const { current_plot_view } = useAppSelector(

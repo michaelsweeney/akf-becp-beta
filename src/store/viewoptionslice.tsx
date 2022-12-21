@@ -18,13 +18,15 @@ const initialState: ViewOptionSliceTypes = {
     carbon_projection_table_options: { units: "kg_co2_per_sf" },
   },
   plot_options: {
-    current_plot_view: "multiline",
+    current_plot_view: "stacked",
     multiline_plot_options: {
       units: "kg_co2_per_sf",
       grouping: "mep",
     },
     stacked_plot_options: {
       units: "kg_co2_per_sf",
+      current_case_id: 0,
+      grouping: "category",
     },
   },
 };
@@ -83,7 +85,7 @@ export const ViewOptionsSlice = createSlice({
       state,
       action: PayloadAction<{
         key: string;
-        val: string;
+        val: string | number;
       }>
     ) => {
       let { key, val } = action.payload;

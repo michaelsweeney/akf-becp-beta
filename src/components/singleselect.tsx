@@ -4,7 +4,7 @@ import { MenuItem, Select, FormControl } from "@mui/material";
 type PropTypes = {
   value: string;
   callback: (d: string | number) => void;
-  option_values: string[];
+  option_values: (string | number)[];
   option_titles?: string[];
   is_disabled?: boolean;
   is_blank?: boolean;
