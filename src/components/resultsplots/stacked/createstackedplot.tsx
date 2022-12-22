@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { CreatePlotPropTypes } from "types";
 import { bindD3Element } from "dataformat/d3helpers";
-import { color, stack } from "d3";
+
 import {
   electricity_icon_path,
   gas_icon_path,
@@ -81,14 +81,19 @@ const createStackedPlot = (props: CreatePlotPropTypes) => {
   if (case_data) {
     let val_key = grouping === "category" ? "category" : "fuel";
 
-    let stack_keys: string[];
-    if (val_key === "category") {
-      stack_keys = ["mep", "non_mep"];
-    } else if (val_key === "fuel") {
-      stack_keys = ["Natural Gas", "Electricity"];
-    } else {
+    //@ts-ignore
+    let stack_keys: string[] = [...new Set(case_data.map((d) => d[val_key]))];
+    // reorder stacking
+    if (
+      stack_keys.includes("Electricity") &&
+      stack_keys.includes("Natural Gas")
+    ) {
       stack_keys = ["Natural Gas", "Electricity"];
     }
+    if (stack_keys.includes("mep") && stack_keys.includes("non_mep")) {
+      stack_keys = ["mep", "non_mep"];
+    }
+    console.log(stack_keys);
 
     let years = [...new Set(case_data.map((d: any) => d.year))];
     let data_to_stack: any[] = [];
@@ -98,15 +103,17 @@ const createStackedPlot = (props: CreatePlotPropTypes) => {
         let query = case_data.find(
           (d: any) => d.year === year && d[val_key] === key
         );
-        //@ts-ignore
-        to_stack_obj[key] = query[unit_key];
+
+        if (query !== undefined) {
+          //@ts-ignore
+          to_stack_obj[key] = query[unit_key];
+        }
       });
       data_to_stack.push(to_stack_obj);
     });
 
     //@ts-ignore
     let stack_data = d3.stack().keys(stack_keys)(data_to_stack);
-    console.log(stack_data);
     //@ts-ignore
     let areaFunc = d3
       .area()
@@ -188,12 +195,15 @@ const createStackedPlot = (props: CreatePlotPropTypes) => {
 
     title_text.text(
       grouping === "category"
-        ? "Operational Carbon Over Time By Category"
-        : "Operational Carbon Over Time By Fuel"
+        ? `Operational Carbon Over Time By Category, ${case_name}`
+        : `Operational Carbon Over Time By Fuel, ${case_name}`
     );
     y_text.text(units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr");
 
     /* legend */
+
+    console.log(stack_data);
+    console.log(case_data);
 
     const rect_width = 25;
     let legend_items = legend_g

@@ -21,7 +21,7 @@ const setupSVGComponents = (
   const vertical_legend_width = 300;
 
   const legend_padding = {
-    t: 20,
+    t: 35,
     b: 20,
     l: 5,
     r: 5,

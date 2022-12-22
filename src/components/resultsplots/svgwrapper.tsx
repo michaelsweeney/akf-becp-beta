@@ -33,12 +33,12 @@ const SVGWrapper = (props: PropTypes) => {
       const getElBox = (sel: string) => {
         return document.querySelector(sel)?.getBoundingClientRect() as DOMRect;
       };
-      // const bottom_padding = 5;
+      const bottom_padding = 5;
 
       let height = d3.sum([
         getElBox(".center-view-container")?.height,
 
-        // -bottom_padding,
+        -bottom_padding,
       ]);
 
       let width = getElBox(".view-container")?.width;

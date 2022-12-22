@@ -34,21 +34,22 @@ const getCaseDisplayAttributes = (inputs: CaseInputSliceTypes) => {
     let elecColorFunc = d3.interpolate("#008ed5", "#004467");
     let gasColorFunc = d3.interpolate("#3dcc00", "#00550b");
 
+    fuel_color = d3.schemeTableau10[i];
     if (case_fuels.length !== 1) {
       fuel_type = "mixed";
-      fuel_color = mixColorFunc(i / case_ids.length);
+      // fuel_color = mixColorFunc(i / case_ids.length);
       fuel_icon = mixed_icon_path;
     } else if (case_fuels.includes("Natural Gas")) {
       fuel_type = "gas";
-      fuel_color = gasColorFunc(i / case_ids.length);
+      // fuel_color = gasColorFunc(i / case_ids.length);
       fuel_icon = gas_icon_path;
     } else if (case_fuels.includes("Electricity")) {
       fuel_type = "elec";
-      fuel_color = elecColorFunc(i / case_ids.length);
+      // fuel_color = elecColorFunc(i / case_ids.length);
       fuel_icon = electricity_icon_path;
     } else {
       console.error("error parsing fuel type", case_fuels);
-      fuel_color = elecColorFunc(i / case_areas.length);
+      // fuel_color = elecColorFunc(i / case_areas.length);
       fuel_type = "elec";
       fuel_icon = electricity_icon_path;
     }
