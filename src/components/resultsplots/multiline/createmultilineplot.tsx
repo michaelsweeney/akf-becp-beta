@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as d3 from "d3";
 
 import {
@@ -6,7 +7,7 @@ import {
   PlotDimensionType,
 } from "types";
 import { bindD3Element } from "dataformat/d3helpers";
-
+import { getClosestYear } from "../hover";
 import { getCaseDisplayAttributes } from "../getcasedisplay";
 
 const createMultilinePlot = (props: CreatePlotPropTypes) => {
@@ -38,6 +39,9 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     legend_row_padding,
     title_text,
     y_text,
+    hover_g,
+    hover_rect,
+    hover_line,
   } = svg_components;
 
   title_text.text(
@@ -56,7 +60,6 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
       (d) => d.case_id === case_id
     )?.case_results
       ?.emissions_projection_by_mep_category as CaseResultsEmissionsProjectionByMEPCategory[];
-
     let years = [...new Set(case_obj?.map((d) => d.year))];
 
     let case_data: any[] = [];
@@ -88,28 +91,20 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
 
   let case_display_attributes = getCaseDisplayAttributes(case_inputs);
 
-  //@ts-ignore
   let xmax = d3.max(data.map((d) => d3.max(d.map((e) => e.year))));
-  //@ts-ignore
   let xmin = d3.min(data.map((d) => d3.min(d.map((e) => e.year))));
 
-  //@ts-ignore
-
-  let ymax =
-    //@ts-ignore
-    d3.max(data.map((d) => d3.max(d.map((e) => e.val)))) * y_padding;
+  let ymax = d3.max(data.map((d) => d3.max(d.map((e) => e.val)))) * y_padding;
   let ymin = 0;
 
   let xScale = d3
     .scaleLinear()
     .range([0, plot_dimensions.width])
-    //@ts-ignore
     .domain([xmin, xmax]);
 
   let yScale = d3
     .scaleLinear()
     .range([plot_dimensions.height, 0])
-    //@ts-ignore
     .domain([ymin, ymax]);
 
   let xaxis = d3.axisBottom(xScale).tickFormat((d: number) => d.toString());
@@ -120,18 +115,14 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
 
   let xaxis_g = bindD3Element(axis_g, "g", "x-axis-g")
     .attr("transform", `translate(${0},${plot_dimensions.height})`)
-    //@ts-ignore
+
     .call(xaxis);
 
-  let yaxis_g = bindD3Element(axis_g, "g", "y-axis-g")
-    //@ts-ignore
-    .call(yaxis);
+  let yaxis_g = bindD3Element(axis_g, "g", "y-axis-g").call(yaxis);
 
   let lineFunc = d3
     .line()
-    //@ts-ignore
     .x((d) => xScale(d.year))
-    //@ts-ignore
     .y((d) => yScale(d.val));
 
   let paths = plot_g
@@ -149,14 +140,14 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     })
     .attr("fill", "none");
 
-  gridlines_g
-    .call(
-      //@ts-ignore
-      d3.axisLeft(yScale).ticks(5).tickSize(-plot_dimensions.width)
-    )
-    .style("stroke-dasharray", "2 2");
+  gridlines_g.call(
+    d3.axisLeft(yScale).ticks(5).tickSize(-plot_dimensions.width)
+  );
 
-  gridlines_g.selectAll("line").attr("stroke", "gray");
+  gridlines_g
+    .selectAll("line")
+    .attr("stroke", "gray")
+    .style("stroke-dasharray", "2 2");
 
   gridlines_g.selectAll("text").remove();
   gridlines_g.selectAll(".domain").remove();
@@ -176,7 +167,6 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     .attr("class", "legend-item-g");
 
   legend_items.each(function (d: any, i: number) {
-    //@ts-ignore
     let row = d3.select(this);
     let legend_text_pad = 30;
 
@@ -197,6 +187,19 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
       )
       .attr("fill", d.color)
       .attr("stroke", d.color);
+  });
+
+  let years = data[0].map((d) => d.year);
+
+  hover_rect.on("mousemove", function (event, d) {
+    let closest_year = getClosestYear(years, event, xScale);
+    hover_line.attr("opacity", 1);
+    hover_line.attr("x1", xScale(closest_year));
+    hover_line.attr("x2", xScale(closest_year));
+  });
+  hover_rect.on("mouseover", function (event, d) {});
+  hover_rect.on("mouseout", function (event, d) {
+    hover_line.attr("opacity", 0);
   });
 };
 

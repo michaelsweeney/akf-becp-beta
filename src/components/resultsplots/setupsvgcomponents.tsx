@@ -62,6 +62,7 @@ const setupSVGComponents = (
     "transform",
     `translate(${plot_dimensions.l},${plot_dimensions.t})`
   );
+
   const axis_g = bindD3Element(svg, "g", "axis-g").attr(
     "transform",
     `translate(${plot_dimensions.l},${plot_dimensions.t})`
@@ -72,11 +73,12 @@ const setupSVGComponents = (
     `translate(${legend_dimensions.l},${legend_dimensions.t})`
   );
 
-  const plot_border = bindD3Element(plot_g, "rect", "legend-rect")
+  const plot_border = bindD3Element(plot_g, "rect", "plot-border-rect")
     .attr("width", plot_dimensions.width)
     .attr("height", plot_dimensions.height)
     .attr("fill", "none")
     .attr("stroke", "gray");
+
   const title_text = bindD3Element(text_g, "text", "title-text")
     .attr("x", plot_dimensions.l)
     .attr("y", 25)
@@ -88,6 +90,25 @@ const setupSVGComponents = (
     .attr("transform", "rotate(270)")
     .style("text-anchor", "middle")
     .classed("axis-title", true);
+
+  const hover_g = bindD3Element(svg, "g", "hover-g").attr(
+    "transform",
+    `translate(${plot_dimensions.l},${plot_dimensions.t})`
+  );
+  const hover_line = bindD3Element(hover_g, "line", "hover-line")
+    .attr("opacity", 1)
+    .attr("stroke", "black")
+    .attr("stroke-width", 2)
+    .attr("y1", 0)
+    .attr("y2", plot_dimensions.height)
+    .style("stroke-dasharray", "3 3")
+    .style("cursor", "pointer");
+
+  const hover_rect = bindD3Element(hover_g, "rect", "hover-rect")
+    .attr("width", plot_dimensions.width)
+    .attr("height", plot_dimensions.height)
+    .attr("opacity", 0)
+    .style("cursor", "pointer");
 
   return {
     svg,
@@ -106,6 +127,9 @@ const setupSVGComponents = (
     legend_row_padding,
     title_text,
     y_text,
+    hover_g,
+    hover_rect,
+    hover_line,
   };
 };
 
