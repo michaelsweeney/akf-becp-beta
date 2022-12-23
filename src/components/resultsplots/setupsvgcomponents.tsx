@@ -10,6 +10,10 @@ const setupSVGComponents = (
     .attr("height", container_dimensions.height)
     .attr("width", container_dimensions.width);
 
+  const hover_div = bindD3Element(container_ref, "div", "hover-div")
+    .style("position", "absolute")
+    .style("visibility", "hidden");
+
   const plot_padding = {
     t: 40,
     b: 50,
@@ -95,8 +99,9 @@ const setupSVGComponents = (
     "transform",
     `translate(${plot_dimensions.l},${plot_dimensions.t})`
   );
+
   const hover_line = bindD3Element(hover_g, "line", "hover-line")
-    .attr("opacity", 1)
+    .attr("opacity", 0)
     .attr("stroke", "black")
     .attr("stroke-width", 2)
     .attr("y1", 0)
@@ -130,6 +135,7 @@ const setupSVGComponents = (
     hover_g,
     hover_rect,
     hover_line,
+    hover_div,
   };
 };
 

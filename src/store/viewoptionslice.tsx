@@ -18,7 +18,7 @@ const initialState: ViewOptionSliceTypes = {
     carbon_projection_table_options: { units: "kg_co2_per_sf" },
   },
   plot_options: {
-    current_plot_view: "stacked",
+    current_plot_view: "multiline",
     multiline_plot_options: {
       units: "kg_co2_per_sf",
       grouping: "mep",

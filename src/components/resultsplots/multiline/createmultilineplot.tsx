@@ -9,6 +9,7 @@ import {
 import { bindD3Element } from "dataformat/d3helpers";
 import { getClosestYear } from "../hover";
 import { getCaseDisplayAttributes } from "../getcasedisplay";
+import { formatNumber } from "dataformat/numberformat";
 
 const createMultilinePlot = (props: CreatePlotPropTypes) => {
   const {
@@ -42,6 +43,7 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     hover_g,
     hover_rect,
     hover_line,
+    hover_div,
   } = svg_components;
 
   title_text.text(
@@ -50,9 +52,10 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
       : "Operational Carbon Over Time, Whole Building"
   );
 
-  y_text.text(units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr");
+  let units_label =
+    units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr";
+  y_text.text(units_label);
 
-  // create dataset.
   let data: any[] = [];
   case_inputs.case_attributes.forEach((c) => {
     let { case_id, case_name } = c;
@@ -88,7 +91,7 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
     });
     data.push(case_data);
   });
-
+  let years = data[0].map((d) => d.year);
   let case_display_attributes = getCaseDisplayAttributes(case_inputs);
 
   let xmax = d3.max(data.map((d) => d3.max(d.map((e) => e.year))));
@@ -189,17 +192,36 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
       .attr("stroke", d.color);
   });
 
-  let years = data[0].map((d) => d.year);
-
   hover_rect.on("mousemove", function (event, d) {
     let closest_year = getClosestYear(years, event, xScale);
     hover_line.attr("opacity", 1);
     hover_line.attr("x1", xScale(closest_year));
     hover_line.attr("x2", xScale(closest_year));
+    hover_div.style("visibility", "visible");
+    hover_div.style("left", event.pageX - 100 + "px");
+    hover_div.style("top", event.pageY - 150 + "px");
+
+    let hover_data = data.map(
+      (d) => d.filter((e) => e.year === closest_year)[0]
+    );
+
+    hover_div.html(
+      `
+    <div class='hover-year-text'>Year: ${closest_year}</div>
+    <div>${hover_data
+      .map((d) => {
+        return `<div>${d.case_name}: ${formatNumber(
+          d.val
+        )} ${units_label}</div>`;
+      })
+      .join("")}</div>
+    `
+    );
   });
   hover_rect.on("mouseover", function (event, d) {});
   hover_rect.on("mouseout", function (event, d) {
     hover_line.attr("opacity", 0);
+    hover_div.style("visibility", "hidden");
   });
 };
 

@@ -9,6 +9,7 @@ import {
   mep_icon_path,
   non_mep_icon_path,
 } from "components/svgicons";
+import { formatNumber } from "dataformat/numberformat";
 
 const colorslookup = {
   mep: d3.schemeTableau10[6],
@@ -61,6 +62,7 @@ const createStackedPlot = (props: CreatePlotPropTypes) => {
     hover_g,
     hover_rect,
     hover_line,
+    hover_div,
   } = svg_components;
 
   const { units, current_case_id, grouping } =
@@ -77,14 +79,18 @@ const createStackedPlot = (props: CreatePlotPropTypes) => {
   let unit_key =
     units === "kg_co2_absolute" ? "kg_co2_absolute" : "kg_co2_per_sf";
 
+  let units_val = units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr";
   let case_data = case_outputs.output_response.find(
     (d) => d.case_id === current_case_id
   )?.case_results[grouping_key];
 
-  if (case_data) {
-    let val_key = grouping === "category" ? "category" : "fuel";
+  let val_key: string;
+  let stack_keys: string[];
 
-    let stack_keys: string[] = [...new Set(case_data.map((d) => d[val_key]))];
+  if (case_data) {
+    val_key = grouping === "category" ? "category" : "fuel";
+
+    stack_keys = [...new Set(case_data.map((d) => d[val_key]))];
     // reorder stacking
     if (
       stack_keys.includes("Electricity") &&
@@ -183,7 +189,7 @@ const createStackedPlot = (props: CreatePlotPropTypes) => {
         ? `Operational Carbon Over Time By Category, ${case_name}`
         : `Operational Carbon Over Time By Fuel, ${case_name}`
     );
-    y_text.text(units === "kg_co2_absolute" ? "kg CO2e/yr" : "kg CO2e/sf/yr");
+    y_text.text(units_val);
 
     /* legend */
 
@@ -216,17 +222,36 @@ const createStackedPlot = (props: CreatePlotPropTypes) => {
         .attr("stroke", colorslookup[d]);
     });
 
-    console.log(case_data);
     hover_rect.on("mousemove", function (event, d) {
       let closest_year = getClosestYear(years, event, xScale);
 
       hover_line.attr("opacity", 1);
       hover_line.attr("x1", xScale(closest_year));
       hover_line.attr("x2", xScale(closest_year));
+
+      let hover_data = case_data.filter((d) => d.year === closest_year);
+
+      hover_div.style("visibility", "visible");
+      hover_div.style("left", event.pageX - 100 + "px");
+      hover_div.style("top", event.pageY - 150 + "px");
+      hover_div.html(
+        `
+      <div class='hover-year-text'>Year: ${closest_year}</div>
+      <div>${hover_data
+        .map((d) => {
+          return `<div>${labelslookup[d[val_key]]}: ${formatNumber(
+            d[unit_key]
+          )} ${units_val}</div>`;
+        })
+        .join("")}</div>
+      `
+      );
     });
+
     hover_rect.on("mouseover", function (event, d) {});
     hover_rect.on("mouseout", function (event, d) {
       hover_line.attr("opacity", 0);
+      hover_div.style("visibility", "hidden");
     });
   }
 };
