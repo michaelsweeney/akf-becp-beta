@@ -317,7 +317,7 @@ export type EnduseTableFlatResultsObject = {
   case_name: string;
   case_id: number;
   enduse: string;
-  subcategory: string;
+  subcategory?: string;
   fuel: string;
   val: number;
 };
@@ -331,7 +331,7 @@ export type CarbonTableProjectionResultsYearType = {
 };
 
 export type DataTableHeadTypes = string[];
-export type DataTableRowTypes = (string | number)[];
+export type DataTableRowTypes = (string | number | undefined)[];
 export type DataTableTypes = DataTableRowTypes[];
 
 export type ContainerDimensionTypes = {

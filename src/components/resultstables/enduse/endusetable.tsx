@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 import { useAppSelector } from "store/hooks";
 
 import {
@@ -81,11 +82,33 @@ const EnduseTable = () => {
           (d) => d.case_id === case_id
         )?.case_name as string;
 
-        let obj = enduse_results_flat.find(
+        // let obj = enduse_results_flat.find(
+        //   (d) =>
+        //     d[groupby_key as keyof typeof d] === enduse &&
+        //     d.case_name === case_name
+        // ) as EnduseTableFlatResultsObject;
+
+        let obj_filter = enduse_results_flat.filter(
           (d) =>
             d[groupby_key as keyof typeof d] === enduse &&
             d.case_name === case_name
-        ) as EnduseTableFlatResultsObject;
+        ) as EnduseTableFlatResultsObject[];
+
+        let obj_filter_sum = {} as EnduseTableFlatResultsObject;
+
+        obj_filter_sum.tag = obj_filter[0].tag;
+        obj_filter_sum.case_id = obj_filter[0].case_id;
+        obj_filter_sum.case_name = obj_filter[0].case_name;
+        obj_filter_sum.enduse = obj_filter[0].enduse;
+
+        obj_filter_sum.fuel = obj_filter[0].fuel;
+        obj_filter_sum.val = d3.sum(obj_filter.map((d) => d.val));
+
+        if (groupby_key === "subcategory_combined") {
+          obj_filter_sum.subcategory = obj_filter[0].subcategory;
+        }
+
+        let obj = obj_filter_sum;
 
         if (obj !== undefined) {
           row.push(obj);
@@ -105,20 +128,37 @@ const EnduseTable = () => {
     });
   }
 
-  const header_text = [
-    "Enduse",
-    "Fuel",
-    "Subcategory",
-    ...case_inputs.case_attributes.map((d) => d.case_name), // should be unique_case_ids
-  ];
+  const header_text =
+    groupby_key === "subcategory_combined"
+      ? [
+          "Enduse",
+          "Fuel",
+          "Subcategory",
+          ...case_inputs.case_attributes.map((d) => d.case_name), // should be unique_case_ids
+        ]
+      : [
+          "Enduse",
+          "Fuel",
+
+          ...case_inputs.case_attributes.map((d) => d.case_name), // should be unique_case_ids
+        ];
 
   let row_data = enduse_table_array.map((row) => {
-    return [
-      row[0].enduse,
-      row[0].fuel,
-      row[0].subcategory,
-      ...row.map((d) => formatNumber(d.val)),
-    ];
+    if (groupby_key === "subcategory_combined") {
+      return [
+        row[0].enduse,
+        row[0].fuel,
+
+        row[0].subcategory,
+        ...row.map((d) => formatNumber(d.val)),
+      ];
+    } else {
+      return [
+        row[0].enduse,
+        row[0].fuel,
+        ...row.map((d) => formatNumber(d.val)),
+      ];
+    }
   });
 
   return (
@@ -126,7 +166,7 @@ const EnduseTable = () => {
       <TableTitle>{`End Use Table, ${
         val_key === "kbtu_absolute" ? "kbtu/yr" : "kbtu/sf/yr"
       } (grouped by ${
-        groupby_key === "enduse" ? "end use" : "subcategory"
+        groupby_key === "enduse" ? "enduse" : "subcategory"
       })`}</TableTitle>
 
       <DataTable headers={header_text} table_data={row_data} />
