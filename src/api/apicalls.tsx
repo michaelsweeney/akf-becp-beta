@@ -1,8 +1,8 @@
 import { ref_bldg_to_berdo_type, ref_bldg_to_ll97_type } from "lookups";
 import { CaseInputSliceTypes, InputCaseTypes } from "types";
-const url = "https://akf-becp-pyapi.herokuapp.com/"; // deploymebnt
+// const url = "https://akf-becp-pyapi.herokuapp.com/"; // deploymebnt
+const url = "https://akf-becp-backend.herokuapp.com/"; // akf deployment
 // const url = "https://localhost:5000"; // works on pc
-
 // const url = "http://127.0.0.1:5001/"; // works on mac
 
 //@ts-ignore
