@@ -179,14 +179,17 @@ const createMultilinePlot = (props: CreatePlotPropTypes) => {
       .text(d.case_name)
       .style("font-size", "14px");
 
-    bindD3Element(row, "path", "row-rect")
-      .attr("d", d.icon)
+    let icon_offset_x = -7;
+    let icon_offset_y = -7;
+
+    bindD3Element(row, "g", "row-rect")
+      .html(d.icon)
       .attr(
         "transform",
         () =>
-          `translate(0,${
-            i * legend_row_padding + legend_row_padding / 2
-          }) scale(1)`
+          `translate(${icon_offset_x},${
+            icon_offset_y + i * legend_row_padding + legend_row_padding / 2
+          }) scale(.075)`
       )
       .attr("fill", d.color)
       .attr("stroke", d.color);

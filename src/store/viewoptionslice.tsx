@@ -8,7 +8,7 @@ import {
 } from "types";
 
 const initialState: ViewOptionSliceTypes = {
-  current_view: "table",
+  current_view: "plot",
   table_options: {
     current_table_view: "enduse",
     enduse_table_options: {

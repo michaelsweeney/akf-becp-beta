@@ -6,6 +6,10 @@ import {
   mixed_icon_path,
 } from "styling/icons";
 
+import { createElecIcon } from "styling/iconsvg/elec";
+import { createGasIcon } from "styling/iconsvg/gas";
+import { createMixedIcon } from "styling/iconsvg/mixed";
+
 const getCaseDisplayAttributes = (inputs: CaseInputSliceTypes) => {
   const { api_inputs, case_attributes } = inputs;
 
@@ -30,28 +34,28 @@ const getCaseDisplayAttributes = (inputs: CaseInputSliceTypes) => {
     let fuel_color: string;
     let fuel_icon: string;
 
-    let mixColorFunc = d3.interpolate("#c9ab01", "#504400");
-    let elecColorFunc = d3.interpolate("#008ed5", "#004467");
-    let gasColorFunc = d3.interpolate("#3dcc00", "#00550b");
+    let mixColorFunc = d3.interpolate("#22A5A1", "#8BD2CF");
+    let elecColorFunc = d3.interpolate("#0E1B2C", "#89A5CD");
+    let gasColorFunc = d3.interpolate("#D86827", "#F1A01F");
 
-    fuel_color = d3.schemeTableau10[i];
+    // fuel_color = d3.schemeTableau10[i];
     if (case_fuels.length !== 1) {
       fuel_type = "mixed";
-      // fuel_color = mixColorFunc(i / case_ids.length);
-      fuel_icon = mixed_icon_path;
+      fuel_color = mixColorFunc(i / case_ids.length);
+      fuel_icon = createMixedIcon(fuel_color);
     } else if (case_fuels.includes("Natural Gas")) {
       fuel_type = "gas";
-      // fuel_color = gasColorFunc(i / case_ids.length);
-      fuel_icon = gas_icon_path;
+      fuel_color = gasColorFunc(i / case_ids.length);
+      fuel_icon = createGasIcon(fuel_color);
     } else if (case_fuels.includes("Electricity")) {
       fuel_type = "elec";
-      // fuel_color = elecColorFunc(i / case_ids.length);
-      fuel_icon = electricity_icon_path;
+      fuel_color = elecColorFunc(i / case_ids.length);
+      fuel_icon = createElecIcon(fuel_color);
     } else {
       console.error("error parsing fuel type", case_fuels);
-      // fuel_color = elecColorFunc(i / case_areas.length);
+      fuel_color = elecColorFunc(i / case_areas.length);
       fuel_type = "elec";
-      fuel_icon = electricity_icon_path;
+      fuel_icon = createElecIcon(fuel_color);
     }
 
     attributes.push({
